@@ -1,0 +1,133 @@
+---
+import { getCollection } from 'astro:content';
+
+// 모든 블로그 글 가져오기
+const allPosts = await getCollection('blog');
+
+// 태그 개수 계산
+const tagCountMap = new Map<string, number>();
+allPosts.forEach((post) => {
+	const tags = post.data.tags || [];
+	tags.forEach((tag) => {
+		const currentCount = tagCountMap.get(tag) || 0;
+		tagCountMap.set(tag, currentCount + 1);
+	});
+});
+
+// 태그 배열로 변환하고 개수 순으로 정렬
+const tags = Array.from(tagCountMap.entries())
+	.map(([name, count]) => ({ name, count }))
+	.sort((a, b) => b.count - a.count);
+---
+
+<div class="tag-sidebar">
+	<h2>태그</h2>
+	<ul class="tag-list">
+		{
+			tags.length > 0 ? (
+				tags.map((tag) => (
+					<li class="tag-item">
+						<a href={`/tags/${encodeURIComponent(tag.name)}`}>
+							<span class="tag-name">{tag.name}</span>
+							<span class="tag-count">({tag.count})</span>
+						</a>
+					</li>
+				))
+			) : (
+				<li class="tag-item">
+					<span class="no-tags">태그가 없습니다</span>
+				</li>
+			)
+		}
+	</ul>
+</div>
+
+<style>
+	.tag-sidebar {
+		background-color: rgba(var(--gray-light), 0.5);
+		padding: 1em 0.5em;
+		border-radius: 8px;
+		position: sticky;
+		top: 1em;
+		max-height: calc(100vh - 2em);
+		overflow-y: auto;
+	}
+
+	.tag-sidebar h2 {
+		font-size: 1.25em;
+		margin: 0 0 1em 0;
+		color: rgb(var(--black));
+		border-bottom: 2px solid var(--accent);
+		padding-bottom: 0.5em;
+	}
+
+	.tag-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.tag-item {
+		margin-bottom: 0.3em;
+	}
+
+	.tag-item a {
+		display: block;
+		padding: 0.5em;
+		border-radius: 6px;
+		text-decoration: none;
+		color: rgb(var(--gray-dark));
+		transition: all 0.2s ease;
+	}
+
+	.tag-item a:hover {
+		background-color: rgba(var(--accent), 0.1);
+		color: var(--accent);
+		transform: translateX(4px);
+	}
+
+	.tag-name {
+		font-weight: 500;
+	}
+
+	.tag-count {
+		color: rgb(var(--gray));
+		font-size: 0.9em;
+		margin-left: 0.5em;
+	}
+
+	.no-tags {
+		color: rgb(var(--gray));
+		font-size: 0.9em;
+	}
+
+	/* 모바일 반응형 */
+	@media (max-width: 768px) {
+		.tag-sidebar {
+			position: relative;
+			top: 0;
+			max-height: none;
+			margin-bottom: 1em;
+		}
+
+		.tag-sidebar h2 {
+			font-size: 1.1em;
+		}
+
+		.tag-list {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5em;
+		}
+
+		.tag-item {
+			margin-bottom: 0;
+		}
+
+		.tag-item a {
+			padding: 0.4em 0.8em;
+			font-size: 0.9em;
+		}
+	}
+</style>
+

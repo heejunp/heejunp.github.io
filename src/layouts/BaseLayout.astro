@@ -1,0 +1,80 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import TagSidebar from '../components/TagSidebar.astro';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description } = Astro.props;
+
+// 블로그 관련 페이지인지 확인 (/blog 또는 /tags로 시작)
+const showTags = Astro.url.pathname.startsWith('/blog') || Astro.url.pathname.startsWith('/tags');
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+	<body>
+		<Header />
+		<div class={`layout-container ${showTags ? 'has-sidebar' : ''}`}>
+			{showTags && (
+				<aside class="sidebar">
+					<TagSidebar />
+				</aside>
+			)}
+			<main class="main-content">
+				<slot />
+			</main>
+		</div>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.layout-container {
+		display: grid;
+		min-height: 100vh;
+		gap: 1em;
+	}
+
+	.layout-container.has-sidebar {
+		grid-template-columns: 250px 1fr;
+	}
+
+	.layout-container:not(.has-sidebar) {
+		grid-template-columns: 1fr;
+	}
+
+	.sidebar {
+		padding: 1em;
+	}
+
+	.main-content {
+		padding: 0;
+		overflow-x: hidden;
+		width: auto;
+		max-width: none;
+		margin: 0;
+	}
+
+	.main-content > * {
+		max-width: 100%;
+	}
+
+	/* 모바일 반응형 */
+	@media (max-width: 768px) {
+		.layout-container {
+			grid-template-columns: 1fr;
+		}
+
+		.sidebar {
+			display: none;
+		}
+	}
+</style>
