@@ -29,15 +29,14 @@ const techStacks: TechStack[] = [
 	<div class="credits-container">
 		<div class="credits-content">
 			<h2 class="credits-title">기술 스택</h2>
-			<div class="tech-list">
-				{techStacks.map((tech, index) => (
-					<div 
-						class="tech-item" 
-						style={`animation-delay: ${index * 0.1}s`}
-					>
-						<span class="tech-name">{tech.name}</span>
-					</div>
-				))}
+			<div class="credits-scroll-wrapper">
+				<div class="tech-list">
+					{techStacks.map((tech, index) => (
+						<div class="tech-item">
+							<span class="tech-name">{tech.name}</span>
+						</div>
+					))}
+				</div>
 			</div>
 			<div class="credits-end">
 				<p class="credits-text">Made with ❤️ by 박희준</p>
@@ -51,7 +50,7 @@ const techStacks: TechStack[] = [
 	.credits-footer {
 		background: #0f3460;
 		color: #ffffff;
-		padding: 8rem 2rem 4rem;
+		padding: 2rem;
 		position: relative;
 		overflow: hidden;
 		min-height: 100vh;
@@ -89,24 +88,49 @@ const techStacks: TechStack[] = [
 
 	.credits-content {
 		text-align: center;
-		perspective: 1000px;
+		width: 100%;
+		max-width: 1200px;
+		position: relative;
+		z-index: 1;
 	}
 
 	.credits-title {
 		font-size: clamp(2rem, 4vw, 3rem);
 		font-weight: 700;
-		margin: 0 0 4rem 0;
+		margin: 0 0 2rem 0;
 		color: #00ff41;
 		text-transform: uppercase;
 		letter-spacing: 0.2em;
-		opacity: 0;
-		animation: fadeIn 1s ease-out 0.5s forwards;
 		font-family: 'Courier New', monospace;
 		text-shadow: 
 			4px 4px 0 #16213e,
 			8px 8px 0 #1a1a2e;
 		position: relative;
-		z-index: 1;
+		z-index: 2;
+	}
+
+	.credits-scroll-wrapper {
+		height: 70vh;
+		overflow: hidden;
+		position: relative;
+		mask-image: linear-gradient(
+			to bottom,
+			transparent 0%,
+			black 10%,
+			black 90%,
+			transparent 100%
+		);
+		-webkit-mask-image: linear-gradient(
+			to bottom,
+			transparent 0%,
+			black 10%,
+			black 90%,
+			transparent 100%
+		);
+	}
+
+	.credits-scroll-wrapper:hover .tech-list {
+		animation-play-state: paused;
 	}
 
 	@keyframes fadeIn {
@@ -123,17 +147,25 @@ const techStacks: TechStack[] = [
 	.tech-list {
 		display: flex;
 		flex-direction: column;
-		gap: 1.5rem;
-		margin-bottom: 6rem;
+		gap: 2rem;
 		align-items: center;
+		justify-content: flex-start;
+		animation: scroll-up 25s linear infinite;
+		padding: 2rem 0;
+	}
+
+	@keyframes scroll-up {
+		0% {
+			transform: translateY(100%);
+		}
+		100% {
+			transform: translateY(-100%);
+		}
 	}
 
 	.tech-item {
 		font-size: clamp(1.2rem, 2vw, 1.8rem);
 		color: #ffd700;
-		opacity: 0;
-		transform: translateY(50px);
-		animation: creditsScroll 0.8s ease-out forwards;
 		text-shadow: 
 			2px 2px 0 #16213e,
 			4px 4px 0 #1a1a2e;
@@ -141,26 +173,15 @@ const techStacks: TechStack[] = [
 		font-family: 'Courier New', monospace;
 		font-weight: 700;
 		position: relative;
-		z-index: 1;
+		white-space: nowrap;
 	}
 
 	.tech-item:hover {
 		color: #00ff41;
-		transform: translateX(5px);
+		transform: scale(1.1);
 		text-shadow: 
 			3px 3px 0 #16213e,
 			6px 6px 0 #1a1a2e;
-	}
-
-	@keyframes creditsScroll {
-		from {
-			opacity: 0;
-			transform: translateY(50px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
 	}
 
 	.tech-name {
@@ -178,11 +199,13 @@ const techStacks: TechStack[] = [
 	}
 
 	.credits-end {
-		margin-top: 8rem;
-		padding-top: 4rem;
-		border-top: 1px solid rgba(255, 255, 255, 0.1);
-		opacity: 0;
-		animation: fadeIn 1s ease-out 2s forwards;
+		margin-top: 3rem;
+		padding-top: 3rem;
+		border-top: 3px solid #00ff41;
+		width: 100%;
+		text-align: center;
+		position: relative;
+		z-index: 2;
 	}
 
 	.credits-text {
@@ -193,7 +216,6 @@ const techStacks: TechStack[] = [
 		font-family: 'Courier New', monospace;
 		text-shadow: 1px 1px 0 #16213e;
 		position: relative;
-		z-index: 1;
 	}
 
 	.credits-year {
@@ -204,30 +226,32 @@ const techStacks: TechStack[] = [
 		font-family: 'Courier New', monospace;
 		text-shadow: 2px 2px 0 #16213e;
 		position: relative;
-		z-index: 1;
 	}
 
-	/* 도트 스타일 애니메이션 */
-	@media (prefers-reduced-motion: no-preference) {
-		.tech-item {
-			animation: creditsScroll 0.8s ease-out forwards;
+	/* 애니메이션 감소 모션 설정 */
+	@media (prefers-reduced-motion: reduce) {
+		.tech-list {
+			animation: none;
 		}
 	}
 
 	/* 모바일 반응형 */
 	@media (max-width: 640px) {
 		.credits-footer {
-			padding: 6rem 1rem 3rem;
+			padding: 2rem 1rem;
+		}
+
+		.credits-scroll-wrapper {
+			height: 60vh;
 		}
 
 		.tech-list {
-			gap: 1rem;
-			margin-bottom: 4rem;
+			gap: 1.5rem;
 		}
 
 		.credits-end {
-			margin-top: 4rem;
-			padding-top: 2rem;
+			margin-top: 3rem;
+			padding-top: 3rem;
 		}
 	}
 </style>
