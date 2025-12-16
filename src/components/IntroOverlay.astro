@@ -1,0 +1,147 @@
+---
+// 인트로 오버레이 컴포넌트
+---
+
+<div id="intro-overlay" class="intro-overlay">
+	<div class="intro-content">
+		<h1 class="intro-text">안녕하세요</h1>
+	</div>
+</div>
+
+<style>
+	/* 한글 손글씨 폰트 로드 */
+	@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+
+	.intro-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		height: 100dvh; /* 동적 뷰포트 높이 지원 */
+		background: #000000;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 9999;
+		transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+		pointer-events: none;
+		backdrop-filter: blur(0px);
+	}
+
+	.intro-overlay.hidden {
+		opacity: 0;
+		visibility: hidden;
+	}
+
+	.intro-content {
+		text-align: center;
+	}
+
+	.intro-text {
+		font-family: 'Nanum Pen Script', 'Pretendard', sans-serif;
+		font-size: clamp(4rem, 10vw, 7rem);
+		font-weight: 400;
+		color: #ffffff;
+		margin: 0;
+		letter-spacing: 0.02em;
+		line-height: 1.3;
+		/* 손글씨 느낌을 위한 스타일링 */
+		transform: rotate(-0.5deg);
+		text-shadow: 
+			2px 2px 4px rgba(0, 0, 0, 0.4),
+			0 0 20px rgba(255, 255, 255, 0.1);
+		animation: fadeInUp 1.2s ease-out;
+		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+	}
+
+	@keyframes fadeInUp {
+		from {
+			opacity: 0;
+			transform: translateY(30px) rotate(-0.5deg);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) rotate(-0.5deg);
+		}
+	}
+
+	/* 모바일 최적화 */
+	@media (max-width: 768px) {
+		.intro-text {
+			font-size: clamp(3rem, 15vw, 5rem);
+		}
+	}
+</style>
+
+<script>
+	// 스크롤 감지하여 오버레이 숨기기
+	document.addEventListener('DOMContentLoaded', () => {
+		const overlay = document.getElementById('intro-overlay');
+		if (!overlay) return;
+
+		// 초기에는 body 스크롤 막기
+		document.body.style.overflow = 'hidden';
+
+		let scrolled = false;
+		let touchStartY = 0;
+		let touchStartTime = 0;
+
+		const hideOverlay = () => {
+			if (scrolled) return;
+			scrolled = true;
+			overlay.classList.add('hidden');
+			
+			// 스크롤 다시 활성화
+			setTimeout(() => {
+				document.body.style.overflow = '';
+				if (overlay.parentNode) {
+					overlay.remove();
+				}
+			}, 800);
+		};
+
+		// 스크롤 이벤트 리스너
+		let ticking = false;
+		const handleScroll = () => {
+			if (!scrolled && window.scrollY > 30) {
+				hideOverlay();
+			}
+		};
+
+		window.addEventListener('scroll', () => {
+			if (!ticking) {
+				window.requestAnimationFrame(() => {
+					handleScroll();
+					ticking = false;
+				});
+				ticking = true;
+			}
+		}, { passive: true });
+
+		// 터치 이벤트 감지 (모바일 스와이프)
+		window.addEventListener('touchstart', (e) => {
+			touchStartY = e.touches[0].clientY;
+			touchStartTime = Date.now();
+		}, { passive: true });
+
+		window.addEventListener('touchmove', (e) => {
+			if (scrolled) return;
+			const touchY = e.touches[0].clientY;
+			const deltaY = touchStartY - touchY;
+			const deltaTime = Date.now() - touchStartTime;
+			
+			// 위로 스와이프 감지 (속도와 거리 고려)
+			if (deltaY > 50 && deltaTime < 500) {
+				hideOverlay();
+			}
+		}, { passive: true });
+
+		// 마우스 휠 이벤트 (데스크톱)
+		window.addEventListener('wheel', (e) => {
+			if (!scrolled && e.deltaY > 0) {
+				hideOverlay();
+			}
+		}, { passive: true });
+	});
+</script>
