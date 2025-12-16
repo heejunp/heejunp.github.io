@@ -24,10 +24,10 @@ const isHomePage = Astro.url.pathname === '/';
 	<head>
 		<BaseHead title={title} description={description} />
 	</head>
-	<body>
+	<body class={isHomePage ? 'portfolio-page' : ''}>
 		{isHomePage && <IntroOverlay />}
-		<Header />
-		<div class={`layout-container ${showTags ? 'has-sidebar' : ''}`}>
+		{!isHomePage && <Header />}
+		<div class={`layout-container ${showTags ? 'has-sidebar' : ''} ${isHomePage ? 'portfolio-layout' : ''}`}>
 			{showTags && (
 				<aside class="sidebar">
 					<TagSidebar />
@@ -37,7 +37,7 @@ const isHomePage = Astro.url.pathname === '/';
 				<slot />
 			</main>
 		</div>
-		<Footer />
+		{!isHomePage && <Footer />}
 	</body>
 </html>
 
@@ -70,6 +70,27 @@ const isHomePage = Astro.url.pathname === '/';
 
 	.main-content > * {
 		max-width: 100%;
+	}
+
+	/* 포트폴리오 페이지 스타일 */
+	body.portfolio-page {
+		background: #0f3460;
+		color: #ffffff;
+	}
+
+	.layout-container.portfolio-layout {
+		grid-template-columns: 1fr;
+		max-width: 100%;
+		margin: 0;
+		padding: 0;
+		gap: 0;
+	}
+
+	.layout-container.portfolio-layout .main-content {
+		padding: 0;
+		margin: 0;
+		max-width: 100%;
+		width: 100%;
 	}
 
 	/* 모바일 반응형 */

@@ -9,9 +9,6 @@
 </div>
 
 <style>
-	/* 한글 손글씨 폰트 로드 */
-	@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
-
 	.intro-overlay {
 		position: fixed;
 		top: 0;
@@ -19,7 +16,7 @@
 		width: 100%;
 		height: 100vh;
 		height: 100dvh; /* 동적 뷰포트 높이 지원 */
-		background: #000000;
+		background: #0f3460;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -27,6 +24,26 @@
 		transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 		pointer-events: none;
 		backdrop-filter: blur(0px);
+	}
+
+	.intro-overlay::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-image: 
+			radial-gradient(circle, #00ff41 1px, transparent 1px);
+		background-size: 20px 20px;
+		opacity: 0.2;
+		pointer-events: none;
+		animation: dotMove 20s linear infinite;
+	}
+
+	@keyframes dotMove {
+		0% { background-position: 0 0; }
+		100% { background-position: 20px 20px; }
 	}
 
 	.intro-overlay.hidden {
@@ -39,20 +56,20 @@
 	}
 
 	.intro-text {
-		font-family: 'Nanum Pen Script', 'Pretendard', sans-serif;
+		font-family: 'Courier New', monospace;
 		font-size: clamp(4rem, 10vw, 7rem);
-		font-weight: 400;
-		color: #ffffff;
+		font-weight: 700;
+		color: #00ff41;
 		margin: 0;
-		letter-spacing: 0.02em;
+		letter-spacing: 0.1em;
 		line-height: 1.3;
-		/* 손글씨 느낌을 위한 스타일링 */
-		transform: rotate(-0.5deg);
 		text-shadow: 
-			2px 2px 4px rgba(0, 0, 0, 0.4),
-			0 0 20px rgba(255, 255, 255, 0.1);
+			4px 4px 0 #16213e,
+			8px 8px 0 #1a1a2e,
+			12px 12px 0 #0f3460;
 		animation: fadeInUp 1.2s ease-out;
-		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+		position: relative;
+		z-index: 1;
 	}
 
 	@keyframes fadeInUp {

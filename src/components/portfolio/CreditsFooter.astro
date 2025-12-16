@@ -1,0 +1,233 @@
+---
+// 영화 크레딧 스타일 푸터 컴포넌트
+
+interface TechStack {
+	name: string;
+	icon?: string;
+}
+
+const techStacks: TechStack[] = [
+	{ name: 'JavaScript' },
+	{ name: 'TypeScript' },
+	{ name: 'React' },
+	{ name: 'Vue.js' },
+	{ name: 'Astro' },
+	{ name: 'Next.js' },
+	{ name: 'Node.js' },
+	{ name: 'HTML5' },
+	{ name: 'CSS3' },
+	{ name: 'SASS' },
+	{ name: 'Tailwind CSS' },
+	{ name: 'Git' },
+	{ name: 'GitHub' },
+	{ name: 'Figma' },
+	{ name: 'VS Code' },
+];
+---
+
+<section class="credits-footer">
+	<div class="credits-container">
+		<div class="credits-content">
+			<h2 class="credits-title">기술 스택</h2>
+			<div class="tech-list">
+				{techStacks.map((tech, index) => (
+					<div 
+						class="tech-item" 
+						style={`animation-delay: ${index * 0.1}s`}
+					>
+						<span class="tech-name">{tech.name}</span>
+					</div>
+				))}
+			</div>
+			<div class="credits-end">
+				<p class="credits-text">Made with ❤️ by 박희준</p>
+				<p class="credits-year">© {new Date().getFullYear()}</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.credits-footer {
+		background: #0f3460;
+		color: #ffffff;
+		padding: 8rem 2rem 4rem;
+		position: relative;
+		overflow: hidden;
+		min-height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.credits-footer::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-image: 
+			radial-gradient(circle, #00ff41 1px, transparent 1px);
+		background-size: 30px 30px;
+		opacity: 0.1;
+		pointer-events: none;
+		animation: dotMove 15s linear infinite;
+	}
+
+	@keyframes dotMove {
+		0% { background-position: 0 0; }
+		100% { background-position: 30px 30px; }
+	}
+
+	.credits-container {
+		max-width: 1200px;
+		width: 100%;
+		position: relative;
+		z-index: 1;
+	}
+
+	.credits-content {
+		text-align: center;
+		perspective: 1000px;
+	}
+
+	.credits-title {
+		font-size: clamp(2rem, 4vw, 3rem);
+		font-weight: 700;
+		margin: 0 0 4rem 0;
+		color: #00ff41;
+		text-transform: uppercase;
+		letter-spacing: 0.2em;
+		opacity: 0;
+		animation: fadeIn 1s ease-out 0.5s forwards;
+		font-family: 'Courier New', monospace;
+		text-shadow: 
+			4px 4px 0 #16213e,
+			8px 8px 0 #1a1a2e;
+		position: relative;
+		z-index: 1;
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.tech-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		margin-bottom: 6rem;
+		align-items: center;
+	}
+
+	.tech-item {
+		font-size: clamp(1.2rem, 2vw, 1.8rem);
+		color: #ffd700;
+		opacity: 0;
+		transform: translateY(50px);
+		animation: creditsScroll 0.8s ease-out forwards;
+		text-shadow: 
+			2px 2px 0 #16213e,
+			4px 4px 0 #1a1a2e;
+		transition: all 0.1s ease;
+		font-family: 'Courier New', monospace;
+		font-weight: 700;
+		position: relative;
+		z-index: 1;
+	}
+
+	.tech-item:hover {
+		color: #00ff41;
+		transform: translateX(5px);
+		text-shadow: 
+			3px 3px 0 #16213e,
+			6px 6px 0 #1a1a2e;
+	}
+
+	@keyframes creditsScroll {
+		from {
+			opacity: 0;
+			transform: translateY(50px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.tech-name {
+		display: inline-block;
+		font-weight: 300;
+		letter-spacing: 0.1em;
+		position: relative;
+	}
+
+	.tech-name::before {
+		content: '▶';
+		margin-right: 1rem;
+		color: #00ff41;
+		font-size: 0.8em;
+	}
+
+	.credits-end {
+		margin-top: 8rem;
+		padding-top: 4rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		opacity: 0;
+		animation: fadeIn 1s ease-out 2s forwards;
+	}
+
+	.credits-text {
+		font-size: clamp(1rem, 1.5vw, 1.2rem);
+		color: #e94560;
+		margin: 0 0 1rem 0;
+		letter-spacing: 0.05em;
+		font-family: 'Courier New', monospace;
+		text-shadow: 1px 1px 0 #16213e;
+		position: relative;
+		z-index: 1;
+	}
+
+	.credits-year {
+		font-size: clamp(0.9rem, 1.2vw, 1rem);
+		color: #00ff41;
+		margin: 0;
+		letter-spacing: 0.1em;
+		font-family: 'Courier New', monospace;
+		text-shadow: 2px 2px 0 #16213e;
+		position: relative;
+		z-index: 1;
+	}
+
+	/* 도트 스타일 애니메이션 */
+	@media (prefers-reduced-motion: no-preference) {
+		.tech-item {
+			animation: creditsScroll 0.8s ease-out forwards;
+		}
+	}
+
+	/* 모바일 반응형 */
+	@media (max-width: 640px) {
+		.credits-footer {
+			padding: 6rem 1rem 3rem;
+		}
+
+		.tech-list {
+			gap: 1rem;
+			margin-bottom: 4rem;
+		}
+
+		.credits-end {
+			margin-top: 4rem;
+			padding-top: 2rem;
+		}
+	}
+</style>

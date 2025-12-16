@@ -1,8 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import HeroSection from '../components/portfolio/HeroSection.astro';
+import TimelineSection from '../components/portfolio/TimelineSection.astro';
+import CreditsFooter from '../components/portfolio/CreditsFooter.astro';
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<h1>홈</h1>
+	<HeroSection />
+	<TimelineSection />
+	<CreditsFooter />
 </BaseLayout>

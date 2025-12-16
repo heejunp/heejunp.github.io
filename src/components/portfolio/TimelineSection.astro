@@ -1,0 +1,301 @@
+---
+// 타임라인 섹션 컴포넌트 (지그재그 레이아웃)
+
+interface TimelineItem {
+	year: string;
+	title: string;
+	description: string;
+	type: 'project' | 'experience';
+}
+
+const timelineItems: TimelineItem[] = [
+	{
+		year: '2024',
+		title: '포트폴리오 웹사이트',
+		description: 'Astro를 활용한 모던한 포트폴리오 웹사이트 개발',
+		type: 'project'
+	},
+	{
+		year: '2023',
+		title: 'React 프로젝트',
+		description: '사용자 친화적인 인터페이스를 가진 웹 애플리케이션 개발',
+		type: 'project'
+	},
+	{
+		year: '2022',
+		title: '프론트엔드 개발자',
+		description: '다양한 프로젝트를 통해 프론트엔드 개발 역량 강화',
+		type: 'experience'
+	},
+	{
+		year: '2021',
+		title: '첫 프로젝트',
+		description: '웹 개발의 첫걸음을 시작한 의미 있는 프로젝트',
+		type: 'project'
+	}
+];
+---
+
+<section class="timeline-section">
+	<div class="timeline-container">
+		<h2 class="section-title">프로젝트 & 연혁</h2>
+		<div class="timeline-wrapper">
+			<div class="timeline-line"></div>
+		{timelineItems.map((item, index) => (
+			<div class={`timeline-item ${index % 2 === 0 ? 'left' : 'right'}`} data-index={index}>
+				<div class="timeline-card">
+					<div class="timeline-year">{item.year}</div>
+					<h3 class="timeline-title">{item.title}</h3>
+					<p class="timeline-description">{item.description}</p>
+					<div class={`timeline-badge ${item.type}`}>
+						{item.type === 'project' ? '프로젝트' : '연혁'}
+					</div>
+				</div>
+				<div class="timeline-dot"></div>
+			</div>
+		))}
+		</div>
+	</div>
+</section>
+
+<style>
+	.timeline-section {
+		padding: 6rem 2rem;
+		background: #16213e;
+		position: relative;
+		min-height: 100vh;
+	}
+
+	.timeline-section::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-image: 
+			radial-gradient(circle, #0f3460 1px, transparent 1px);
+		background-size: 20px 20px;
+		opacity: 0.2;
+		pointer-events: none;
+	}
+
+	.timeline-container {
+		max-width: 1400px;
+		margin: 0 auto;
+		position: relative;
+	}
+
+	.section-title {
+		font-size: clamp(2rem, 4vw, 3rem);
+		font-weight: 700;
+		text-align: center;
+		margin: 0 0 4rem 0;
+		color: #00ff41;
+		text-shadow: 
+			4px 4px 0 #0f3460,
+			8px 8px 0 #1a1a2e;
+		font-family: 'Courier New', monospace;
+		letter-spacing: 0.1em;
+		position: relative;
+		z-index: 1;
+	}
+
+	.timeline-wrapper {
+		position: relative;
+		padding: 2rem 0;
+	}
+
+	.timeline-line {
+		position: absolute;
+		left: 50%;
+		top: 0;
+		bottom: 0;
+		width: 4px;
+		background: repeating-linear-gradient(
+			to bottom,
+			#00ff41 0px,
+			#00ff41 10px,
+			transparent 10px,
+			transparent 20px
+		);
+		transform: translateX(-50%);
+		box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+	}
+
+	.timeline-item {
+		position: relative;
+		margin-bottom: 4rem;
+		display: flex;
+		align-items: center;
+		opacity: 0;
+		transform: translateY(50px);
+		transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+	}
+
+	.timeline-item.visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.timeline-item:nth-child(1) { transition-delay: 0.1s; }
+	.timeline-item:nth-child(2) { transition-delay: 0.2s; }
+	.timeline-item:nth-child(3) { transition-delay: 0.3s; }
+	.timeline-item:nth-child(4) { transition-delay: 0.4s; }
+
+	.timeline-item.left {
+		justify-content: flex-end;
+		padding-right: calc(50% + 2rem);
+	}
+
+	.timeline-item.right {
+		justify-content: flex-start;
+		padding-left: calc(50% + 2rem);
+	}
+
+	.timeline-card {
+		background: #1a1a2e;
+		border: 3px solid #00ff41;
+		border-radius: 0;
+		padding: 2rem;
+		max-width: 500px;
+		width: 100%;
+		position: relative;
+		transition: all 0.1s ease;
+		box-shadow: 
+			0 0 0 2px #16213e,
+			8px 8px 0 0 #00ff41;
+	}
+
+	.timeline-card:hover {
+		transform: translate(-2px, -2px);
+		box-shadow: 
+			0 0 0 2px #16213e,
+			10px 10px 0 0 #00ff41;
+	}
+
+	.timeline-year {
+		font-size: 0.9rem;
+		color: #ffd700;
+		font-weight: 700;
+		margin-bottom: 0.5rem;
+		letter-spacing: 0.1em;
+		font-family: 'Courier New', monospace;
+		text-shadow: 2px 2px 0 #0f3460;
+	}
+
+	.timeline-title {
+		font-size: clamp(1.2rem, 2vw, 1.5rem);
+		color: #00ff41;
+		margin: 0 0 0.75rem 0;
+		font-weight: 700;
+		font-family: 'Courier New', monospace;
+		text-shadow: 2px 2px 0 #0f3460;
+	}
+
+	.timeline-description {
+		font-size: 1rem;
+		color: #e94560;
+		line-height: 1.6;
+		margin: 0 0 1rem 0;
+		font-family: 'Courier New', monospace;
+		text-shadow: 1px 1px 0 #0f3460;
+	}
+
+	.timeline-badge {
+		display: inline-block;
+		padding: 0.25rem 0.75rem;
+		border-radius: 0;
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		font-family: 'Courier New', monospace;
+		border: 2px solid;
+	}
+
+	.timeline-badge.project {
+		background: #1a1a2e;
+		color: #00ff41;
+		border-color: #00ff41;
+		box-shadow: 2px 2px 0 0 #00ff41;
+	}
+
+	.timeline-badge.experience {
+		background: #1a1a2e;
+		color: #ffd700;
+		border-color: #ffd700;
+		box-shadow: 2px 2px 0 0 #ffd700;
+	}
+
+	.timeline-dot {
+		position: absolute;
+		left: 50%;
+		width: 20px;
+		height: 20px;
+		border-radius: 0;
+		background: #00ff41;
+		border: 3px solid #16213e;
+		transform: translateX(-50%) rotate(45deg);
+		box-shadow: 
+			0 0 0 2px #00ff41,
+			0 0 10px rgba(0, 255, 65, 0.8);
+		z-index: 2;
+	}
+
+	/* 모바일 반응형 */
+	@media (max-width: 968px) {
+		.timeline-line {
+			left: 2rem;
+		}
+
+		.timeline-item.left,
+		.timeline-item.right {
+			padding-left: 4rem;
+			padding-right: 0;
+			justify-content: flex-start;
+		}
+
+		.timeline-dot {
+			left: 2rem;
+		}
+
+		.timeline-card {
+			max-width: 100%;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.timeline-section {
+			padding: 4rem 1rem;
+		}
+
+		.timeline-card {
+			padding: 1.5rem;
+		}
+	}
+</style>
+
+<script>
+	// Intersection Observer를 사용한 스크롤 애니메이션
+	document.addEventListener('DOMContentLoaded', () => {
+		const timelineItems = document.querySelectorAll('.timeline-item');
+		
+		const observerOptions = {
+			threshold: 0.2,
+			rootMargin: '0px 0px -100px 0px'
+		};
+
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('visible');
+				}
+			});
+		}, observerOptions);
+
+		timelineItems.forEach(item => {
+			observer.observe(item);
+		});
+	});
+</script>
