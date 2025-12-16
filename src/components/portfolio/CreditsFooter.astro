@@ -31,6 +31,13 @@ const techStacks: TechStack[] = [
 			<h2 class="credits-title">기술 스택</h2>
 			<div class="credits-scroll-wrapper">
 				<div class="tech-list">
+					{/* 첫 번째 세트 */}
+					{techStacks.map((tech, index) => (
+						<div class="tech-item">
+							<span class="tech-name">{tech.name}</span>
+						</div>
+					))}
+					{/* 두 번째 세트 (무한 루프를 위해) */}
 					{techStacks.map((tech, index) => (
 						<div class="tech-item">
 							<span class="tech-name">{tech.name}</span>
@@ -113,20 +120,25 @@ const techStacks: TechStack[] = [
 		height: 70vh;
 		overflow: hidden;
 		position: relative;
-		mask-image: linear-gradient(
+		border: 3px solid #00ff41;
+	}
+
+	.credits-scroll-wrapper::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		pointer-events: none;
+		background: linear-gradient(
 			to bottom,
-			transparent 0%,
-			black 10%,
-			black 90%,
-			transparent 100%
+			rgba(15, 52, 96, 1) 0%,
+			transparent 10%,
+			transparent 90%,
+			rgba(15, 52, 96, 1) 100%
 		);
-		-webkit-mask-image: linear-gradient(
-			to bottom,
-			transparent 0%,
-			black 10%,
-			black 90%,
-			transparent 100%
-		);
+		z-index: 1;
 	}
 
 	.credits-scroll-wrapper:hover .tech-list {
@@ -150,16 +162,18 @@ const techStacks: TechStack[] = [
 		gap: 2rem;
 		align-items: center;
 		justify-content: flex-start;
-		animation: scroll-up 25s linear infinite;
+		animation: scroll-up 20s linear infinite;
 		padding: 2rem 0;
+		position: relative;
+		z-index: 0;
 	}
 
 	@keyframes scroll-up {
 		0% {
-			transform: translateY(100%);
+			transform: translateY(50%);
 		}
 		100% {
-			transform: translateY(-100%);
+			transform: translateY(-50%);
 		}
 	}
 
