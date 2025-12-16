@@ -17,6 +17,9 @@ const showTags = Astro.url.pathname.startsWith('/blog') || Astro.url.pathname.st
 
 // 메인 페이지인지 확인 (인트로 오버레이 표시)
 const isHomePage = Astro.url.pathname === '/';
+
+// 포트폴리오 스타일이 필요한 페이지 (about 페이지 포함)
+const isPortfolioPage = Astro.url.pathname === '/about';
 ---
 
 <!doctype html>
@@ -24,10 +27,10 @@ const isHomePage = Astro.url.pathname === '/';
 	<head>
 		<BaseHead title={title} description={description} />
 	</head>
-	<body class={isHomePage ? 'portfolio-page' : ''}>
+	<body class={isHomePage || isPortfolioPage ? 'portfolio-page' : ''}>
 		{isHomePage && <IntroOverlay />}
-		{!isHomePage && <Header />}
-		<div class={`layout-container ${showTags ? 'has-sidebar' : ''} ${isHomePage ? 'portfolio-layout' : ''}`}>
+		{!isHomePage && !isPortfolioPage && <Header />}
+		<div class={`layout-container ${showTags ? 'has-sidebar' : ''} ${isHomePage || isPortfolioPage ? 'portfolio-layout' : ''}`}>
 			{showTags && (
 				<aside class="sidebar">
 					<TagSidebar />
@@ -37,7 +40,7 @@ const isHomePage = Astro.url.pathname === '/';
 				<slot />
 			</main>
 		</div>
-		{!isHomePage && <Footer />}
+		{!isHomePage && !isPortfolioPage && <Footer />}
 	</body>
 </html>
 
