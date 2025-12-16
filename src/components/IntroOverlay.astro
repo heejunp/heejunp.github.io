@@ -4,7 +4,11 @@
 
 <div id="intro-overlay" class="intro-overlay">
 	<div class="intro-content">
-		<h1 class="intro-text">안녕하세요</h1>
+		<h1 class="intro-text">
+			<span id="typed-text"></span>
+			<span class="cursor">|</span>
+		</h1>
+		<p class="scroll-hint" id="scroll-hint">스크롤을 내려주세요 ↓</p>
 	</div>
 </div>
 
@@ -67,7 +71,44 @@
 			4px 4px 0 #16213e,
 			8px 8px 0 #1a1a2e,
 			12px 12px 0 #0f3460;
-		animation: fadeInUp 1.2s ease-out;
+		position: relative;
+		z-index: 1;
+		display: inline-block;
+	}
+
+	#typed-text {
+		display: inline-block;
+	}
+
+	.cursor {
+		display: inline-block;
+		color: #00ff41;
+		margin-left: 0.1em;
+		animation: blink 1s infinite;
+		font-weight: 300;
+	}
+
+	@keyframes blink {
+		0%, 50% {
+			opacity: 1;
+		}
+		51%, 100% {
+			opacity: 0;
+		}
+	}
+
+	.scroll-hint {
+		font-family: 'Courier New', monospace;
+		font-size: clamp(1rem, 2vw, 1.5rem);
+		color: #ffd700;
+		margin: 2rem 0 0 0;
+		opacity: 0;
+		animation: fadeInUp 0.8s ease-out forwards, bounce 2s ease-in-out infinite;
+		animation-delay: 1.5s;
+		text-shadow: 
+			2px 2px 0 #16213e,
+			4px 4px 0 #1a1a2e;
+		letter-spacing: 0.05em;
 		position: relative;
 		z-index: 1;
 	}
@@ -75,11 +116,20 @@
 	@keyframes fadeInUp {
 		from {
 			opacity: 0;
-			transform: translateY(30px) rotate(-0.5deg);
+			transform: translateY(20px);
 		}
 		to {
 			opacity: 1;
-			transform: translateY(0) rotate(-0.5deg);
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes bounce {
+		0%, 100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-10px);
 		}
 	}
 
@@ -92,13 +142,38 @@
 </style>
 
 <script>
-	// 스크롤 감지하여 오버레이 숨기기
+	// 타이핑 효과 및 스크롤 감지
 	document.addEventListener('DOMContentLoaded', () => {
 		const overlay = document.getElementById('intro-overlay');
 		if (!overlay) return;
 
 		// 초기에는 body 스크롤 막기
 		document.body.style.overflow = 'hidden';
+
+		// 타이핑 효과
+		const typedText = document.getElementById('typed-text');
+		const scrollHint = document.getElementById('scroll-hint');
+		const text = '안녕하세요';
+		let index = 0;
+
+		const typeText = () => {
+			if (index < text.length) {
+				typedText.textContent += text[index];
+				index++;
+				setTimeout(typeText, 150); // 각 글자마다 150ms 간격
+			} else {
+				// 타이핑 완료 후 안내 문구 표시
+				if (scrollHint) {
+					setTimeout(() => {
+						scrollHint.style.opacity = '1';
+						scrollHint.style.animation = 'fadeInUp 0.8s ease-out forwards, bounce 2s ease-in-out infinite';
+					}, 500);
+				}
+			}
+		};
+
+		// 약간의 딜레이 후 타이핑 시작
+		setTimeout(typeText, 300);
 
 		let scrolled = false;
 		let touchStartY = 0;
