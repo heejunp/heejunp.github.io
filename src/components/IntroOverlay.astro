@@ -103,14 +103,18 @@
 		color: #ffd700;
 		margin: 2rem 0 0 0;
 		opacity: 0;
-		animation: fadeInUp 0.8s ease-out forwards, bounce 2s ease-in-out infinite;
-		animation-delay: 1.5s;
 		text-shadow: 
 			2px 2px 0 #16213e,
 			4px 4px 0 #1a1a2e;
 		letter-spacing: 0.05em;
 		position: relative;
 		z-index: 1;
+		transition: opacity 0.3s ease;
+	}
+
+	.scroll-hint.visible {
+		opacity: 1;
+		animation: fadeInUp 0.8s ease-out forwards, bounce 2s ease-in-out infinite;
 	}
 
 	@keyframes fadeInUp {
@@ -165,8 +169,7 @@
 				// 타이핑 완료 후 안내 문구 표시
 				if (scrollHint) {
 					setTimeout(() => {
-						scrollHint.style.opacity = '1';
-						scrollHint.style.animation = 'fadeInUp 0.8s ease-out forwards, bounce 2s ease-in-out infinite';
+						scrollHint.classList.add('visible');
 					}, 500);
 				}
 			}
