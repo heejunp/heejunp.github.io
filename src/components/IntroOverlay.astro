@@ -219,6 +219,20 @@
 <script>
 	// 타이핑 효과 및 스크롤 감지
 	document.addEventListener('DOMContentLoaded', () => {
+		// skipIntro 쿼리 파라미터 확인
+		const urlParams = new URLSearchParams(window.location.search);
+		const skipIntro = urlParams.get('skipIntro') === 'true';
+		
+		// skipIntro가 true이면 오버레이를 즉시 숨기고 제거
+		if (skipIntro) {
+			const overlay = document.getElementById('intro-overlay');
+			if (overlay) {
+				overlay.remove();
+				document.body.style.overflow = '';
+			}
+			return;
+		}
+
 		const overlay = document.getElementById('intro-overlay');
 		if (!overlay) return;
 

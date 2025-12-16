@@ -11,93 +11,288 @@ const posts = (await getCollection('blog')).sort(
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<section>
-		<ul>
+	<section class="blog-section">
+		<h1 class="blog-title">블로그</h1>
+		<ul class="blog-list">
 			{
 				posts.map((post) => (
-					<li>
-						<a href={`/blog/${post.id}/`}>
+					<li class="blog-card">
+						<a href={`/blog/${post.id}/`} class="blog-link">
 							{post.data.heroImage && (
-								<Image width={720} height={360} src={post.data.heroImage} alt="" />
+								<div class="blog-image-wrapper">
+									<Image width={720} height={360} src={post.data.heroImage} alt="" class="blog-image" />
+								</div>
 							)}
-							<h4 class="title">{post.data.title}</h4>
-							<p class="date">
-								<FormattedDate date={post.data.pubDate} />
-							</p>
+							<div class="blog-content">
+								<h4 class="blog-title-text">{post.data.title}</h4>
+								<p class="blog-date">
+									<FormattedDate date={post.data.pubDate} />
+								</p>
+							</div>
 						</a>
 					</li>
 				))
 			}
 		</ul>
+		<a href="/?skipIntro=true" class="back-button">
+			<span class="back-arrow">←</span>
+			<span class="back-text">뒤로</span>
+		</a>
 	</section>
 </BaseLayout>
 
 <style>
-	main {
-		padding: 2em 1em;
+	.blog-section {
+		min-height: 100vh;
+		padding: 4rem 2rem;
+		background: #000000;
+		position: relative;
+		overflow: hidden;
 	}
-	ul {
-		display: flex;
-		flex-wrap: wrap;
+
+	/* 우주 배경 */
+	.blog-section::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-image: 
+			radial-gradient(3px 3px at 10% 20%, #ffffff, transparent),
+			radial-gradient(2px 2px at 20% 30%, #ffffff, transparent),
+			radial-gradient(1px 1px at 30% 15%, #ffffff, transparent),
+			radial-gradient(2px 2px at 40% 25%, #ffffff, transparent),
+			radial-gradient(1px 1px at 50% 10%, #ffffff, transparent),
+			radial-gradient(3px 3px at 60% 20%, #ffffff, transparent),
+			radial-gradient(2px 2px at 70% 30%, #ffffff, transparent),
+			radial-gradient(1px 1px at 80% 15%, #ffffff, transparent),
+			radial-gradient(2px 2px at 90% 25%, #ffffff, transparent),
+			radial-gradient(1px 1px at 15% 40%, #ffffff, transparent),
+			radial-gradient(2px 2px at 25% 50%, #ffffff, transparent),
+			radial-gradient(1px 1px at 35% 45%, #ffffff, transparent),
+			radial-gradient(3px 3px at 45% 55%, #ffffff, transparent),
+			radial-gradient(2px 2px at 55% 40%, #ffffff, transparent),
+			radial-gradient(1px 1px at 65% 50%, #ffffff, transparent),
+			radial-gradient(2px 2px at 75% 60%, #ffffff, transparent),
+			radial-gradient(1px 1px at 85% 45%, #ffffff, transparent),
+			radial-gradient(3px 3px at 95% 55%, #ffffff, transparent),
+			radial-gradient(2px 2px at 5% 70%, #ffffff, transparent),
+			radial-gradient(1px 1px at 15% 80%, #ffffff, transparent),
+			radial-gradient(2px 2px at 25% 75%, #ffffff, transparent),
+			radial-gradient(1px 1px at 35% 85%, #ffffff, transparent),
+			radial-gradient(3px 3px at 45% 70%, #ffffff, transparent),
+			radial-gradient(2px 2px at 55% 80%, #ffffff, transparent),
+			radial-gradient(1px 1px at 65% 75%, #ffffff, transparent),
+			radial-gradient(2px 2px at 75% 85%, #ffffff, transparent),
+			radial-gradient(1px 1px at 85% 90%, #ffffff, transparent),
+			radial-gradient(3px 3px at 95% 95%, #ffffff, transparent),
+			radial-gradient(2px 2px at 12% 60%, #ffffff, transparent),
+			radial-gradient(1px 1px at 22% 65%, #ffffff, transparent),
+			radial-gradient(2px 2px at 32% 70%, #ffffff, transparent),
+			radial-gradient(1px 1px at 42% 65%, #ffffff, transparent),
+			radial-gradient(3px 3px at 52% 60%, #ffffff, transparent),
+			radial-gradient(2px 2px at 62% 65%, #ffffff, transparent),
+			radial-gradient(1px 1px at 72% 70%, #ffffff, transparent),
+			radial-gradient(2px 2px at 82% 65%, #ffffff, transparent),
+			radial-gradient(1px 1px at 92% 60%, #ffffff, transparent);
+		background-size: 200% 200%;
+		background-position: 0% 0%;
+		opacity: 1;
+		pointer-events: none;
+		animation: starMove 50s linear infinite;
+		z-index: 0;
+	}
+
+	.blog-section::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: 
+			radial-gradient(ellipse at 20% 30%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
+			radial-gradient(ellipse at 80% 70%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+			radial-gradient(ellipse at 50% 50%, rgba(233, 69, 96, 0.06) 0%, transparent 50%);
+		pointer-events: none;
+		z-index: 0;
+		animation: nebulaPulse 20s ease-in-out infinite alternate;
+	}
+
+	@keyframes starMove {
+		0% { 
+			background-position: 0% 0%;
+		}
+		100% { 
+			background-position: 100% 100%;
+		}
+	}
+
+	@keyframes nebulaPulse {
+		0% {
+			opacity: 0.5;
+			transform: scale(1);
+		}
+		100% {
+			opacity: 1;
+			transform: scale(1.1);
+		}
+	}
+
+	.blog-title {
+		font-family: 'Courier New', monospace;
+		font-size: clamp(2.5rem, 5vw, 4rem);
+		font-weight: 700;
+		color: #00ff41;
+		text-align: center;
+		margin: 0 0 3rem 0;
+		text-shadow: 
+			4px 4px 0 #16213e,
+			8px 8px 0 #1a1a2e;
+		letter-spacing: 0.1em;
+		position: relative;
+		z-index: 1;
+	}
+
+	.blog-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
 		gap: 2rem;
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
+		max-width: 1400px;
+		margin: 0 auto;
+		position: relative;
+		z-index: 1;
 	}
-	ul li {
-		width: calc(50% - 1rem);
-	}
-	ul li * {
-		text-decoration: none;
-		transition: 0.2s ease;
-	}
-	ul li:first-child {
-		width: 100%;
-		margin-bottom: 1rem;
-		text-align: center;
-	}
-	ul li:first-child img {
+
+	.blog-card {
 		width: 100%;
 	}
-	ul li:first-child .title {
-		font-size: 2.369rem;
-	}
-	ul li img {
-		margin-bottom: 0.5rem;
-		border-radius: 12px;
-	}
-	ul li a {
+
+	.blog-link {
 		display: block;
+		text-decoration: none;
+		background: rgba(26, 26, 46, 0.8);
+		border: 3px solid #00ff41;
+		padding: 0;
+		transition: all 0.2s ease;
+		box-shadow: 4px 4px 0 0 #00ff41;
+		overflow: hidden;
 	}
-	.title {
+
+	.blog-link:hover {
+		transform: translate(-2px, -2px);
+		box-shadow: 6px 6px 0 0 #00ff41;
+		border-color: #ffd700;
+	}
+
+	.blog-image-wrapper {
+		width: 100%;
+		overflow: hidden;
+		background: #0f3460;
+	}
+
+	.blog-image {
+		width: 100%;
+		height: auto;
+		display: block;
+		transition: transform 0.3s ease;
+		image-rendering: pixelated;
+	}
+
+	.blog-link:hover .blog-image {
+		transform: scale(1.05);
+	}
+
+	.blog-content {
+		padding: 1.5rem;
+	}
+
+	.blog-title-text {
+		font-family: 'Courier New', monospace;
+		font-size: clamp(1.2rem, 2vw, 1.5rem);
+		font-weight: 700;
+		margin: 0 0 0.75rem 0;
+		color: #00ff41;
+		line-height: 1.3;
+		text-shadow: 2px 2px 0 #16213e;
+		transition: color 0.2s ease;
+	}
+
+	.blog-link:hover .blog-title-text {
+		color: #ffd700;
+	}
+
+	.blog-date {
+		font-family: 'Courier New', monospace;
+		font-size: 0.9rem;
 		margin: 0;
-		color: rgb(var(--black));
+		color: #ffd700;
+		text-shadow: 1px 1px 0 #16213e;
+	}
+
+	.back-button {
+		position: fixed;
+		bottom: 2rem;
+		right: 2rem;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 1rem 1.5rem;
+		background: rgba(0, 255, 65, 0.1);
+		border: 3px solid #00ff41;
+		color: #00ff41;
+		text-decoration: none;
+		font-family: 'Courier New', monospace;
+		font-weight: 700;
+		font-size: 1.2rem;
+		z-index: 1000;
+		transition: all 0.2s ease;
+		box-shadow: 4px 4px 0 0 #00ff41;
+	}
+
+	.back-button:hover {
+		background: rgba(0, 255, 65, 0.2);
+		transform: translate(-2px, -2px);
+		box-shadow: 6px 6px 0 0 #00ff41;
+	}
+
+	.back-button:active {
+		transform: translate(2px, 2px);
+		box-shadow: 2px 2px 0 0 #00ff41;
+	}
+
+	.back-arrow {
+		font-size: 1.5rem;
 		line-height: 1;
 	}
-	.date {
-		margin: 0;
-		color: rgb(var(--gray));
+
+	.back-text {
+		text-shadow: 2px 2px 0 #16213e;
 	}
-	ul li a:hover h4,
-	ul li a:hover .date {
-		color: rgb(var(--accent));
-	}
-	ul a:hover img {
-		box-shadow: var(--box-shadow);
-	}
-	@media (max-width: 720px) {
-		ul {
-			gap: 0.5em;
+
+	@media (max-width: 768px) {
+		.blog-section {
+			padding: 2rem 1rem;
 		}
-		ul li {
-			width: 100%;
-			text-align: center;
+
+		.blog-list {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
 		}
-		ul li:first-child {
-			margin-bottom: 0;
+
+		.blog-title {
+			margin-bottom: 2rem;
 		}
-		ul li:first-child .title {
-			font-size: 1.563em;
+
+		.back-button {
+			bottom: 1rem;
+			right: 1rem;
+			padding: 0.75rem 1rem;
+			font-size: 1rem;
 		}
 	}
 </style>

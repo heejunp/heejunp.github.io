@@ -1,20 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import tmpImage from '../assets/gifs/exit.png';
-import aboutImage from '../assets/gifs/about.png';
-import blogImage from '../assets/gifs/blog.png';
-import exitImage from '../assets/gifs/exit.png';
+import linkImage from '../assets/index/link.png';
+import aboutImage from '../assets/index/about.png';
+import blogImage from '../assets/index/blog.png';
+import exitImage from '../assets/index/exit.png';
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
 	<div class="navigation-grid">
-		<!-- 1시 방향: 빈 공간 -->
-		<div class="nav-section">
+		<!-- 1시 방향: GitHub 링크 -->
+		<a href="https://github.com/heejunp" target="_blank" rel="noopener noreferrer" class="nav-section">
 			<div class="nav-gif-wrapper">
-				<img src={tmpImage.src} alt="Tmp" class="nav-gif" />
+				<img src={linkImage.src} alt="GitHub" class="nav-gif" />
 			</div>
-		</div>
+		</a>
 		
 		<!-- 11시 방향: /about -->
 		<a href="/about" class="nav-section nav-about">

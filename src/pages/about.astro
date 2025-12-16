@@ -10,4 +10,60 @@ import CreditsFooter from '../components/portfolio/CreditsFooter.astro';
 	<HeroSection />
 	<TimelineSection />
 	<CreditsFooter />
+	<a href="/?skipIntro=true" class="back-button">
+		<span class="back-arrow">←</span>
+		<span class="back-text">뒤로</span>
+	</a>
 </BaseLayout>
+
+<style>
+	.back-button {
+		position: fixed;
+		bottom: 2rem;
+		right: 2rem;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 1rem 1.5rem;
+		background: rgba(0, 255, 65, 0.1);
+		border: 3px solid #00ff41;
+		color: #00ff41;
+		text-decoration: none;
+		font-family: 'Courier New', monospace;
+		font-weight: 700;
+		font-size: 1.2rem;
+		z-index: 1000;
+		transition: all 0.2s ease;
+		box-shadow: 4px 4px 0 0 #00ff41;
+	}
+
+	.back-button:hover {
+		background: rgba(0, 255, 65, 0.2);
+		transform: translate(-2px, -2px);
+		box-shadow: 6px 6px 0 0 #00ff41;
+	}
+
+	.back-button:active {
+		transform: translate(2px, 2px);
+		box-shadow: 2px 2px 0 0 #00ff41;
+	}
+
+	.back-arrow {
+		font-size: 1.5rem;
+		line-height: 1;
+	}
+
+	.back-text {
+		text-shadow: 2px 2px 0 #16213e;
+	}
+
+	/* 모바일 반응형 */
+	@media (max-width: 768px) {
+		.back-button {
+			bottom: 1rem;
+			right: 1rem;
+			padding: 0.75rem 1rem;
+			font-size: 1rem;
+		}
+	}
+</style>
