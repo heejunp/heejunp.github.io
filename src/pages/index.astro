@@ -12,6 +12,7 @@ import exitImage from '../assets/index/exit.png';
 		<!-- 1시 방향: GitHub 링크 -->
 		<a href="https://github.com/heejunp" target="_blank" rel="noopener noreferrer" class="nav-section">
 			<div class="nav-gif-wrapper">
+				<div class="nav-label">[GitHub]</div>
 				<img src={linkImage.src} alt="GitHub" class="nav-gif" />
 			</div>
 		</a>
@@ -19,6 +20,7 @@ import exitImage from '../assets/index/exit.png';
 		<!-- 11시 방향: /about -->
 		<a href="/about" class="nav-section nav-about">
 			<div class="nav-gif-wrapper">
+				<div class="nav-label">[About]</div>
 				<img src={aboutImage.src} alt="About" class="nav-gif" />
 			</div>
 		</a>
@@ -26,6 +28,7 @@ import exitImage from '../assets/index/exit.png';
 		<!-- 7시 방향: /blog -->
 		<a href="/blog" class="nav-section nav-blog">
 			<div class="nav-gif-wrapper">
+				<div class="nav-label">[Blog]</div>
 				<img src={blogImage.src} alt="Blog" class="nav-gif" />
 			</div>
 		</a>
@@ -33,6 +36,7 @@ import exitImage from '../assets/index/exit.png';
 		<!-- 5시 방향: / (exit) -->
 		<a href="/" class="nav-section nav-exit">
 			<div class="nav-gif-wrapper">
+				<div class="nav-label">[Exit]</div>
 				<!-- <video src={exitVideo} autoplay loop muted playsinline class="nav-gif"></video> -->
 				 <img src={exitImage.src} alt="Exit" class="nav-gif" />
 			</div>
@@ -61,43 +65,85 @@ import exitImage from '../assets/index/exit.png';
 		right: 0;
 		bottom: 0;
 		background-image: 
-			radial-gradient(3px 3px at 10% 20%, #ffffff, transparent),
+			radial-gradient(3px 3px at 5% 10%, #ffffff, transparent),
+			radial-gradient(2px 2px at 10% 20%, #ffffff, transparent),
+			radial-gradient(1px 1px at 15% 5%, #ffffff, transparent),
 			radial-gradient(2px 2px at 20% 30%, #ffffff, transparent),
-			radial-gradient(1px 1px at 30% 15%, #ffffff, transparent),
-			radial-gradient(2px 2px at 40% 25%, #ffffff, transparent),
+			radial-gradient(1px 1px at 25% 15%, #ffffff, transparent),
+			radial-gradient(3px 3px at 30% 25%, #ffffff, transparent),
+			radial-gradient(2px 2px at 35% 10%, #ffffff, transparent),
+			radial-gradient(1px 1px at 40% 20%, #ffffff, transparent),
+			radial-gradient(2px 2px at 45% 35%, #ffffff, transparent),
 			radial-gradient(1px 1px at 50% 10%, #ffffff, transparent),
-			radial-gradient(3px 3px at 60% 20%, #ffffff, transparent),
+			radial-gradient(3px 3px at 55% 30%, #ffffff, transparent),
+			radial-gradient(2px 2px at 60% 20%, #ffffff, transparent),
+			radial-gradient(1px 1px at 65% 15%, #ffffff, transparent),
 			radial-gradient(2px 2px at 70% 30%, #ffffff, transparent),
-			radial-gradient(1px 1px at 80% 15%, #ffffff, transparent),
-			radial-gradient(2px 2px at 90% 25%, #ffffff, transparent),
-			radial-gradient(1px 1px at 15% 40%, #ffffff, transparent),
-			radial-gradient(2px 2px at 25% 50%, #ffffff, transparent),
-			radial-gradient(1px 1px at 35% 45%, #ffffff, transparent),
-			radial-gradient(3px 3px at 45% 55%, #ffffff, transparent),
-			radial-gradient(2px 2px at 55% 40%, #ffffff, transparent),
-			radial-gradient(1px 1px at 65% 50%, #ffffff, transparent),
-			radial-gradient(2px 2px at 75% 60%, #ffffff, transparent),
-			radial-gradient(1px 1px at 85% 45%, #ffffff, transparent),
-			radial-gradient(3px 3px at 95% 55%, #ffffff, transparent),
-			radial-gradient(2px 2px at 5% 70%, #ffffff, transparent),
-			radial-gradient(1px 1px at 15% 80%, #ffffff, transparent),
-			radial-gradient(2px 2px at 25% 75%, #ffffff, transparent),
-			radial-gradient(1px 1px at 35% 85%, #ffffff, transparent),
-			radial-gradient(3px 3px at 45% 70%, #ffffff, transparent),
-			radial-gradient(2px 2px at 55% 80%, #ffffff, transparent),
-			radial-gradient(1px 1px at 65% 75%, #ffffff, transparent),
-			radial-gradient(2px 2px at 75% 85%, #ffffff, transparent),
-			radial-gradient(1px 1px at 85% 90%, #ffffff, transparent),
-			radial-gradient(3px 3px at 95% 95%, #ffffff, transparent),
-			radial-gradient(2px 2px at 12% 60%, #ffffff, transparent),
-			radial-gradient(1px 1px at 22% 65%, #ffffff, transparent),
-			radial-gradient(2px 2px at 32% 70%, #ffffff, transparent),
-			radial-gradient(1px 1px at 42% 65%, #ffffff, transparent),
-			radial-gradient(3px 3px at 52% 60%, #ffffff, transparent),
-			radial-gradient(2px 2px at 62% 65%, #ffffff, transparent),
-			radial-gradient(1px 1px at 72% 70%, #ffffff, transparent),
-			radial-gradient(2px 2px at 82% 65%, #ffffff, transparent),
-			radial-gradient(1px 1px at 92% 60%, #ffffff, transparent);
+			radial-gradient(1px 1px at 75% 25%, #ffffff, transparent),
+			radial-gradient(3px 3px at 80% 15%, #ffffff, transparent),
+			radial-gradient(2px 2px at 85% 35%, #ffffff, transparent),
+			radial-gradient(1px 1px at 90% 20%, #ffffff, transparent),
+			radial-gradient(2px 2px at 95% 25%, #ffffff, transparent),
+			radial-gradient(1px 1px at 3% 40%, #ffffff, transparent),
+			radial-gradient(2px 2px at 8% 50%, #ffffff, transparent),
+			radial-gradient(1px 1px at 13% 45%, #ffffff, transparent),
+			radial-gradient(3px 3px at 18% 55%, #ffffff, transparent),
+			radial-gradient(2px 2px at 23% 40%, #ffffff, transparent),
+			radial-gradient(1px 1px at 28% 50%, #ffffff, transparent),
+			radial-gradient(2px 2px at 33% 45%, #ffffff, transparent),
+			radial-gradient(1px 1px at 38% 60%, #ffffff, transparent),
+			radial-gradient(3px 3px at 43% 50%, #ffffff, transparent),
+			radial-gradient(2px 2px at 48% 55%, #ffffff, transparent),
+			radial-gradient(1px 1px at 53% 40%, #ffffff, transparent),
+			radial-gradient(2px 2px at 58% 50%, #ffffff, transparent),
+			radial-gradient(1px 1px at 63% 45%, #ffffff, transparent),
+			radial-gradient(3px 3px at 68% 55%, #ffffff, transparent),
+			radial-gradient(2px 2px at 73% 60%, #ffffff, transparent),
+			radial-gradient(1px 1px at 78% 45%, #ffffff, transparent),
+			radial-gradient(2px 2px at 83% 50%, #ffffff, transparent),
+			radial-gradient(1px 1px at 88% 55%, #ffffff, transparent),
+			radial-gradient(3px 3px at 93% 40%, #ffffff, transparent),
+			radial-gradient(2px 2px at 98% 50%, #ffffff, transparent),
+			radial-gradient(1px 1px at 2% 70%, #ffffff, transparent),
+			radial-gradient(2px 2px at 7% 80%, #ffffff, transparent),
+			radial-gradient(1px 1px at 12% 75%, #ffffff, transparent),
+			radial-gradient(3px 3px at 17% 85%, #ffffff, transparent),
+			radial-gradient(2px 2px at 22% 70%, #ffffff, transparent),
+			radial-gradient(1px 1px at 27% 80%, #ffffff, transparent),
+			radial-gradient(2px 2px at 32% 75%, #ffffff, transparent),
+			radial-gradient(1px 1px at 37% 90%, #ffffff, transparent),
+			radial-gradient(3px 3px at 42% 70%, #ffffff, transparent),
+			radial-gradient(2px 2px at 47% 80%, #ffffff, transparent),
+			radial-gradient(1px 1px at 52% 75%, #ffffff, transparent),
+			radial-gradient(2px 2px at 57% 85%, #ffffff, transparent),
+			radial-gradient(1px 1px at 62% 70%, #ffffff, transparent),
+			radial-gradient(3px 3px at 67% 80%, #ffffff, transparent),
+			radial-gradient(2px 2px at 72% 75%, #ffffff, transparent),
+			radial-gradient(1px 1px at 77% 90%, #ffffff, transparent),
+			radial-gradient(2px 2px at 82% 85%, #ffffff, transparent),
+			radial-gradient(1px 1px at 87% 70%, #ffffff, transparent),
+			radial-gradient(3px 3px at 92% 80%, #ffffff, transparent),
+			radial-gradient(2px 2px at 97% 75%, #ffffff, transparent),
+			radial-gradient(1px 1px at 4% 60%, #ffffff, transparent),
+			radial-gradient(2px 2px at 9% 65%, #ffffff, transparent),
+			radial-gradient(1px 1px at 14% 70%, #ffffff, transparent),
+			radial-gradient(2px 2px at 19% 65%, #ffffff, transparent),
+			radial-gradient(1px 1px at 24% 60%, #ffffff, transparent),
+			radial-gradient(3px 3px at 29% 65%, #ffffff, transparent),
+			radial-gradient(2px 2px at 34% 70%, #ffffff, transparent),
+			radial-gradient(1px 1px at 39% 65%, #ffffff, transparent),
+			radial-gradient(2px 2px at 44% 60%, #ffffff, transparent),
+			radial-gradient(1px 1px at 49% 65%, #ffffff, transparent),
+			radial-gradient(3px 3px at 54% 70%, #ffffff, transparent),
+			radial-gradient(2px 2px at 59% 65%, #ffffff, transparent),
+			radial-gradient(1px 1px at 64% 60%, #ffffff, transparent),
+			radial-gradient(2px 2px at 69% 65%, #ffffff, transparent),
+			radial-gradient(1px 1px at 74% 70%, #ffffff, transparent),
+			radial-gradient(2px 2px at 79% 65%, #ffffff, transparent),
+			radial-gradient(1px 1px at 84% 60%, #ffffff, transparent),
+			radial-gradient(3px 3px at 89% 65%, #ffffff, transparent),
+			radial-gradient(2px 2px at 94% 70%, #ffffff, transparent),
+			radial-gradient(1px 1px at 99% 65%, #ffffff, transparent);
 		background-size: 200% 200%;
 		background-position: 0% 0%;
 		opacity: 1;
@@ -168,9 +214,25 @@ import exitImage from '../assets/index/exit.png';
 		width: 100%;
 		height: 100%;
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 		padding: 2rem;
+		gap: 1rem;
+		position: relative;
+	}
+
+	.nav-label {
+		font-family: 'Courier New', monospace;
+		font-size: clamp(1rem, 2vw, 1.5rem);
+		font-weight: 700;
+		color: #00ff41;
+		text-shadow: 
+			2px 2px 0 #16213e,
+			4px 4px 0 #1a1a2e;
+		letter-spacing: 0.1em;
+		z-index: 2;
+		position: relative;
 	}
 
 	.nav-gif {
