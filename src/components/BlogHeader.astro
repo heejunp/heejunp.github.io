@@ -1,0 +1,324 @@
+---
+import { SITE_TITLE } from '../consts';
+---
+
+<header class="blog-header">
+	<nav class="blog-nav">
+		<a href="/?skipIntro=true" class="logo">
+			HOME
+		</a>
+		<div class="search-container">
+			<input 
+				type="text" 
+				id="blog-search" 
+				class="search-input" 
+				placeholder="Search by title or tag..."
+				autocomplete="off"
+			/>
+			<div id="search-results" class="search-results"></div>
+		</div>
+		<a href="https://github.com/heejunp" target="_blank" rel="noopener noreferrer" class="github-link">
+			<svg viewBox="0 0 16 16" aria-hidden="true" width="24" height="24">
+				<path
+					fill="currentColor"
+					d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+				></path>
+			</svg>
+		</a>
+	</nav>
+</header>
+
+<script>
+	// 페이지 로드 후 블로그 포스트 데이터 수집
+	function initSearch() {
+		const allPosts = Array.from(document.querySelectorAll('.blog-card')).map((card) => {
+			const link = card.querySelector('.blog-link');
+			const titleElement = card.querySelector('.blog-title-text');
+			const tags = card.dataset.tags ? card.dataset.tags.split(',').filter(t => t.trim()) : [];
+			
+			return {
+				title: titleElement?.textContent?.trim() || '',
+				href: link?.getAttribute('href') || '',
+				tags: tags,
+				element: card
+			};
+		});
+
+		const searchInput = document.getElementById('blog-search') as HTMLInputElement;
+		const searchResults = document.getElementById('search-results');
+
+		if (!searchInput || !searchResults) return;
+
+		let searchTimeout: number | null = null;
+
+		searchInput.addEventListener('input', (e) => {
+			const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+			
+			// 디바운스
+			if (searchTimeout) {
+				clearTimeout(searchTimeout);
+			}
+
+			searchTimeout = window.setTimeout(() => {
+				if (query.length === 0) {
+					searchResults.innerHTML = '';
+					searchResults.classList.remove('active');
+					// 모든 포스트 표시
+					allPosts.forEach((post) => {
+						post.element.style.display = '';
+					});
+					return;
+				}
+
+				// 검색 실행
+				const filtered = allPosts.filter((post) => {
+					const titleMatch = post.title.toLowerCase().includes(query);
+					const tagMatch = post.tags.some((tag) => tag.toLowerCase().includes(query));
+					return titleMatch || tagMatch;
+				});
+
+				// 검색 결과 표시
+				if (filtered.length > 0) {
+					searchResults.innerHTML = filtered.map((post) => {
+						const highlightedTitle = post.title.replace(
+							new RegExp(`(${query})`, 'gi'),
+							'<mark>$1</mark>'
+						);
+						return `
+							<a href="${post.href}" class="search-result-item">
+								<div class="result-title">${highlightedTitle}</div>
+								${post.tags.length > 0 ? `<div class="result-tags">${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>` : ''}
+							</a>
+						`;
+					}).join('');
+					searchResults.classList.add('active');
+				} else {
+					searchResults.innerHTML = '<div class="no-results">No results found</div>';
+					searchResults.classList.add('active');
+				}
+
+				// 포스트 필터링
+				allPosts.forEach((post) => {
+					const isMatch = filtered.some((f) => f.href === post.href);
+					post.element.style.display = isMatch ? '' : 'none';
+				});
+			}, 150);
+		});
+
+		// 외부 클릭 시 검색 결과 닫기
+		document.addEventListener('click', (e) => {
+			if (!searchInput.contains(e.target as Node) && !searchResults.contains(e.target as Node)) {
+				searchResults.classList.remove('active');
+			}
+		});
+
+		// ESC 키로 검색 결과 닫기
+		searchInput.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') {
+				searchResults.classList.remove('active');
+				searchInput.blur();
+			}
+		});
+	}
+
+	// DOM 로드 후 초기화
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initSearch);
+	} else {
+		initSearch();
+	}
+</script>
+
+<style>
+	.blog-header {
+		position: sticky;
+		top: 0;
+		z-index: 1000;
+		background: rgba(0, 0, 0, 0.98);
+		backdrop-filter: blur(10px);
+		border-bottom: 3px solid #00ff41;
+		box-shadow: 0 4px 0 0 #00ff41;
+		width: 100%;
+		display: block;
+		margin: 0;
+		padding: 0;
+		flex-shrink: 0;
+	}
+
+	.blog-nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1rem 2rem;
+		gap: 2rem;
+		max-width: 1600px;
+		margin: 0 auto;
+	}
+
+	.logo {
+		font-family: 'Pretendard', 'Courier New', monospace;
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: #00ff41;
+		text-decoration: none;
+		text-shadow: 2px 2px 0 #16213e;
+		white-space: nowrap;
+		transition: all 0.2s ease;
+	}
+
+	.logo:hover {
+		color: #ffd700;
+		transform: translateX(2px);
+	}
+
+	.search-container {
+		flex: 1;
+		max-width: 600px;
+		position: relative;
+	}
+
+	.search-input {
+		width: 100%;
+		padding: 0.75rem 1rem;
+		background: rgba(26, 26, 46, 0.8);
+		border: 2px solid #00ff41;
+		border-radius: 4px;
+		color: #e5e9f0;
+		font-family: 'Pretendard', sans-serif;
+		font-size: 1rem;
+		box-shadow: 2px 2px 0 0 #00ff41;
+		transition: all 0.2s ease;
+	}
+
+	.search-input:focus {
+		outline: none;
+		border-color: #ffd700;
+		box-shadow: 2px 2px 0 0 #ffd700;
+		background: rgba(26, 26, 46, 0.95);
+	}
+
+	.search-input::placeholder {
+		color: rgba(229, 233, 240, 0.5);
+	}
+
+	.search-results {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		margin-top: 0.5rem;
+		background: rgba(26, 26, 46, 0.95);
+		border: 2px solid #00ff41;
+		border-radius: 4px;
+		box-shadow: 4px 4px 0 0 #00ff41;
+		max-height: 400px;
+		overflow-y: auto;
+		display: none;
+		z-index: 1001;
+	}
+
+	.search-results.active {
+		display: block;
+	}
+
+	.search-result-item {
+		display: block;
+		padding: 1rem;
+		text-decoration: none;
+		color: #e5e9f0;
+		border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+		transition: all 0.2s ease;
+	}
+
+	.search-result-item:last-child {
+		border-bottom: none;
+	}
+
+	.search-result-item:hover {
+		background: rgba(0, 255, 65, 0.1);
+		color: #ffd700;
+	}
+
+	.result-title {
+		font-family: 'Pretendard', 'Courier New', monospace;
+		font-weight: 700;
+		margin-bottom: 0.5rem;
+		font-size: 1rem;
+	}
+
+	.result-title mark {
+		background: rgba(255, 215, 0, 0.3);
+		color: #ffd700;
+		padding: 0.1em 0.2em;
+		border-radius: 2px;
+	}
+
+	.result-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 0.5rem;
+	}
+
+	.result-tags .tag {
+		padding: 0.25rem 0.5rem;
+		background: rgba(0, 255, 65, 0.1);
+		border: 1px solid #00ff41;
+		border-radius: 2px;
+		font-size: 0.75rem;
+		font-family: 'Pretendard', 'Courier New', monospace;
+		color: #00ff41;
+	}
+
+	.no-results {
+		padding: 1rem;
+		text-align: center;
+		color: rgba(229, 233, 240, 0.6);
+		font-family: 'Pretendard', sans-serif;
+	}
+
+	.github-link {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #00ff41;
+		text-decoration: none;
+		transition: all 0.2s ease;
+		padding: 0.5rem;
+		border-radius: 4px;
+	}
+
+	.github-link:hover {
+		color: #ffd700;
+		background: rgba(0, 255, 65, 0.1);
+		transform: scale(1.1);
+	}
+
+	@media (max-width: 768px) {
+		.blog-nav {
+			padding: 0.75rem 1rem;
+			gap: 0.75rem;
+			flex-wrap: wrap;
+		}
+
+		.logo {
+			font-size: 1.1rem;
+		}
+
+		.search-container {
+			order: 3;
+			width: 100%;
+			max-width: 100%;
+			margin-top: 0.5rem;
+		}
+
+		.search-input {
+			padding: 0.5rem 0.75rem;
+			font-size: 0.9rem;
+		}
+
+		.github-link {
+			order: 2;
+		}
+	}
+</style>

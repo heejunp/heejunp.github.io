@@ -2,7 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import TagSidebar from '../components/TagSidebar.astro';
+import CategorySidebar from '../components/CategorySidebar.astro';
 import IntroOverlay from '../components/IntroOverlay.astro';
 
 interface Props {
@@ -19,6 +19,9 @@ const showTags = includeSidebar && (Astro.url.pathname.startsWith('/blog') || As
 // 메인 페이지인지 확인 (인트로 오버레이 표시)
 const isHomePage = Astro.url.pathname === '/';
 
+// 블로그 페이지인지 확인 (/blog로 시작)
+const isBlogPage = Astro.url.pathname.startsWith('/blog');
+
 // skipIntro 쿼리 파라미터 확인
 const skipIntro = Astro.url.searchParams.get('skipIntro') === 'true';
 
@@ -33,11 +36,11 @@ const isPortfolioPage = Astro.url.pathname === '/about';
 	</head>
 	<body class={isHomePage || isPortfolioPage ? 'portfolio-page' : ''}>
 		{isHomePage && !skipIntro && <IntroOverlay />}
-		{!isHomePage && !isPortfolioPage && <Header />}
+		{!isHomePage && !isPortfolioPage && !isBlogPage && <Header />}
 		<div class={`layout-container ${showTags ? 'has-sidebar' : ''} ${isHomePage || isPortfolioPage ? 'portfolio-layout' : ''}`}>
 			{showTags && (
 				<aside class="sidebar">
-					<TagSidebar />
+					<CategorySidebar />
 				</aside>
 			)}
 			<main class="main-content">
@@ -80,6 +83,21 @@ const isPortfolioPage = Astro.url.pathname === '/about';
 	.main-content > * {
 		max-width: 100%;
 		position: relative;
+	}
+
+	/* 블로그 페이지 전용 레이아웃 */
+	.main-content :global(.blog-page-wrapper) {
+		width: 100%;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.main-content :global(.blog-header) {
+		position: sticky;
+		top: 0;
+		width: 100%;
+		z-index: 1000;
 	}
 
 	/* 포트폴리오 페이지 스타일 */

@@ -3,53 +3,192 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
+import BlogHeader from '../../components/BlogHeader.astro';
+import CategorySidebar from '../../components/CategorySidebar.astro';
+import TagCloud from '../../components/TagCloud.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
-const posts = (await getCollection('blog')).sort(
+const allPosts = await getCollection('blog');
+
+// 카테고리 및 태그 필터링 (여러 태그 지원)
+const categoryFilter = Astro.url.searchParams.get('category');
+const tagFilters = Astro.url.searchParams.getAll('tag');
+
+let filteredPosts = allPosts;
+
+// 카테고리 필터링
+if (categoryFilter) {
+	filteredPosts = filteredPosts.filter((post) => {
+		return post.data.category === categoryFilter;
+	});
+}
+
+// 태그 필터링 (여러 태그 지원)
+if (tagFilters.length > 0) {
+	filteredPosts = filteredPosts.filter((post) => {
+		const tags = post.data.tags || [];
+		// 선택된 모든 태그를 가진 글만 표시
+		return tagFilters.every(tagFilter => tags.includes(tagFilter));
+	});
+}
+
+const posts = filteredPosts.sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
-<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<section class="blog-section">
-		<h1 class="blog-title">블로그</h1>
-		<ul class="blog-list">
-			{
-				posts.map((post) => (
-					<li class="blog-card">
-						<a href={`/blog/${post.id}/`} class="blog-link">
-							{post.data.heroImage && (
-								<div class="blog-image-wrapper">
-									<Image width={720} height={360} src={post.data.heroImage} alt="" class="blog-image" />
-								</div>
-							)}
-							<div class="blog-content">
-								<h4 class="blog-title-text">{post.data.title}</h4>
-								<p class="blog-date">
-									<FormattedDate date={post.data.pubDate} />
-								</p>
-							</div>
-						</a>
-					</li>
-				))
-			}
-		</ul>
-		<a href="/?skipIntro=true" class="back-button">
-			<span class="back-arrow">←</span>
-			<span class="back-text">뒤로</span>
-		</a>
-	</section>
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION} includeSidebar={false}>
+	<div class="blog-page-wrapper">
+		<BlogHeader />
+		<div class="blog-content-wrapper">
+			<aside class="category-sidebar-wrapper">
+				<CategorySidebar />
+			</aside>
+			<section class="blog-section">
+				<div class="category-filter-info" style="display: {(categoryFilter || tagFilters.length > 0) ? 'flex' : 'none'};">
+					<h2 class="filter-title">
+						{categoryFilter && `Category: ${categoryFilter}`}
+						{categoryFilter && tagFilters.length > 0 && ' | '}
+						{tagFilters.length > 0 && `Tags: ${tagFilters.join(', ')}`}
+					</h2>
+					<a href="/blog" class="clear-filter">Clear Filter</a>
+				</div>
+				<ul class="blog-list">
+					{
+						posts.map((post) => (
+							<li class="blog-card" data-tags={post.data.tags?.join(',') || ''} data-category={post.data.category || ''}>
+								<a href={`/blog/${post.id}/`} class="blog-link">
+									{post.data.heroImage && (
+										<div class="blog-image-wrapper">
+											<Image width={720} height={360} src={post.data.heroImage} alt="" class="blog-image" />
+										</div>
+									)}
+									<div class="blog-content">
+										<h4 class="blog-title-text">{post.data.title}</h4>
+										<p class="blog-date">
+											<FormattedDate date={post.data.pubDate} />
+										</p>
+									</div>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+				<a href="/?skipIntro=true" class="back-button">
+					<span class="back-arrow">←</span>
+					<span class="back-text">뒤로</span>
+				</a>
+			</section>
+			<aside class="tag-cloud-wrapper">
+				<TagCloud />
+			</aside>
+		</div>
+	</div>
 </BaseLayout>
 
 <style>
-	.blog-section {
+	.blog-page-wrapper {
+		width: 100%;
 		min-height: 100vh;
-		padding: 4rem 2rem;
 		background: #000000;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.blog-content-wrapper {
+		flex: 1;
+		width: 100%;
 		position: relative;
-		overflow: hidden;
+		display: grid;
+		grid-template-columns: 250px 1fr 250px;
+		gap: 2rem;
+		padding: 2rem;
+		max-width: 1800px;
+		margin: 0 auto;
+	}
+
+	.category-sidebar-wrapper {
+		position: sticky;
+		top: calc(80px + 2rem);
+		align-self: start;
+		height: fit-content;
+		max-height: calc(100vh - 100px);
+		overflow-y: auto;
+		overflow-x: hidden;
+		z-index: 10;
+	}
+
+	.category-sidebar-wrapper :global(.category-sidebar) {
+		max-height: calc(100vh - 100px);
+		overflow-y: auto;
+		overflow-x: hidden;
+		scrollbar-width: thin;
+		scrollbar-color: #00ff41 rgba(0, 255, 65, 0.1);
+	}
+
+	.category-sidebar-wrapper :global(.category-sidebar)::-webkit-scrollbar {
+		width: 6px;
+	}
+
+	.category-sidebar-wrapper :global(.category-sidebar)::-webkit-scrollbar-track {
+		background: rgba(0, 255, 65, 0.1);
+	}
+
+	.category-sidebar-wrapper :global(.category-sidebar)::-webkit-scrollbar-thumb {
+		background: #00ff41;
+		border-radius: 3px;
+	}
+
+	.tag-cloud-wrapper {
+		position: sticky;
+		top: calc(80px + 2rem);
+		align-self: start;
+		height: fit-content;
+		max-height: calc(100vh - 100px);
+		overflow: visible;
+		z-index: 100;
+		pointer-events: auto;
+	}
+
+	.tag-cloud-wrapper :global(.tag-cloud) {
+		max-height: calc(100vh - 100px);
+		overflow-y: auto;
+		overflow-x: hidden;
+		scrollbar-width: thin;
+		scrollbar-color: #00ff41 rgba(0, 255, 65, 0.1);
+		pointer-events: auto;
+		position: relative;
+		z-index: 100;
+	}
+
+	.tag-cloud-wrapper :global(.tag-cloud-item) {
+		position: relative;
+		z-index: 101;
+		pointer-events: auto !important;
+	}
+
+	.tag-cloud-wrapper :global(.tag-cloud)::-webkit-scrollbar {
+		width: 6px;
+	}
+
+	.tag-cloud-wrapper :global(.tag-cloud)::-webkit-scrollbar-track {
+		background: rgba(0, 255, 65, 0.1);
+	}
+
+	.tag-cloud-wrapper :global(.tag-cloud)::-webkit-scrollbar-thumb {
+		background: #00ff41;
+		border-radius: 3px;
+	}
+
+	.blog-section {
+		min-height: calc(100vh - 80px);
+		padding: 0;
+		background: transparent;
+		position: relative;
+		overflow: visible;
 		width: 100%;
 		max-width: 100%;
+		z-index: 1;
 	}
 
 	/* 우주 배경 */
@@ -140,6 +279,50 @@ const posts = (await getCollection('blog')).sort(
 			opacity: 1;
 			transform: scale(1.1);
 		}
+	}
+
+	.category-filter-info {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 2rem;
+		padding: 1rem 1.5rem;
+		background: rgba(26, 26, 46, 0.8);
+		border: 3px solid #00ff41;
+		box-shadow: 4px 4px 0 0 #00ff41;
+		position: relative;
+		z-index: 1;
+	}
+
+	.filter-title {
+		font-family: 'Pretendard', 'Courier New', monospace;
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: #00ff41;
+		margin: 0;
+		text-shadow: 2px 2px 0 #16213e;
+		letter-spacing: 0.1em;
+	}
+
+	.clear-filter {
+		padding: 0.5rem 1rem;
+		background: rgba(0, 255, 65, 0.1);
+		border: 2px solid #00ff41;
+		color: #00ff41;
+		text-decoration: none;
+		font-family: 'Pretendard', 'Courier New', monospace;
+		font-weight: 700;
+		font-size: 0.9rem;
+		transition: all 0.2s ease;
+		box-shadow: 2px 2px 0 0 #00ff41;
+	}
+
+	.clear-filter:hover {
+		background: rgba(0, 255, 65, 0.2);
+		transform: translate(-1px, -1px);
+		box-shadow: 3px 3px 0 0 #00ff41;
+		color: #ffd700;
+		border-color: #ffd700;
 	}
 
 	.blog-title {
@@ -277,14 +460,42 @@ const posts = (await getCollection('blog')).sort(
 	}
 
 	@media (max-width: 1279px) {
+		.blog-content-wrapper {
+			grid-template-columns: 1fr;
+			padding: 1rem;
+			gap: 1rem;
+		}
+
+		.category-sidebar-wrapper {
+			position: static;
+			top: auto;
+			max-height: none;
+			order: 2;
+		}
+
+		.category-sidebar-wrapper :global(.category-sidebar) {
+			max-height: none;
+		}
+
+		.tag-cloud-wrapper {
+			position: static;
+			top: auto;
+			max-height: none;
+			order: 3;
+		}
+
+		.tag-cloud-wrapper :global(.tag-cloud) {
+			max-height: none;
+		}
+
 		.blog-section {
-			padding: 2rem 1rem;
+			order: 1;
 		}
 	}
 
 	@media (max-width: 768px) {
-		.blog-section {
-			padding: 2rem 1rem;
+		.blog-content-wrapper {
+			padding: 1rem;
 		}
 
 		.blog-list {
@@ -294,6 +505,7 @@ const posts = (await getCollection('blog')).sort(
 
 		.blog-title {
 			margin-bottom: 2rem;
+			font-size: clamp(2rem, 6vw, 3rem);
 		}
 
 		.back-button {
@@ -304,3 +516,60 @@ const posts = (await getCollection('blog')).sort(
 		}
 	}
 </style>
+
+<script>
+	// Clear Filter 버튼 클라이언트 사이드 처리
+	document.addEventListener('DOMContentLoaded', () => {
+		const clearFilterLink = document.querySelector('.clear-filter');
+		const blogCards = document.querySelectorAll('.blog-card');
+		const categoryFilterInfo = document.querySelector('.category-filter-info');
+		const filterTitle = document.querySelector('.filter-title');
+		const categoryLinks = document.querySelectorAll('.category-item a');
+		const tagLinks = document.querySelectorAll('.tag-cloud-item');
+		
+		function clearAllFilters() {
+			// URL 업데이트
+			window.history.pushState({}, '', '/blog');
+			
+			// 모든 글 목록 표시
+			blogCards.forEach((card) => {
+				(card as HTMLElement).style.display = '';
+			});
+			
+			// 필터 정보 숨김
+			if (categoryFilterInfo) {
+				(categoryFilterInfo as HTMLElement).style.display = 'none';
+			}
+			if (filterTitle) {
+				filterTitle.textContent = '';
+			}
+			
+			// 카테고리 active 상태 제거
+			categoryLinks.forEach((link) => {
+				link.classList.remove('active');
+			});
+			
+			// 태그 active 상태 제거 (전체만 active)
+			tagLinks.forEach((link) => {
+				if (link.classList.contains('all-tag')) {
+					link.classList.add('active');
+				} else {
+					link.classList.remove('active');
+				}
+			});
+			
+			// 다른 컴포넌트에 알림
+			window.dispatchEvent(new CustomEvent('clearAllFilters'));
+		}
+		
+		if (clearFilterLink) {
+			clearFilterLink.addEventListener('click', (e) => {
+				e.preventDefault();
+				clearAllFilters();
+			});
+		}
+		
+		// 다른 컴포넌트에서 clearAllFilters 이벤트 수신
+		window.addEventListener('clearAllFilters', clearAllFilters);
+	});
+</script>

@@ -10,7 +10,7 @@ type Props = CollectionEntry<'blog'>['data'] & {
 
 const { title, description, pubDate, updatedDate, heroImage, headings } = Astro.props;
 import TableOfContents from '../components/TableOfContents.astro';
-import TagSidebar from '../components/TagSidebar.astro';
+import CategorySidebar from '../components/CategorySidebar.astro';
 import type { MarkdownHeading } from 'astro';
 ---
 
@@ -318,7 +318,7 @@ import type { MarkdownHeading } from 'astro';
 				min-width: 240px;
 				overflow: hidden;
 			}
-			.tag-sidebar-wrapper :global(.tag-sidebar) {
+			.tag-sidebar-wrapper :global(.category-sidebar) {
 				max-height: calc(100vh - 4rem);
 				overflow-y: auto;
 				overflow-x: hidden;
@@ -327,13 +327,13 @@ import type { MarkdownHeading } from 'astro';
 				width: 100%;
 				box-sizing: border-box;
 			}
-			.tag-sidebar-wrapper :global(.tag-sidebar)::-webkit-scrollbar {
+			.tag-sidebar-wrapper :global(.category-sidebar)::-webkit-scrollbar {
 				width: 6px;
 			}
-			.tag-sidebar-wrapper :global(.tag-sidebar)::-webkit-scrollbar-track {
+			.tag-sidebar-wrapper :global(.category-sidebar)::-webkit-scrollbar-track {
 				background: rgba(0, 255, 65, 0.1);
 			}
-			.tag-sidebar-wrapper :global(.tag-sidebar)::-webkit-scrollbar-thumb {
+			.tag-sidebar-wrapper :global(.category-sidebar)::-webkit-scrollbar-thumb {
 				background: #00ff41;
 				border-radius: 3px;
 			}
@@ -485,7 +485,7 @@ import type { MarkdownHeading } from 'astro';
 	<div class="blog-post-wrapper">
 		<article class="blog-grid">
 			<aside class="tag-sidebar-wrapper">
-				<TagSidebar />
+				<CategorySidebar />
 			</aside>
 			<div class="content-column">
 				<div class="hero-image">
