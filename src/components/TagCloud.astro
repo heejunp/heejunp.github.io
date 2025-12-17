@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { buildBlogUrl } from '../utils/filter';
 
 // 모든 블로그 글 가져오기
 const allPosts = await getCollection('blog');
@@ -28,14 +29,23 @@ const tags = Array.from(tagCountMap.entries())
 const maxCount = tags.length > 0 ? tags[0].count : 1;
 const minCount = tags.length > 0 ? tags[tags.length - 1].count : 1;
 const countRange = maxCount - minCount || 1;
+
+// '전체' 태그용 평균 크기 계산
+const averageSize = tags.length > 0 
+	? tags.reduce((sum, tag) => {
+		const size = 0.8 + ((tag.count - minCount) / countRange) * 0.7;
+		return sum + size;
+	}, 0) / tags.length
+	: 1.15;
 ---
 
 <div class="tag-cloud">
 	<h2>Tags</h2>
 	<div class="tag-cloud-container">
 		<a 
-			href={currentCategory ? `/blog?category=${encodeURIComponent(currentCategory)}` : "/blog"}
+			href={buildBlogUrl(currentCategory, [])}
 			class={`tag-cloud-item all-tag ${currentTags.length === 0 ? 'active' : ''}`}
+			style={`font-size: ${averageSize}em;`}
 			data-tag-name=""
 		>
 			전체
@@ -44,10 +54,7 @@ const countRange = maxCount - minCount || 1;
 			tags.length > 0 ? (
 				tags.map((tag) => {
 					const size = 0.8 + ((tag.count - minCount) / countRange) * 0.7;
-					// 카테고리 필터가 있으면 함께 유지
-					const tagUrl = currentCategory 
-						? `/blog?category=${encodeURIComponent(currentCategory)}&tag=${encodeURIComponent(tag.name)}`
-						: `/blog?tag=${encodeURIComponent(tag.name)}`;
+					const tagUrl = buildBlogUrl(currentCategory, [tag.name]);
 					const isActive = currentTags.includes(tag.name);
 					return (
 						<a 
@@ -70,25 +77,25 @@ const countRange = maxCount - minCount || 1;
 
 <style>
 	.tag-cloud {
-		background-color: rgba(26, 26, 46, 0.8);
-		padding: 1.5em;
-		border: 3px solid #00ff41;
-		box-shadow: 4px 4px 0 0 #00ff41;
+		background-color: var(--color-bg-card);
+		padding: var(--spacing-md);
+		border: var(--border-width) solid var(--color-primary);
+		box-shadow: var(--shadow-offset) var(--shadow-offset) 0 0 var(--color-primary);
 		box-sizing: border-box;
 		width: 100%;
 		position: relative;
-		z-index: 1;
+		z-index: var(--z-base);
 		pointer-events: auto;
 	}
 
 	.tag-cloud h2 {
-		font-family: 'Pretendard', 'Courier New', monospace;
+		font-family: var(--font-family-mono);
 		font-size: 1.25em;
-		margin: 0 0 1em 0;
-		color: #00ff41;
-		border-bottom: 2px solid #00ff41;
-		padding-bottom: 0.5em;
-		text-shadow: 2px 2px 0 #16213e;
+		margin: 0 0 var(--spacing-sm) 0;
+		color: var(--color-primary);
+		border-bottom: var(--border-width-medium) solid var(--color-primary);
+		padding-bottom: var(--spacing-xs);
+		text-shadow: var(--shadow-offset-sm) var(--shadow-offset-sm) 0 var(--color-shadow-dark);
 		letter-spacing: 0.1em;
 	}
 
@@ -99,99 +106,66 @@ const countRange = maxCount - minCount || 1;
 		align-items: center;
 		justify-content: flex-start;
 		position: relative;
-		z-index: 10;
+		z-index: var(--z-sticky);
 		pointer-events: auto;
 	}
 
 	.tag-cloud-item {
 		display: inline-block;
 		padding: 0.4em 0.8em;
-		background: rgba(0, 255, 65, 0.1);
-		border: 2px solid #00ff41;
-		border-radius: 4px;
-		color: #00ff41;
+		background: var(--color-nebula-green);
+		border: var(--border-width-medium) solid var(--color-primary);
+		border-radius: var(--border-radius);
+		color: var(--color-primary);
 		text-decoration: none;
-		font-family: 'Pretendard', 'Courier New', monospace;
+		font-family: var(--font-family-mono);
 		font-weight: 600;
-		transition: all 0.2s ease;
-		box-shadow: 2px 2px 0 0 rgba(0, 255, 65, 0.2);
+		transition: all var(--transition-base);
+		box-shadow: var(--shadow-offset-sm) var(--shadow-offset-sm) 0 0 var(--color-nebula-green-medium);
 		white-space: nowrap;
 		line-height: 1.4;
 		position: relative;
-		z-index: 10;
+		z-index: var(--z-sticky);
 		cursor: pointer;
 		pointer-events: auto !important;
 		user-select: none;
 	}
 
 	.tag-cloud-item:hover {
-		background: rgba(0, 255, 65, 0.2);
-		border-color: #ffd700;
-		color: #ffd700;
+		background: var(--color-nebula-green-medium);
+		border-color: var(--color-secondary);
+		color: var(--color-secondary);
 		transform: translate(-1px, -1px);
-		box-shadow: 3px 3px 0 0 rgba(255, 215, 0, 0.3);
+		box-shadow: 3px 3px 0 0 var(--color-nebula-gold-light);
 	}
-
-	.tag-cloud-item[data-count="1"] {
-		opacity: 0.7;
-	}
-
-	.tag-cloud-item.all-tag {
-		font-size: 1.1em;
-		font-weight: 700;
-		background: rgba(255, 215, 0, 0.1);
-		border-color: #ffd700;
-		color: #ffd700;
-	}
-
-	.tag-cloud-item.all-tag:hover {
-		background: rgba(255, 215, 0, 0.2);
-	}
-
+	
 	.tag-cloud-item.active {
-		background: rgba(255, 215, 0, 0.25) !important;
-		border-color: #ffd700 !important;
-		color: #ffd700 !important;
-		box-shadow: 3px 3px 0 0 rgba(255, 215, 0, 0.5) !important;
-		font-weight: 700 !important;
-		transform: scale(1.05);
-	}
-
-	.tag-cloud-item.all-tag.active {
-		background: rgba(255, 215, 0, 0.3) !important;
-		border-color: #ffd700 !important;
-		color: #ffd700 !important;
-		box-shadow: 3px 3px 0 0 rgba(255, 215, 0, 0.6) !important;
+		background: var(--color-nebula-gold-light) !important;
+		border-color: var(--color-secondary) !important;
+		color: var(--color-secondary) !important;
+		box-shadow: 3px 3px 0 0 var(--color-nebula-gold-strong) !important;
 		font-weight: 700 !important;
 		transform: scale(1.05);
 	}
 
 	.tag-cloud-item.active:hover {
-		background: rgba(255, 215, 0, 0.35) !important;
-		border-color: #ffeb3b !important;
-		color: #ffeb3b !important;
-		box-shadow: 4px 4px 0 0 rgba(255, 215, 0, 0.6) !important;
-		transform: scale(1.08) translate(-1px, -1px);
-	}
-
-	.tag-cloud-item.all-tag.active:hover {
-		background: rgba(255, 215, 0, 0.4) !important;
-		border-color: #ffeb3b !important;
-		color: #ffeb3b !important;
-		box-shadow: 4px 4px 0 0 rgba(255, 215, 0, 0.7) !important;
+		background: var(--color-nebula-gold-medium) !important;
+		border-color: var(--color-accent-hover) !important;
+		color: var(--color-accent-hover) !important;
+		box-shadow: var(--shadow-offset) var(--shadow-offset) 0 0 var(--color-nebula-gold-strong) !important;
 		transform: scale(1.08) translate(-1px, -1px);
 	}
 
 	.no-tags {
 		color: rgb(var(--gray));
 		font-size: 0.9em;
-		font-family: 'Pretendard', 'Courier New', monospace;
+		font-family: var(--font-family-mono);
 	}
 
 	/* 모바일 반응형 */
 	@media (max-width: 1279px) {
 		.tag-cloud {
-			border: 1px solid rgba(0, 255, 65, 0.3);
+			border: var(--border-width-thin) solid var(--color-nebula-green-strong);
 		}
 	}
 </style>

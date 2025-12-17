@@ -5,6 +5,7 @@
  */
 
 :root {
+    /* Legacy Bear Blog colors */
     --accent: #2337ff;
     --accent-dark: #000d8a;
     --black: 15, 18, 25;
@@ -13,6 +14,64 @@
     --gray-dark: 34, 41, 57;
     --gray-gradient: rgba(var(--gray-light), 50%), #fff;
     --box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%), 0 16px 32px rgba(var(--gray), 33%);
+    /* Portfolio Design System - Colors */
+    --color-primary: #00ff41;
+    --color-secondary: #ffd700;
+    --color-accent: #00ffff;
+    --color-accent-hover: #ffeb3b;
+    /* Background Colors */
+    --color-bg-dark: #000000;
+    --color-bg-card: rgba(26, 26, 46, 0.8);
+    --color-bg-image: #0f3460;
+    --color-bg-dark-blue: #16213e;
+    --color-bg-darker-blue: #1a1a2e;
+    /* Nebula Colors (with opacity) */
+    --color-nebula-green: rgba(0, 255, 65, 0.1);
+    --color-nebula-green-light: rgba(0, 255, 65, 0.15);
+    --color-nebula-green-medium: rgba(0, 255, 65, 0.2);
+    --color-nebula-green-strong: rgba(0, 255, 65, 0.3);
+    --color-nebula-gold: rgba(255, 215, 0, 0.08);
+    --color-nebula-gold-light: rgba(255, 215, 0, 0.25);
+    --color-nebula-gold-medium: rgba(255, 215, 0, 0.35);
+    --color-nebula-gold-strong: rgba(255, 215, 0, 0.5);
+    --color-nebula-pink: rgba(233, 69, 96, 0.06);
+    --color-nebula-cyan: rgba(0, 255, 255, 0.08);
+    /* Shadow Colors */
+    --color-shadow-dark: #16213e;
+    --color-shadow-darker: #1a1a2e;
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    /* Borders */
+    --border-width: 3px;
+    --border-width-thin: 1px;
+    --border-width-medium: 2px;
+    --border-radius: 4px;
+    --border-radius-sm: 2px;
+    /* Shadows */
+    --shadow-offset: 4px;
+    --shadow-offset-sm: 2px;
+    --shadow-offset-lg: 6px;
+    /* Layout */
+    --header-height: 80px;
+    --sidebar-width: 250px;
+    --max-content-width: 1800px;
+    --max-blog-width: 1400px;
+    /* Typography */
+    --font-family-mono: "Pretendard", "Courier New", monospace;
+    --font-family-sans: "Pretendard", sans-serif;
+    /* Transitions */
+    --transition-fast: 0.1s ease;
+    --transition-base: 0.2s ease;
+    --transition-slow: 0.3s ease;
+    /* Z-index */
+    --z-base: 1;
+    --z-sticky: 10;
+    --z-dropdown: 100;
+    --z-header: 1000;
 }
 
 @font-face {

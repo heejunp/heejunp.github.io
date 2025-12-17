@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { buildBlogUrl } from '../utils/filter';
 
 // 모든 블로그 글 가져오기
 const allPosts = await getCollection('blog');
@@ -30,13 +31,7 @@ const categories = Array.from(categoryCountMap.entries())
 		{
 			categories.length > 0 ? (
 				categories.map((category) => {
-					// 태그 필터가 있으면 함께 유지 (여러 태그 지원)
-					let categoryUrl = `/blog?category=${encodeURIComponent(category.name)}`;
-					if (currentTags.length > 0) {
-						currentTags.forEach(tag => {
-							categoryUrl += `&tag=${encodeURIComponent(tag)}`;
-						});
-					}
+					const categoryUrl = buildBlogUrl(category.name, currentTags);
 					return (
 						<li class="category-item">
 							<a 
@@ -61,23 +56,23 @@ const categories = Array.from(categoryCountMap.entries())
 
 <style>
 	.category-sidebar {
-		background-color: rgba(26, 26, 46, 0.8);
-		padding: 1.5em;
-		border: 1px solid #00ff41;
-		border-radius: 4px;
-		box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+		background-color: var(--color-bg-card);
+		padding: var(--spacing-md);
+		border: var(--border-width-thin) solid var(--color-primary);
+		border-radius: var(--border-radius);
+		box-shadow: 0 0 10px var(--color-nebula-green);
 		box-sizing: border-box;
 		width: 100%;
 	}
 
 	.category-sidebar h2 {
-		font-family: 'Pretendard', 'Courier New', monospace;
+		font-family: var(--font-family-mono);
 		font-size: 1.25em;
-		margin: 0 0 1em 0;
-		color: #00ff41;
-		border-bottom: 2px solid #00ff41;
-		padding-bottom: 0.5em;
-		text-shadow: 2px 2px 0 #16213e;
+		margin: 0 0 var(--spacing-sm) 0;
+		color: var(--color-primary);
+		border-bottom: var(--border-width-medium) solid var(--color-primary);
+		padding-bottom: var(--spacing-xs);
+		text-shadow: var(--shadow-offset-sm) var(--shadow-offset-sm) 0 var(--color-shadow-dark);
 		letter-spacing: 0.1em;
 	}
 
@@ -106,11 +101,11 @@ const categories = Array.from(categoryCountMap.entries())
 	}
 
 	.category-item a:hover {
-		background-color: rgba(0, 255, 65, 0.1);
-		border-color: #00ff41;
-		color: #ffd700;
+		background-color: var(--color-nebula-green);
+		border-color: var(--color-primary);
+		color: var(--color-secondary);
 		transform: translateX(4px);
-		box-shadow: 2px 2px 0 0 rgba(0, 255, 65, 0.2);
+		box-shadow: var(--shadow-offset-sm) var(--shadow-offset-sm) 0 0 var(--color-nebula-green-medium);
 	}
 
 	.category-name {
@@ -118,36 +113,36 @@ const categories = Array.from(categoryCountMap.entries())
 	}
 
 	.category-count {
-		color: #00ff41;
+		color: var(--color-primary);
 		font-size: 0.9em;
-		margin-left: 0.5em;
+		margin-left: var(--spacing-xs);
 	}
 	
 	.category-item a:hover .category-count {
-		color: #ffd700;
+		color: var(--color-secondary);
 	}
 
 	.category-item a.active {
-		background-color: rgba(0, 255, 65, 0.15);
-		border-color: #00ff41;
-		color: #00ff41;
-		box-shadow: 2px 2px 0 0 rgba(0, 255, 65, 0.3);
+		background-color: var(--color-nebula-green-light);
+		border-color: var(--color-primary);
+		color: var(--color-primary);
+		box-shadow: var(--shadow-offset-sm) var(--shadow-offset-sm) 0 0 var(--color-nebula-green-strong);
 	}
 
 	.category-item a.active .category-count {
-		color: #00ff41;
+		color: var(--color-primary);
 	}
 
 	.category-item a.active:hover {
-		background-color: rgba(0, 255, 65, 0.2);
-		border-color: #ffd700;
-		color: #ffd700;
+		background-color: var(--color-nebula-green-medium);
+		border-color: var(--color-secondary);
+		color: var(--color-secondary);
 	}
 
 	.no-categories {
 		color: rgb(var(--gray));
 		font-size: 0.9em;
-		font-family: 'Pretendard', 'Courier New', monospace;
+		font-family: var(--font-family-mono);
 	}
 
 	/* 모바일 반응형 */
@@ -155,14 +150,14 @@ const categories = Array.from(categoryCountMap.entries())
 		.category-sidebar {
 			position: static;
 			max-height: none;
-			margin-bottom: 2rem;
-			border: 1px solid rgba(0, 255, 65, 0.3);
+			margin-bottom: var(--spacing-lg);
+			border: var(--border-width-thin) solid var(--color-nebula-green-strong);
 		}
 		
 		.category-list {
 			display: flex;
 			flex-wrap: wrap;
-			gap: 0.5em;
+			gap: var(--spacing-xs);
 		}
 
 		.category-item {
@@ -170,7 +165,7 @@ const categories = Array.from(categoryCountMap.entries())
 		}
 		
 		.category-item a {
-			border: 1px solid rgba(0, 255, 65, 0.3);
+			border: var(--border-width-thin) solid var(--color-nebula-green-strong);
 		}
 	}
 </style>

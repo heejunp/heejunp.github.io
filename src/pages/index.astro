@@ -161,9 +161,9 @@ import exitImage from '../assets/index/exit.png';
 		right: 0;
 		bottom: 0;
 		background: 
-			radial-gradient(ellipse at 20% 30%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
-			radial-gradient(ellipse at 80% 70%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
-			radial-gradient(ellipse at 50% 50%, rgba(233, 69, 96, 0.06) 0%, transparent 50%);
+			radial-gradient(ellipse at 20% 30%, var(--color-nebula-green) 0%, transparent 50%),
+			radial-gradient(ellipse at 80% 70%, var(--color-nebula-gold) 0%, transparent 50%),
+			radial-gradient(ellipse at 50% 50%, var(--color-nebula-pink) 0%, transparent 50%);
 		pointer-events: none;
 		z-index: 0;
 		animation: nebulaPulse 20s ease-in-out infinite alternate;
@@ -201,7 +201,7 @@ import exitImage from '../assets/index/exit.png';
 	}
 
 	.nav-section:hover {
-		border-color: #ffd700;
+		border-color: var(--color-secondary);
 		background: rgba(0, 255, 65, 0.05);
 	}
 
@@ -223,13 +223,13 @@ import exitImage from '../assets/index/exit.png';
 	}
 
 	.nav-label {
-		font-family: 'Courier New', monospace;
+		font-family: var(--font-family-mono);
 		font-size: clamp(1rem, 2vw, 1.5rem);
 		font-weight: 700;
-		color: #00ff41;
+		color: var(--color-primary);
 		text-shadow: 
-			2px 2px 0 #16213e,
-			4px 4px 0 #1a1a2e;
+			var(--shadow-offset-sm) var(--shadow-offset-sm) 0 var(--color-shadow-dark),
+			var(--shadow-offset) var(--shadow-offset) 0 var(--color-shadow-darker);
 		letter-spacing: 0.1em;
 		z-index: 2;
 		position: relative;
