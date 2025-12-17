@@ -1,5 +1,5 @@
 ---
-// 타임라인 섹션 컴포넌트 (지그재그 레이아웃)
+// 타임라인 섹션 컴포넌트
 
 interface TimelineItem {
 	year: string;
@@ -38,7 +38,7 @@ const timelineItems: TimelineItem[] = [
 
 <section class="timeline-section">
 	<div class="timeline-container">
-		<h2 class="section-title">프로젝트 & 연혁</h2>
+		<h2 class="section-title">Timeline</h2>
 		<div class="timeline-wrapper">
 			<div class="timeline-line"></div>
 		{timelineItems.map((item, index) => (
@@ -60,8 +60,8 @@ const timelineItems: TimelineItem[] = [
 
 <style>
 	.timeline-section {
-		padding: 6rem 2rem;
-		background: #16213e;
+		padding: calc(var(--spacing-xl) * 2) var(--spacing-lg);
+		background: var(--color-bg-dark-blue);
 		position: relative;
 		min-height: 100vh;
 	}
@@ -69,19 +69,16 @@ const timelineItems: TimelineItem[] = [
 	.timeline-section::before {
 		content: '';
 		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
+		inset: 0;
 		background-image: 
-			radial-gradient(circle, #0f3460 1px, transparent 1px);
+			radial-gradient(circle, var(--color-bg-image) 1px, transparent 1px);
 		background-size: 20px 20px;
 		opacity: 0.2;
 		pointer-events: none;
 	}
 
 	.timeline-container {
-		max-width: 1400px;
+		max-width: var(--max-blog-width);
 		margin: 0 auto;
 		position: relative;
 	}
@@ -90,20 +87,20 @@ const timelineItems: TimelineItem[] = [
 		font-size: clamp(2rem, 4vw, 3rem);
 		font-weight: 700;
 		text-align: center;
-		margin: 0 0 4rem 0;
-		color: #00ff41;
+		margin: 0 0 calc(var(--spacing-lg) * 2) 0;
+		color: var(--color-primary);
 		text-shadow: 
-			4px 4px 0 #0f3460,
-			8px 8px 0 #1a1a2e;
-		font-family: 'Courier New', monospace;
+			var(--shadow-offset) var(--shadow-offset) 0 var(--color-bg-image),
+			calc(var(--shadow-offset) * 2) calc(var(--shadow-offset) * 2) 0 var(--color-bg-darker-blue);
+		font-family: var(--font-family-mono);
 		letter-spacing: 0.1em;
 		position: relative;
-		z-index: 1;
+		z-index: var(--z-base);
 	}
 
 	.timeline-wrapper {
 		position: relative;
-		padding: 2rem 0;
+		padding: var(--spacing-lg) 0;
 	}
 
 	.timeline-line {
@@ -114,18 +111,18 @@ const timelineItems: TimelineItem[] = [
 		width: 4px;
 		background: repeating-linear-gradient(
 			to bottom,
-			#00ff41 0px,
-			#00ff41 10px,
+			var(--color-primary) 0px,
+			var(--color-primary) 10px,
 			transparent 10px,
 			transparent 20px
 		);
 		transform: translateX(-50%);
-		box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+		box-shadow: 0 0 10px var(--color-nebula-gold-strong);
 	}
 
 	.timeline-item {
 		position: relative;
-		margin-bottom: 4rem;
+		margin-bottom: calc(var(--spacing-lg) * 2);
 		display: flex;
 		align-items: center;
 		opacity: 0;
@@ -145,61 +142,61 @@ const timelineItems: TimelineItem[] = [
 
 	.timeline-item.left {
 		justify-content: flex-end;
-		padding-right: calc(50% + 2rem);
+		padding-right: calc(50% + var(--spacing-lg));
 	}
 
 	.timeline-item.right {
 		justify-content: flex-start;
-		padding-left: calc(50% + 2rem);
+		padding-left: calc(50% + var(--spacing-lg));
 	}
 
 	.timeline-card {
-		background: #1a1a2e;
-		border: 3px solid #00ff41;
+		background: var(--color-bg-darker-blue);
+		border: var(--border-width) solid var(--color-primary);
 		border-radius: 0;
-		padding: 2rem;
+		padding: var(--spacing-lg);
 		max-width: 500px;
 		width: 100%;
 		position: relative;
-		transition: all 0.1s ease;
+		transition: all var(--transition-fast);
 		box-shadow: 
-			0 0 0 2px #16213e,
-			8px 8px 0 0 #00ff41;
+			0 0 0 2px var(--color-bg-dark-blue),
+			calc(var(--shadow-offset) * 2) calc(var(--shadow-offset) * 2) 0 0 var(--color-primary);
 	}
 
 	.timeline-card:hover {
 		transform: translate(-2px, -2px);
 		box-shadow: 
-			0 0 0 2px #16213e,
-			10px 10px 0 0 #00ff41;
+			0 0 0 2px var(--color-bg-dark-blue),
+			calc(var(--shadow-offset-lg) + 2px) calc(var(--shadow-offset-lg) + 2px) 0 0 var(--color-primary);
 	}
 
 	.timeline-year {
 		font-size: 0.9rem;
-		color: #ffd700;
+		color: var(--color-secondary);
 		font-weight: 700;
-		margin-bottom: 0.5rem;
+		margin-bottom: var(--spacing-xs);
 		letter-spacing: 0.1em;
-		font-family: 'Courier New', monospace;
-		text-shadow: 2px 2px 0 #0f3460;
+		font-family: var(--font-family-mono);
+		text-shadow: var(--shadow-offset-sm) var(--shadow-offset-sm) 0 var(--color-bg-image);
 	}
 
 	.timeline-title {
 		font-size: clamp(1.2rem, 2vw, 1.5rem);
-		color: #00ff41;
+		color: var(--color-primary);
 		margin: 0 0 0.75rem 0;
 		font-weight: 700;
-		font-family: 'Courier New', monospace;
-		text-shadow: 2px 2px 0 #0f3460;
+		font-family: var(--font-family-mono);
+		text-shadow: var(--shadow-offset-sm) var(--shadow-offset-sm) 0 var(--color-bg-image);
 	}
 
 	.timeline-description {
 		font-size: 1rem;
 		color: #e94560;
 		line-height: 1.6;
-		margin: 0 0 1rem 0;
-		font-family: 'Courier New', monospace;
-		text-shadow: 1px 1px 0 #0f3460;
+		margin: 0 0 var(--spacing-sm) 0;
+		font-family: var(--font-family-mono);
+		text-shadow: 1px 1px 0 var(--color-bg-image);
 	}
 
 	.timeline-badge {
@@ -210,22 +207,22 @@ const timelineItems: TimelineItem[] = [
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
-		font-family: 'Courier New', monospace;
-		border: 2px solid;
+		font-family: var(--font-family-mono);
+		border: var(--border-width-medium) solid;
 	}
 
 	.timeline-badge.project {
-		background: #1a1a2e;
-		color: #00ff41;
-		border-color: #00ff41;
-		box-shadow: 2px 2px 0 0 #00ff41;
+		background: var(--color-bg-darker-blue);
+		color: var(--color-primary);
+		border-color: var(--color-primary);
+		box-shadow: var(--shadow-offset-sm) var(--shadow-offset-sm) 0 0 var(--color-primary);
 	}
 
 	.timeline-badge.experience {
-		background: #1a1a2e;
-		color: #ffd700;
-		border-color: #ffd700;
-		box-shadow: 2px 2px 0 0 #ffd700;
+		background: var(--color-bg-darker-blue);
+		color: var(--color-secondary);
+		border-color: var(--color-secondary);
+		box-shadow: var(--shadow-offset-sm) var(--shadow-offset-sm) 0 0 var(--color-secondary);
 	}
 
 	.timeline-dot {
@@ -234,30 +231,30 @@ const timelineItems: TimelineItem[] = [
 		width: 20px;
 		height: 20px;
 		border-radius: 0;
-		background: #00ff41;
-		border: 3px solid #16213e;
+		background: var(--color-primary);
+		border: var(--border-width) solid var(--color-bg-dark-blue);
 		transform: translateX(-50%) rotate(45deg);
 		box-shadow: 
-			0 0 0 2px #00ff41,
-			0 0 10px rgba(0, 255, 65, 0.8);
+			0 0 0 2px var(--color-primary),
+			0 0 10px var(--color-nebula-gold-strong);
 		z-index: 2;
 	}
 
 	/* 모바일 반응형 */
 	@media (max-width: 968px) {
 		.timeline-line {
-			left: 2rem;
+			left: var(--spacing-lg);
 		}
 
 		.timeline-item.left,
 		.timeline-item.right {
-			padding-left: 4rem;
+			padding-left: calc(var(--spacing-lg) * 2);
 			padding-right: 0;
 			justify-content: flex-start;
 		}
 
 		.timeline-dot {
-			left: 2rem;
+			left: var(--spacing-lg);
 		}
 
 		.timeline-card {
@@ -267,11 +264,11 @@ const timelineItems: TimelineItem[] = [
 
 	@media (max-width: 640px) {
 		.timeline-section {
-			padding: 4rem 1rem;
+			padding: calc(var(--spacing-lg) * 2) var(--spacing-sm);
 		}
 
 		.timeline-card {
-			padding: 1.5rem;
+			padding: var(--spacing-md);
 		}
 	}
 </style>

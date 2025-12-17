@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import BackButton from '../components/BackButton.astro';
 
 type Props = CollectionEntry<'blog'>['data'] & {
 	headings: MarkdownHeading[];
@@ -428,57 +429,6 @@ import type { MarkdownHeading } from 'astro';
 			}
 		}
 
-		/* Back Button */
-		.back-button {
-			position: fixed;
-			bottom: 2rem;
-			right: 2rem;
-			display: flex;
-			align-items: center;
-			gap: 0.5rem;
-			padding: 1rem 1.5rem;
-			background: rgba(0, 255, 65, 0.1);
-			border: 3px solid #00ff41;
-			color: #00ff41;
-			text-decoration: none;
-			font-family: 'Pretendard', 'Courier New', monospace;
-			font-weight: 700;
-			font-size: 1.2rem;
-			z-index: 1000;
-			transition: all 0.2s ease;
-			box-shadow: 4px 4px 0 0 #00ff41;
-		}
-
-		.back-button:hover {
-			background: rgba(0, 255, 65, 0.2);
-			transform: translate3d(-2px, -2px, 0);
-			box-shadow: 6px 6px 0 0 #00ff41;
-			border-color: #ffd700;
-			color: #ffd700;
-		}
-
-		.back-button:active {
-			transform: translate3d(2px, 2px, 0);
-			box-shadow: var(--shadow-offset-sm) var(--shadow-offset-sm) 0 0 var(--color-primary);
-		}
-
-		.back-arrow {
-			font-size: 1.5rem;
-			line-height: 1;
-		}
-
-		.back-text {
-			text-shadow: 2px 2px 0 #16213e;
-		}
-
-		@media (max-width: 768px) {
-			.back-button {
-				bottom: 1rem;
-				right: 1rem;
-				padding: 0.75rem 1rem;
-				font-size: 1rem;
-			}
-		}
 	</style>
 <BaseLayout title={title} description={description} includeSidebar={false}>
 	<!-- Wrap everything in a container for the background -->
@@ -513,9 +463,6 @@ import type { MarkdownHeading } from 'astro';
 				<TableOfContents headings={headings} />
 			</aside>
 		</article>
-		<a href="/blog" class="back-button">
-			<span class="back-arrow">←</span>
-			<span class="back-text">뒤로</span>
-		</a>
+		<BackButton href="/blog" />
 	</div>
 </BaseLayout>
