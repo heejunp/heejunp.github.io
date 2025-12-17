@@ -1,0 +1,144 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+	headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+
+const filteredHeadings = headings.filter((heading) => heading.depth <= 3);
+---
+
+<nav class="toc">
+	<div class="toc-title">ON THIS PAGE</div>
+	<ul>
+		{
+			filteredHeadings.map((heading) => (
+				<li class={`heading-link depth-${heading.depth}`}>
+					<a href={`#${heading.slug}`}>{heading.text}</a>
+				</li>
+			))
+		}
+	</ul>
+</nav>
+
+<script>
+	const observer = new IntersectionObserver(
+		(entries) => {
+			entries.forEach((entry) => {
+				const id = entry.target.getAttribute('id');
+				if (entry.intersectionRatio > 0) {
+					document
+						.querySelector(`.toc a[href="#${id}"]`)
+						?.parentElement?.classList.add('active');
+				} else {
+					document
+						.querySelector(`.toc a[href="#${id}"]`)
+						?.parentElement?.classList.remove('active');
+				}
+			});
+		},
+		{ rootMargin: '0px 0px -80% 0px' } 
+	);
+
+	// Observe all sections that have an ID
+	document.querySelectorAll('h2, h3, h4').forEach((section) => {
+		observer.observe(section);
+	});
+
+    // Smooth scroll and prevent URL change
+    document.querySelectorAll('.toc a').forEach((link) => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const href = link.getAttribute('href');
+            if (href) {
+                const targetId = href.substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    // Offset for fixed header if any (not strictly needed based on current CSS but good practice)
+                    const headerOffset = 0; 
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    });
+</script>
+
+<style>
+	.toc {
+		padding: 1.5em;
+		background: rgba(26, 26, 46, 0.8);
+		border: 3px solid #00ff41;
+		box-shadow: 4px 4px 0 0 #00ff41;
+		border-left: 3px solid #00ff41;
+        font-size: 0.9em;
+		color: #e5e9f0;
+	}
+
+    .toc-title {
+        font-weight: 700;
+        margin-bottom: 1em;
+        font-size: 1em;
+        letter-spacing: 0.1em;
+		font-family: 'Pretendard', 'Courier New', monospace;
+		color: #00ff41;
+		text-shadow: 2px 2px 0 #16213e;
+		border-bottom: 2px solid #00ff41;
+		padding-bottom: 0.5em;
+    }
+
+	ul {
+		list-style: none;
+		padding: 0;
+        margin: 0;
+	}
+
+    li {
+        margin-bottom: 0.5em;
+        line-height: 1.2;
+    }
+
+	a {
+		text-decoration: none;
+		color: #e5e9f0;
+		transition: all 0.2s ease;
+        display: block;
+		padding: 0.3em 0.5em;
+		border-radius: 2px;
+		font-family: 'Pretendard', sans-serif;
+	}
+
+	a:hover {
+		color: #ffd700;
+		background-color: rgba(255, 215, 0, 0.1);
+		transform: translateX(4px);
+	}
+
+	.active a {
+		color: #00ff41;
+		font-weight: 700;
+		background-color: rgba(0, 255, 65, 0.1);
+		border-left: 2px solid #00ff41;
+		padding-left: 0.8em;
+	}
+
+	.depth-3 {
+		padding-left: 1em;
+        font-size: 0.9em;
+	}
+
+	.depth-2 {
+		font-weight: 500;
+	}
+
+	.depth-3 {
+		font-weight: 400;
+	}
+</style>

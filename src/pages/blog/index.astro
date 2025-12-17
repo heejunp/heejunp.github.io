@@ -48,6 +48,8 @@ const posts = (await getCollection('blog')).sort(
 		background: #000000;
 		position: relative;
 		overflow: hidden;
+		width: 100%;
+		max-width: 100%;
 	}
 
 	/* 우주 배경 */
@@ -272,6 +274,12 @@ const posts = (await getCollection('blog')).sort(
 
 	.back-text {
 		text-shadow: 2px 2px 0 #16213e;
+	}
+
+	@media (max-width: 1279px) {
+		.blog-section {
+			padding: 2rem 1rem;
+		}
 	}
 
 	@media (max-width: 768px) {

@@ -4,73 +4,518 @@ import type { CollectionEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & {
+	headings: MarkdownHeading[];
+};
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, headings } = Astro.props;
+import TableOfContents from '../components/TableOfContents.astro';
+import TagSidebar from '../components/TagSidebar.astro';
+import type { MarkdownHeading } from 'astro';
 ---
 
-<BaseLayout title={title} description={description}>
 	<style>
-		main {
-			width: calc(100% - 2em);
-			max-width: 100%;
-			margin: 0;
-			padding: 2em 1em;
+		/* Cosmic Retro Theme Styles */
+		.blog-post-wrapper {
+			position: relative;
+			background-color: #000000;
+			min-height: 100vh;
+			width: 100%;
+			overflow: visible;
 		}
+
+		/* Deep Space Background - Enhanced Starfield (Optimized) */
+		.blog-post-wrapper::before {
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-image: 
+				radial-gradient(3px 3px at 10% 20%, #ffffff, transparent),
+				radial-gradient(2px 2px at 20% 30%, #ffffff, transparent),
+				radial-gradient(1px 1px at 30% 15%, #ffffff, transparent),
+				radial-gradient(2px 2px at 40% 25%, #ffffff, transparent),
+				radial-gradient(1px 1px at 50% 10%, #ffffff, transparent),
+				radial-gradient(3px 3px at 60% 20%, #ffffff, transparent),
+				radial-gradient(2px 2px at 70% 30%, #ffffff, transparent),
+				radial-gradient(1px 1px at 80% 15%, #ffffff, transparent),
+				radial-gradient(2px 2px at 90% 25%, #ffffff, transparent),
+				radial-gradient(1px 1px at 15% 40%, #ffffff, transparent),
+				radial-gradient(2px 2px at 25% 50%, #ffffff, transparent),
+				radial-gradient(1px 1px at 35% 45%, #ffffff, transparent),
+				radial-gradient(3px 3px at 45% 55%, #ffffff, transparent),
+				radial-gradient(2px 2px at 55% 40%, #ffffff, transparent),
+				radial-gradient(1px 1px at 65% 50%, #ffffff, transparent),
+				radial-gradient(2px 2px at 75% 60%, #ffffff, transparent),
+				radial-gradient(1px 1px at 85% 45%, #ffffff, transparent),
+				radial-gradient(3px 3px at 95% 55%, #ffffff, transparent),
+				radial-gradient(2px 2px at 5% 70%, #ffffff, transparent),
+				radial-gradient(1px 1px at 15% 80%, #ffffff, transparent),
+				radial-gradient(2px 2px at 25% 75%, #ffffff, transparent),
+				radial-gradient(1px 1px at 35% 85%, #ffffff, transparent),
+				radial-gradient(3px 3px at 45% 70%, #ffffff, transparent),
+				radial-gradient(2px 2px at 55% 80%, #ffffff, transparent),
+				radial-gradient(1px 1px at 65% 75%, #ffffff, transparent),
+				radial-gradient(2px 2px at 75% 85%, #ffffff, transparent),
+				radial-gradient(1px 1px at 85% 90%, #ffffff, transparent),
+				radial-gradient(3px 3px at 95% 95%, #ffffff, transparent),
+				radial-gradient(2px 2px at 12% 60%, #ffffff, transparent),
+				radial-gradient(1px 1px at 22% 65%, #ffffff, transparent),
+				radial-gradient(2px 2px at 32% 70%, #ffffff, transparent),
+				radial-gradient(1px 1px at 42% 65%, #ffffff, transparent),
+				radial-gradient(3px 3px at 52% 60%, #ffffff, transparent),
+				radial-gradient(2px 2px at 62% 65%, #ffffff, transparent),
+				radial-gradient(1px 1px at 72% 70%, #ffffff, transparent),
+				radial-gradient(2px 2px at 82% 65%, #ffffff, transparent),
+				radial-gradient(1px 1px at 92% 60%, #ffffff, transparent);
+			background-size: 200% 200%;
+			background-position: 0% 0%;
+			opacity: 1;
+			pointer-events: none;
+			will-change: background-position;
+			animation: starMove 50s linear infinite;
+			z-index: 0;
+		}
+
+		/* Nebula Effect (Optimized) */
+		.blog-post-wrapper::after {
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: 
+				radial-gradient(ellipse at 20% 30%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
+				radial-gradient(ellipse at 80% 70%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+				radial-gradient(ellipse at 50% 50%, rgba(233, 69, 96, 0.06) 0%, transparent 50%);
+			pointer-events: none;
+			z-index: 0;
+			will-change: opacity, transform;
+			animation: nebulaPulse 20s ease-in-out infinite alternate;
+		}
+
+		@keyframes starMove {
+			0% { 
+				background-position: 0% 0%;
+			}
+			100% { 
+				background-position: 100% 100%;
+			}
+		}
+
+		@keyframes nebulaPulse {
+			0% {
+				opacity: 0.5;
+				transform: scale3d(1, 1, 1);
+			}
+			100% {
+				opacity: 1;
+				transform: scale3d(1.1, 1.1, 1);
+			}
+		}
+
 		.hero-image {
 			width: 100%;
-			margin-bottom: 2em;
+			max-width: 900px;
+			margin: 0 auto 2em auto;
+			position: relative;
+			z-index: 1;
+			box-sizing: border-box;
 		}
 		.hero-image img {
 			display: block;
-			margin: 0 auto;
-			border-radius: 12px;
-			box-shadow: var(--box-shadow);
+			width: 100%;
+			height: auto;
+			border-radius: 0;
+			border: 3px solid #00ff41;
+			box-shadow: 4px 4px 0 0 #00ff41;
+			image-rendering: pixelated;
+			transition: all 0.2s ease;
+			box-sizing: border-box;
+		}
+		.hero-image:hover img {
+			transform: translate3d(-2px, -2px, 0);
+			box-shadow: 6px 6px 0 0 #00ff41;
 		}
 		.prose {
-			width: 720px;
-			max-width: calc(100% - 2em);
-			margin: auto;
-			padding: 1em;
-			color: rgb(var(--gray-dark));
+			width: 100%;
+			max-width: 900px;
+			margin: 0 auto;
+			padding: 2em;
+			background: rgba(26, 26, 46, 0.6);
+			border: 3px solid #00ff41;
+			box-shadow: 4px 4px 0 0 #00ff41;
+			color: #e5e9f0;
+			position: relative;
+			z-index: 1;
+			box-sizing: border-box;
 		}
 		.title {
-			margin-bottom: 1em;
+			margin-bottom: 2em;
 			padding: 1em 0;
 			text-align: center;
 			line-height: 1;
 		}
 		.title h1 {
 			margin: 0 0 0.5em 0;
+			font-family: 'Pretendard', 'Courier New', monospace;
+			font-size: clamp(2rem, 4vw, 3rem);
+			color: #00ff41;
+			text-shadow: 
+				2px 2px 0 #16213e,
+				4px 4px 0 #1a1a2e;
+			letter-spacing: 0.1em;
+			font-weight: 700;
 		}
 		.date {
 			margin-bottom: 0.5em;
-			color: rgb(var(--gray));
+			color: #ffd700;
+			font-family: 'Pretendard', 'Courier New', monospace;
+			font-size: 0.9em;
+			text-shadow: 1px 1px 0 #16213e;
 		}
 		.last-updated-on {
 			font-style: italic;
+			color: rgba(255, 215, 0, 0.8);
+			font-family: 'Pretendard', 'Courier New', monospace;
+		}
+
+		hr {
+			border: none;
+			border-top: 3px solid #00ff41;
+			margin: 2em 0;
+			box-shadow: 0 2px 0 0 #16213e;
+		}
+
+		/* Global Prose Overrides for Dark Theme */
+		:global(.prose h2), :global(.prose h3), :global(.prose h4) {
+			color: #00ff41 !important;
+			font-family: 'Pretendard', 'Courier New', monospace;
+			margin-top: 2em;
+			text-shadow: 2px 2px 0 #16213e;
+			font-weight: 700;
+		}
+		:global(.prose h2) {
+			font-size: clamp(1.5rem, 3vw, 2rem);
+		}
+		:global(.prose h3) {
+			font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+		}
+		:global(.prose a) {
+			color: #ffd700;
+			text-decoration: none;
+			border-bottom: 2px solid rgba(255, 215, 0, 0.5);
+			transition: all 0.2s ease;
+			text-shadow: 1px 1px 0 #16213e;
+		}
+		:global(.prose a:hover) {
+			background-color: rgba(255, 215, 0, 0.15);
+			color: #fff;
+			border-bottom-color: #ffd700;
+		}
+		:global(.prose strong) {
+			color: #fff;
+			font-weight: 700;
+			text-shadow: 1px 1px 0 #16213e;
+		}
+		:global(.prose code) {
+			background-color: rgba(0, 255, 65, 0.1);
+			color: #00ff41;
+			font-family: 'Courier New', monospace;
+			padding: 0.2em 0.4em;
+			border: 1px solid rgba(0, 255, 65, 0.3);
+			box-shadow: 2px 2px 0 0 rgba(0, 255, 65, 0.2);
+		}
+		:global(.prose) {
+			font-family: 'Pretendard', sans-serif;
+		}
+		:global(.prose pre) {
+			background-color: rgba(0, 0, 0, 0.8);
+			border: 3px solid #00ff41;
+			box-shadow: 4px 4px 0 0 #00ff41;
+			padding: 1.5em;
+			overflow-x: auto;
+		}
+		:global(.prose pre code) {
+			background: transparent;
+			border: none;
+			box-shadow: none;
+			padding: 0;
+		}
+		:global(.prose blockquote) {
+			border-left: 4px solid #00ff41;
+			background: rgba(0, 255, 65, 0.05);
+			color: #a0a0a0;
+			padding: 1em 1.5em;
+			margin: 1.5em 0;
+			border-right: 1px solid rgba(0, 255, 65, 0.2);
+			box-shadow: 2px 2px 0 0 rgba(0, 255, 65, 0.1);
+		}
+		:global(.prose p) {
+			margin-bottom: 1.5em;
+			line-height: 1.8;
+		}
+		:global(.prose ul), :global(.prose ol) {
+			margin: 1.5em 0;
+			padding-left: 2em;
+		}
+		:global(.prose li) {
+			margin-bottom: 0.5em;
+		}
+		:global(.prose img) {
+			border: 3px solid #00ff41;
+			box-shadow: 4px 4px 0 0 #00ff41;
+			margin: 2em auto;
+			display: block;
+			max-width: 100%;
+		}
+
+		/* TOC Layout */
+		.blog-grid {
+			display: block;
+			position: relative;
+			z-index: 1;
+			max-width: 1800px;
+			margin: 0 auto;
+			padding: 2rem 1rem;
+			box-sizing: border-box;
+		}
+		.toc-sidebar, .tag-sidebar-wrapper {
+			display: none;
+		}
+
+		.content-column {
+			width: 100%;
+			max-width: 100%;
+			position: relative;
+			box-sizing: border-box;
+		}
+
+		@media (min-width: 1280px) {
+			.blog-grid {
+				display: grid;
+				grid-template-columns: minmax(0, 1fr) 240px 900px 260px minmax(0, 1fr);
+				gap: 3rem;
+				padding: 2rem;
+				align-items: start;
+				position: relative;
+			}
+			.tag-sidebar-wrapper {
+				grid-column: 2;
+				display: block;
+				position: sticky;
+				top: 2rem;
+				align-self: start;
+				height: fit-content;
+				max-height: calc(100vh - 4rem);
+				z-index: 10;
+				margin-top: 0;
+				width: 240px;
+				max-width: 240px;
+				min-width: 240px;
+				overflow: hidden;
+			}
+			.tag-sidebar-wrapper :global(.tag-sidebar) {
+				max-height: calc(100vh - 4rem);
+				overflow-y: auto;
+				overflow-x: hidden;
+				scrollbar-width: thin;
+				scrollbar-color: #00ff41 rgba(0, 255, 65, 0.1);
+				width: 100%;
+				box-sizing: border-box;
+			}
+			.tag-sidebar-wrapper :global(.tag-sidebar)::-webkit-scrollbar {
+				width: 6px;
+			}
+			.tag-sidebar-wrapper :global(.tag-sidebar)::-webkit-scrollbar-track {
+				background: rgba(0, 255, 65, 0.1);
+			}
+			.tag-sidebar-wrapper :global(.tag-sidebar)::-webkit-scrollbar-thumb {
+				background: #00ff41;
+				border-radius: 3px;
+			}
+			.content-column {
+				grid-column: 3;
+				width: 900px;
+				max-width: 900px;
+				min-width: 0;
+				position: relative;
+				z-index: 1;
+				overflow: visible;
+			}
+			.hero-image {
+				width: 100%;
+				max-width: 100%;
+				margin-left: 0;
+				margin-right: 0;
+			}
+			.prose {
+				width: 100%;
+				max-width: 100%;
+				padding: 2em;
+				margin-left: 0;
+				margin-right: 0;
+				box-sizing: border-box;
+			}
+			.toc-sidebar {
+				grid-column: 4;
+				display: block;
+				position: sticky;
+				top: 2rem;
+				align-self: start;
+				height: fit-content;
+				max-height: calc(100vh - 4rem);
+				z-index: 10;
+				margin-top: 0;
+				width: 260px;
+				max-width: 260px;
+				min-width: 260px;
+				overflow: hidden;
+			}
+			.toc-sidebar :global(.toc) {
+				max-height: calc(100vh - 4rem);
+				overflow-y: auto;
+				overflow-x: hidden;
+				scrollbar-width: thin;
+				scrollbar-color: #00ff41 rgba(0, 255, 65, 0.1);
+				width: 100%;
+				box-sizing: border-box;
+			}
+			.toc-sidebar :global(.toc)::-webkit-scrollbar {
+				width: 6px;
+			}
+			.toc-sidebar :global(.toc)::-webkit-scrollbar-track {
+				background: rgba(0, 255, 65, 0.1);
+			}
+			.toc-sidebar :global(.toc)::-webkit-scrollbar-thumb {
+				background: #00ff41;
+				border-radius: 3px;
+			}
+		}
+
+		@media (max-width: 1279px) {
+			.blog-grid {
+				padding: 1rem;
+			}
+			.hero-image {
+				width: 100%;
+				max-width: 100%;
+				margin: 0 auto 2em auto;
+			}
+			.prose {
+				width: 100%;
+				max-width: 100%;
+				padding: 1.5em;
+				margin: 0 auto;
+			}
+		}
+
+		@media (max-width: 768px) {
+			.hero-image {
+				margin-bottom: 1.5em;
+			}
+			.hero-image img {
+				border-width: 2px;
+				box-shadow: 2px 2px 0 0 #00ff41;
+			}
+			.prose {
+				padding: 1em;
+				border-width: 2px;
+				box-shadow: 2px 2px 0 0 #00ff41;
+			}
+		}
+
+		/* Back Button */
+		.back-button {
+			position: fixed;
+			bottom: 2rem;
+			right: 2rem;
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			padding: 1rem 1.5rem;
+			background: rgba(0, 255, 65, 0.1);
+			border: 3px solid #00ff41;
+			color: #00ff41;
+			text-decoration: none;
+			font-family: 'Pretendard', 'Courier New', monospace;
+			font-weight: 700;
+			font-size: 1.2rem;
+			z-index: 1000;
+			transition: all 0.2s ease;
+			box-shadow: 4px 4px 0 0 #00ff41;
+		}
+
+		.back-button:hover {
+			background: rgba(0, 255, 65, 0.2);
+			transform: translate3d(-2px, -2px, 0);
+			box-shadow: 6px 6px 0 0 #00ff41;
+			border-color: #ffd700;
+			color: #ffd700;
+		}
+
+		.back-button:active {
+			transform: translate3d(2px, 2px, 0);
+			box-shadow: 2px 2px 0 0 #00ff41;
+		}
+
+		.back-arrow {
+			font-size: 1.5rem;
+			line-height: 1;
+		}
+
+		.back-text {
+			text-shadow: 2px 2px 0 #16213e;
+		}
+
+		@media (max-width: 768px) {
+			.back-button {
+				bottom: 1rem;
+				right: 1rem;
+				padding: 0.75rem 1rem;
+				font-size: 1rem;
+			}
 		}
 	</style>
-	<article>
-		<div class="hero-image">
-			{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-		</div>
-		<div class="prose">
-			<div class="title">
-				<div class="date">
-					<FormattedDate date={pubDate} />
-					{
-						updatedDate && (
-							<div class="last-updated-on">
-								Last updated on <FormattedDate date={updatedDate} />
-							</div>
-						)
-					}
+<BaseLayout title={title} description={description} includeSidebar={false}>
+	<!-- Wrap everything in a container for the background -->
+	<div class="blog-post-wrapper">
+		<article class="blog-grid">
+			<aside class="tag-sidebar-wrapper">
+				<TagSidebar />
+			</aside>
+			<div class="content-column">
+				<div class="hero-image">
+					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
 				</div>
-				<h1>{title}</h1>
-				<hr />
+				<div class="prose">
+					<div class="title">
+						<div class="date">
+							<FormattedDate date={pubDate} />
+							{
+								updatedDate && (
+									<div class="last-updated-on">
+										Last updated on <FormattedDate date={updatedDate} />
+									</div>
+								)
+							}
+						</div>
+						<h1>{title}</h1>
+						<hr />
+					</div>
+					<slot />
+				</div>
 			</div>
-			<slot />
-		</div>
-	</article>
+			<aside class="toc-sidebar">
+				<TableOfContents headings={headings} />
+			</aside>
+		</article>
+		<a href="/blog" class="back-button">
+			<span class="back-arrow">←</span>
+			<span class="back-text">뒤로</span>
+		</a>
+	</div>
 </BaseLayout>

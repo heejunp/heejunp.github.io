@@ -44,21 +44,24 @@ const tags = Array.from(tagCountMap.entries())
 
 <style>
 	.tag-sidebar {
-		background-color: rgba(var(--gray-light), 0.5);
-		padding: 1em 0.5em;
-		border-radius: 8px;
-		position: sticky;
-		top: 1em;
-		max-height: calc(100vh - 2em);
-		overflow-y: auto;
+		background-color: rgba(26, 26, 46, 0.8);
+		padding: 1.5em;
+		border: 1px solid #00ff41;
+		border-radius: 4px;
+		box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+		box-sizing: border-box;
+		width: 100%;
 	}
 
 	.tag-sidebar h2 {
+		font-family: 'Pretendard', 'Courier New', monospace;
 		font-size: 1.25em;
 		margin: 0 0 1em 0;
-		color: rgb(var(--black));
-		border-bottom: 2px solid var(--accent);
+		color: #00ff41;
+		border-bottom: 2px solid #00ff41;
 		padding-bottom: 0.5em;
+		text-shadow: 2px 2px 0 #16213e;
+		letter-spacing: 0.1em;
 	}
 
 	.tag-list {
@@ -68,52 +71,60 @@ const tags = Array.from(tagCountMap.entries())
 	}
 
 	.tag-item {
-		margin-bottom: 0.3em;
+		margin-bottom: 0.5em;
 	}
 
 	.tag-item a {
-		display: block;
-		padding: 0.5em;
-		border-radius: 6px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.5em 0.8em;
+		border-radius: 2px;
 		text-decoration: none;
-		color: rgb(var(--gray-dark));
+		color: #e5e9f0;
+		font-family: 'Pretendard', 'Courier New', monospace;
 		transition: all 0.2s ease;
+		border: 1px solid transparent;
 	}
 
 	.tag-item a:hover {
-		background-color: rgba(var(--accent), 0.1);
-		color: var(--accent);
+		background-color: rgba(0, 255, 65, 0.1);
+		border-color: #00ff41;
+		color: #ffd700;
 		transform: translateX(4px);
+		box-shadow: 2px 2px 0 0 rgba(0, 255, 65, 0.2);
 	}
 
 	.tag-name {
-		font-weight: 500;
+		font-weight: 700;
 	}
 
 	.tag-count {
-		color: rgb(var(--gray));
+		color: #00ff41;
 		font-size: 0.9em;
 		margin-left: 0.5em;
+	}
+	
+	.tag-item a:hover .tag-count {
+		color: #ffd700;
 	}
 
 	.no-tags {
 		color: rgb(var(--gray));
 		font-size: 0.9em;
+		font-family: 'Pretendard', 'Courier New', monospace;
 	}
 
 	/* 모바일 반응형 */
-	@media (max-width: 768px) {
+	@media (max-width: 1279px) {
+		/* 사이드바가 BaseLayout에서 숨겨질 수 있지만, 혹시 모를 상황 대비 */
 		.tag-sidebar {
-			position: relative;
-			top: 0;
+			position: static;
 			max-height: none;
-			margin-bottom: 1em;
+			margin-bottom: 2rem;
+			border: 1px solid rgba(0, 255, 65, 0.3);
 		}
-
-		.tag-sidebar h2 {
-			font-size: 1.1em;
-		}
-
+		
 		.tag-list {
 			display: flex;
 			flex-wrap: wrap;
@@ -123,10 +134,9 @@ const tags = Array.from(tagCountMap.entries())
 		.tag-item {
 			margin-bottom: 0;
 		}
-
+		
 		.tag-item a {
-			padding: 0.4em 0.8em;
-			font-size: 0.9em;
+			border: 1px solid rgba(0, 255, 65, 0.3);
 		}
 	}
 </style>

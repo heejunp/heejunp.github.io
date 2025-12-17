@@ -8,12 +8,13 @@ import IntroOverlay from '../components/IntroOverlay.astro';
 interface Props {
 	title: string;
 	description?: string;
+	includeSidebar?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, includeSidebar = true } = Astro.props;
 
-// 블로그 관련 페이지인지 확인 (/blog 또는 /tags로 시작)
-const showTags = Astro.url.pathname.startsWith('/blog') || Astro.url.pathname.startsWith('/tags');
+// 블로그 관련 페이지인지 확인 (/blog 또는 /tags로 시작)하고, includeSidebar가 true인 경우에만 표시
+const showTags = includeSidebar && (Astro.url.pathname.startsWith('/blog') || Astro.url.pathname.startsWith('/tags'));
 
 // 메인 페이지인지 확인 (인트로 오버레이 표시)
 const isHomePage = Astro.url.pathname === '/';
@@ -68,14 +69,17 @@ const isPortfolioPage = Astro.url.pathname === '/about';
 
 	.main-content {
 		padding: 0;
-		overflow-x: hidden;
+		overflow-x: clip;
+		overflow-y: visible;
 		width: auto;
 		max-width: none;
 		margin: 0;
+		position: relative;
 	}
 
 	.main-content > * {
 		max-width: 100%;
+		position: relative;
 	}
 
 	/* 포트폴리오 페이지 스타일 */
@@ -105,9 +109,9 @@ const isPortfolioPage = Astro.url.pathname === '/about';
 		width: 100%;
 	}
 
-	/* 모바일 반응형 */
-	@media (max-width: 768px) {
-		.layout-container {
+	/* 모바일 및 태블릿 반응형 */
+	@media (max-width: 1279px) {
+		.layout-container.has-sidebar {
 			grid-template-columns: 1fr;
 		}
 
