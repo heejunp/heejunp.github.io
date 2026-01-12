@@ -148,7 +148,6 @@ import exitImage from '../assets/index/exit.png';
 		background-position: 0% 0%;
 		opacity: 1;
 		pointer-events: none;
-		animation: starMove 50s linear infinite;
 		z-index: 0;
 	}
 
@@ -166,28 +165,10 @@ import exitImage from '../assets/index/exit.png';
 			radial-gradient(ellipse at 50% 50%, var(--color-nebula-pink) 0%, transparent 50%);
 		pointer-events: none;
 		z-index: 0;
-		animation: nebulaPulse 20s ease-in-out infinite alternate;
+		/* animation: nebulaPulse 20s ease-in-out infinite alternate; */
 	}
 
-	@keyframes starMove {
-		0% { 
-			background-position: 0% 0%;
-		}
-		100% { 
-			background-position: 100% 100%;
-		}
-	}
 
-	@keyframes nebulaPulse {
-		0% {
-			opacity: 0.5;
-			transform: scale(1);
-		}
-		100% {
-			opacity: 1;
-			transform: scale(1.1);
-		}
-	}
 
 	.nav-section {
 		position: relative;
