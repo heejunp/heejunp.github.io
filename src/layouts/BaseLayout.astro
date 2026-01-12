@@ -1,8 +1,6 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import CategorySidebar from '../components/CategorySidebar.astro';
 import IntroOverlay from '../components/IntroOverlay.astro';
 
 interface Props {
@@ -13,14 +11,8 @@ interface Props {
 
 const { title, description, includeSidebar = true } = Astro.props;
 
-// 블로그 관련 페이지인지 확인 (/blog 또는 /tags로 시작)하고, includeSidebar가 true인 경우에만 표시
-const showTags = includeSidebar && (Astro.url.pathname.startsWith('/blog') || Astro.url.pathname.startsWith('/tags'));
-
 // 메인 페이지인지 확인 (인트로 오버레이 표시)
 const isHomePage = Astro.url.pathname === '/';
-
-// 블로그 페이지인지 확인 (/blog로 시작)
-const isBlogPage = Astro.url.pathname.startsWith('/blog');
 
 // skipIntro 쿼리 파라미터 확인
 const skipIntro = Astro.url.searchParams.get('skipIntro') === 'true';
@@ -36,13 +28,7 @@ const isPortfolioPage = Astro.url.pathname === '/about';
 	</head>
 	<body class={isHomePage || isPortfolioPage ? 'portfolio-page' : ''}>
 		{isHomePage && !skipIntro && <IntroOverlay />}
-		{!isHomePage && !isPortfolioPage && !isBlogPage && <Header />}
-		<div class={`layout-container ${showTags ? 'has-sidebar' : ''} ${isHomePage || isPortfolioPage ? 'portfolio-layout' : ''}`}>
-			{showTags && (
-				<aside class="sidebar">
-					<CategorySidebar />
-				</aside>
-			)}
+		<div class={`layout-container ${isHomePage || isPortfolioPage ? 'portfolio-layout' : ''}`}>
 			<main class="main-content">
 				<slot />
 			</main>
