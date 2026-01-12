@@ -1,290 +1,80 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import linkImage from '../assets/index/link.png';
-import aboutImage from '../assets/index/about.png';
-import blogImage from '../assets/index/blog.png';
-import exitImage from '../assets/index/exit.png';
+import ResumeHero from '../components/resume/ResumeHero.astro';
+import ResumeSection from '../components/resume/ResumeSection.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const experiences = [
+  {
+    title: "Senior Frontend Engineer",
+    company: "Tech Company Inc.",
+    period: "2023 - Present",
+    description: [
+      "Led the migration of legacy codebase to Next.js, improving performance by 40%.",
+      "Mentored junior developers and established code review processes.",
+      "Implemented a comprehensive design system using Tailwind CSS and Radix UI."
+    ]
+  },
+  {
+    title: "Frontend Developer",
+    company: "Creative Agency",
+    period: "2021 - 2023",
+    description: [
+      "Developed interactive 3D websites using Three.js and React Three Fiber.",
+      "Collaborated with designers to implement pixel-perfect user interfaces.",
+      "Optimized website accessibility to meet WCAG 2.1 AA standards."
+    ]
+  }
+];
+
+const projects = [
+  {
+    title: "E-commerce Dashboard",
+    company: "Personal Project",
+    period: "2023",
+    description: [
+      "Built a comprehensive analytics dashboard using React, D3.js, and TypeScript.",
+      "implemented real-time data visualization and complex filtering systems."
+    ]
+  },
+  {
+    title: "AI Chat Interface",
+    company: "Personal Project",
+    period: "2024",
+    description: [
+      "Designed and developed a chat interface for LLMs using Vercel AI SDK.",
+      "Focus on smooth typography and streaming response UX."
+    ]
+  }
+];
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<div class="navigation-grid">
-		<!-- 1시 방향: GitHub 링크 -->
-		<a href="https://github.com/heejunp" target="_blank" rel="noopener noreferrer" class="nav-section">
-			<div class="nav-gif-wrapper">
-				<div class="nav-label">[GitHub]</div>
-				<img src={linkImage.src} alt="GitHub" class="nav-gif" />
-			</div>
-		</a>
-		
-		<!-- 11시 방향: /about -->
-		<a href="/about" class="nav-section nav-about">
-			<div class="nav-gif-wrapper">
-				<div class="nav-label">[About]</div>
-				<img src={aboutImage.src} alt="About" class="nav-gif" />
-			</div>
-		</a>
-		
-		<!-- 7시 방향: /blog -->
-		<a href="https://blog.heejunp.com" target="_blank" rel="noopener noreferrer" class="nav-section nav-blog">
-			<div class="nav-gif-wrapper">
-				<div class="nav-label">[Blog]</div>
-				<img src={blogImage.src} alt="Blog" class="nav-gif" />
-			</div>
-		</a>
-		
-		<!-- 5시 방향: / (exit) -->
-		<a href="/" class="nav-section nav-exit">
-			<div class="nav-gif-wrapper">
-				<div class="nav-label">[Exit]</div>
-				<!-- <video src={exitVideo} autoplay loop muted playsinline class="nav-gif"></video> -->
-				 <img src={exitImage.src} alt="Exit" class="nav-gif" />
-			</div>
-		</a>
+	<div class="min-h-screen bg-white">
+		<ResumeHero 
+			name="Park Hee Jun"
+			role="Frontend Engineer"
+			description="Building digital products, brands, and experiences. Specialized in React, TypeScript, and Creative Development."
+			githubUrl="https://github.com/heejunp"
+			blogUrl="https://blog.heejunp.com"
+			email="heejunp@email.com"
+		/>
+
+		<main class="pb-20">
+			<ResumeSection title="Experience" items={experiences} />
+			<ResumeSection title="Projects" items={projects} />
+      
+      <section class="max-w-3xl mx-auto px-4 py-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-2">Skills</h2>
+        <div class="flex flex-wrap gap-2">
+          {["React", "TypeScript", "Next.js", "Tailwind CSS", "Three.js", "Node.js", "GraphQL", "PostgreSQL"].map((skill) => (
+            <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors cursor-default">
+              {skill}
+            </span>
+          ))}
+        </div>
+      </section>
+		</main>
 	</div>
 </BaseLayout>
 
-<style>
-	.navigation-grid {
-		width: 100vw;
-		height: 100vh;
-		position: relative;
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-template-rows: 1fr 1fr;
-		background: #000000;
-		overflow: hidden;
-	}
-
-	/* 우주 배경 - 별들 */
-	.navigation-grid::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background-image: 
-			radial-gradient(3px 3px at 5% 10%, #ffffff, transparent),
-			radial-gradient(2px 2px at 10% 20%, #ffffff, transparent),
-			radial-gradient(1px 1px at 15% 5%, #ffffff, transparent),
-			radial-gradient(2px 2px at 20% 30%, #ffffff, transparent),
-			radial-gradient(1px 1px at 25% 15%, #ffffff, transparent),
-			radial-gradient(3px 3px at 30% 25%, #ffffff, transparent),
-			radial-gradient(2px 2px at 35% 10%, #ffffff, transparent),
-			radial-gradient(1px 1px at 40% 20%, #ffffff, transparent),
-			radial-gradient(2px 2px at 45% 35%, #ffffff, transparent),
-			radial-gradient(1px 1px at 50% 10%, #ffffff, transparent),
-			radial-gradient(3px 3px at 55% 30%, #ffffff, transparent),
-			radial-gradient(2px 2px at 60% 20%, #ffffff, transparent),
-			radial-gradient(1px 1px at 65% 15%, #ffffff, transparent),
-			radial-gradient(2px 2px at 70% 30%, #ffffff, transparent),
-			radial-gradient(1px 1px at 75% 25%, #ffffff, transparent),
-			radial-gradient(3px 3px at 80% 15%, #ffffff, transparent),
-			radial-gradient(2px 2px at 85% 35%, #ffffff, transparent),
-			radial-gradient(1px 1px at 90% 20%, #ffffff, transparent),
-			radial-gradient(2px 2px at 95% 25%, #ffffff, transparent),
-			radial-gradient(1px 1px at 3% 40%, #ffffff, transparent),
-			radial-gradient(2px 2px at 8% 50%, #ffffff, transparent),
-			radial-gradient(1px 1px at 13% 45%, #ffffff, transparent),
-			radial-gradient(3px 3px at 18% 55%, #ffffff, transparent),
-			radial-gradient(2px 2px at 23% 40%, #ffffff, transparent),
-			radial-gradient(1px 1px at 28% 50%, #ffffff, transparent),
-			radial-gradient(2px 2px at 33% 45%, #ffffff, transparent),
-			radial-gradient(1px 1px at 38% 60%, #ffffff, transparent),
-			radial-gradient(3px 3px at 43% 50%, #ffffff, transparent),
-			radial-gradient(2px 2px at 48% 55%, #ffffff, transparent),
-			radial-gradient(1px 1px at 53% 40%, #ffffff, transparent),
-			radial-gradient(2px 2px at 58% 50%, #ffffff, transparent),
-			radial-gradient(1px 1px at 63% 45%, #ffffff, transparent),
-			radial-gradient(3px 3px at 68% 55%, #ffffff, transparent),
-			radial-gradient(2px 2px at 73% 60%, #ffffff, transparent),
-			radial-gradient(1px 1px at 78% 45%, #ffffff, transparent),
-			radial-gradient(2px 2px at 83% 50%, #ffffff, transparent),
-			radial-gradient(1px 1px at 88% 55%, #ffffff, transparent),
-			radial-gradient(3px 3px at 93% 40%, #ffffff, transparent),
-			radial-gradient(2px 2px at 98% 50%, #ffffff, transparent),
-			radial-gradient(1px 1px at 2% 70%, #ffffff, transparent),
-			radial-gradient(2px 2px at 7% 80%, #ffffff, transparent),
-			radial-gradient(1px 1px at 12% 75%, #ffffff, transparent),
-			radial-gradient(3px 3px at 17% 85%, #ffffff, transparent),
-			radial-gradient(2px 2px at 22% 70%, #ffffff, transparent),
-			radial-gradient(1px 1px at 27% 80%, #ffffff, transparent),
-			radial-gradient(2px 2px at 32% 75%, #ffffff, transparent),
-			radial-gradient(1px 1px at 37% 90%, #ffffff, transparent),
-			radial-gradient(3px 3px at 42% 70%, #ffffff, transparent),
-			radial-gradient(2px 2px at 47% 80%, #ffffff, transparent),
-			radial-gradient(1px 1px at 52% 75%, #ffffff, transparent),
-			radial-gradient(2px 2px at 57% 85%, #ffffff, transparent),
-			radial-gradient(1px 1px at 62% 70%, #ffffff, transparent),
-			radial-gradient(3px 3px at 67% 80%, #ffffff, transparent),
-			radial-gradient(2px 2px at 72% 75%, #ffffff, transparent),
-			radial-gradient(1px 1px at 77% 90%, #ffffff, transparent),
-			radial-gradient(2px 2px at 82% 85%, #ffffff, transparent),
-			radial-gradient(1px 1px at 87% 70%, #ffffff, transparent),
-			radial-gradient(3px 3px at 92% 80%, #ffffff, transparent),
-			radial-gradient(2px 2px at 97% 75%, #ffffff, transparent),
-			radial-gradient(1px 1px at 4% 60%, #ffffff, transparent),
-			radial-gradient(2px 2px at 9% 65%, #ffffff, transparent),
-			radial-gradient(1px 1px at 14% 70%, #ffffff, transparent),
-			radial-gradient(2px 2px at 19% 65%, #ffffff, transparent),
-			radial-gradient(1px 1px at 24% 60%, #ffffff, transparent),
-			radial-gradient(3px 3px at 29% 65%, #ffffff, transparent),
-			radial-gradient(2px 2px at 34% 70%, #ffffff, transparent),
-			radial-gradient(1px 1px at 39% 65%, #ffffff, transparent),
-			radial-gradient(2px 2px at 44% 60%, #ffffff, transparent),
-			radial-gradient(1px 1px at 49% 65%, #ffffff, transparent),
-			radial-gradient(3px 3px at 54% 70%, #ffffff, transparent),
-			radial-gradient(2px 2px at 59% 65%, #ffffff, transparent),
-			radial-gradient(1px 1px at 64% 60%, #ffffff, transparent),
-			radial-gradient(2px 2px at 69% 65%, #ffffff, transparent),
-			radial-gradient(1px 1px at 74% 70%, #ffffff, transparent),
-			radial-gradient(2px 2px at 79% 65%, #ffffff, transparent),
-			radial-gradient(1px 1px at 84% 60%, #ffffff, transparent),
-			radial-gradient(3px 3px at 89% 65%, #ffffff, transparent),
-			radial-gradient(2px 2px at 94% 70%, #ffffff, transparent),
-			radial-gradient(1px 1px at 99% 65%, #ffffff, transparent);
-		background-size: 200% 200%;
-		background-position: 0% 0%;
-		opacity: 1;
-		pointer-events: none;
-		z-index: 0;
-	}
-
-	/* 우주 배경 - 네뷸라 효과 */
-	.navigation-grid::after {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: 
-			radial-gradient(ellipse at 20% 30%, var(--color-nebula-green) 0%, transparent 50%),
-			radial-gradient(ellipse at 80% 70%, var(--color-nebula-gold) 0%, transparent 50%),
-			radial-gradient(ellipse at 50% 50%, var(--color-nebula-pink) 0%, transparent 50%);
-		pointer-events: none;
-		z-index: 0;
-		/* animation: nebulaPulse 20s ease-in-out infinite alternate; */
-	}
-
-
-
-	.nav-section {
-		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		text-decoration: none;
-		transition: all 0.2s ease;
-		z-index: 1;
-		overflow: hidden;
-	}
-
-	.nav-section:hover {
-		border-color: var(--color-secondary);
-		background: rgba(0, 255, 65, 0.05);
-	}
-
-	.nav-empty {
-		border: none;
-		pointer-events: none;
-	}
-
-	.nav-gif-wrapper {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		padding: 2rem;
-		gap: 1rem;
-		position: relative;
-	}
-
-	.nav-label {
-		font-family: var(--font-family-mono);
-		font-size: clamp(1rem, 2vw, 1.5rem);
-		font-weight: 700;
-		color: var(--color-primary);
-		text-shadow: 
-			var(--shadow-offset-sm) var(--shadow-offset-sm) 0 var(--color-shadow-dark),
-			var(--shadow-offset) var(--shadow-offset) 0 var(--color-shadow-darker);
-		letter-spacing: 0.1em;
-		z-index: 2;
-		position: relative;
-	}
-
-	.nav-gif {
-		max-width: 100%;
-		max-height: 100%;
-		width: auto;
-		height: auto;
-		object-fit: contain;
-		image-rendering: pixelated;
-		filter: drop-shadow(4px 4px 0 #16213e);
-		transition: transform 0.2s ease;
-	}
-
-	video.nav-gif {
-		image-rendering: auto;
-	}
-
-	.nav-section:hover .nav-gif {
-		transform: scale(1.05);
-		filter: drop-shadow(6px 6px 0 #16213e);
-	}
-
-	/* 11시 방향: 왼쪽 위 */
-	.nav-about {
-		grid-column: 1;
-		grid-row: 1;
-	}
-
-	/* 1시 방향: 오른쪽 위 (빈 공간) */
-	.nav-empty {
-		grid-column: 2;
-		grid-row: 1;
-	}
-
-	/* 7시 방향: 왼쪽 아래 */
-	.nav-blog {
-		grid-column: 1;
-		grid-row: 2;
-	}
-
-	/* 5시 방향: 오른쪽 아래 */
-	.nav-exit {
-		grid-column: 2;
-		grid-row: 2;
-	}
-
-	/* 모바일 반응형 */
-	@media (max-width: 768px) {
-		.navigation-grid {
-			grid-template-columns: 1fr;
-			grid-template-rows: repeat(4, 1fr);
-		}
-
-		.nav-about {
-			grid-column: 1;
-			grid-row: 1;
-		}
-
-		.nav-empty {
-			grid-column: 1;
-			grid-row: 2;
-		}
-
-		.nav-blog {
-			grid-column: 1;
-			grid-row: 3;
-		}
-
-		.nav-exit {
-			grid-column: 1;
-			grid-row: 4;
-		}
-	}
-</style>

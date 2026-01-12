@@ -1,7 +1,6 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
-import IntroOverlay from '../components/IntroOverlay.astro';
 
 interface Props {
 	title: string;
@@ -27,7 +26,7 @@ const isPortfolioPage = Astro.url.pathname === '/about';
 		<BaseHead title={title} description={description} />
 	</head>
 	<body class={isHomePage || isPortfolioPage ? 'portfolio-page' : ''}>
-		{isHomePage && !skipIntro && <IntroOverlay />}
+
 		<div class={`layout-container ${isHomePage || isPortfolioPage ? 'portfolio-layout' : ''}`}>
 			<main class="main-content">
 				<slot />
@@ -88,8 +87,8 @@ const isPortfolioPage = Astro.url.pathname === '/about';
 
 	/* 포트폴리오 페이지 스타일 */
 	body.portfolio-page {
-		background: #000000;
-		color: #ffffff;
+		background: #ffffff;
+		color: #1a1a1a;
 	}
 
 	/* 블로그 페이지 스타일 */
