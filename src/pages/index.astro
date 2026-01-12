@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ResumeHero from '../components/resume/ResumeHero.astro';
 import ResumeSection from '../components/resume/ResumeSection.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import profileImage from '../assets/profile.png';
 
 const experiences = [
   {
@@ -57,7 +58,8 @@ const projects = [
 			description="Building digital products, brands, and experiences. Specialized in React, TypeScript, and Creative Development."
 			githubUrl="https://github.com/heejunp"
 			blogUrl="https://blog.heejunp.com"
-			email="heejunp@email.com"
+			email="heejun.park@proton.me"
+      profileImage={profileImage}
 		/>
 
 		<main class="pb-20">
