@@ -7,6 +7,10 @@ import Projects from '../components/sections/Projects.astro';
 import Experience from '../components/sections/Experience.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import profileImage from '../assets/profile.png';
+import buzzBookImage from '../assets/buzzbook.png';
+import jipPickTImage from '../assets/jippickt.png';
+import linkyImage from '../assets/linky.jpg';
+import jangsaManLabImage from '../assets/jangsamanlab.png';
 
 const experiences = [
   {
@@ -31,42 +35,62 @@ const experiences = [
   }
 ];
 
+import { TECH_TAGS } from '../consts/tags';
+
+const ProjectCategory = {
+  BACKEND: "BackEnd Development",
+  FULLSTACK: "Full Stack Development",
+  INFRASTRUCTURE: "Infrastucture Development",
+  AI: "AI Application",
+  PRODUCTIVITY: "Productivity Tool",
+  CREATIVE: "Creative Dev"
+} as const;
+
 const projects = [
   {
-    title: "E-commerce Dashboard",
-    category: "Full Stack Development",
-    description: "Built a comprehensive analytics dashboard using React, D3.js, and TypeScript. Implemented real-time data visualization and complex filtering systems for large-scale logistics data.",
-    tags: ["React", "D3.js", "TypeScript", "Next.js"],
-    image: "bg-gradient-to-br from-purple-900 to-indigo-900", // Placeholder
+    title: "Buzz Book",
+    category: ProjectCategory.BACKEND,
+    description: "Microservices Architecture (MSA) project functions as a scalable bookstore platform. Orchestrated distributed services using Spring Boot and RabbitMQ, integrating Elasticsearch for search and Redis for caching.",
+    tags: [TECH_TAGS.MSA, TECH_TAGS.SPRING_BOOT, TECH_TAGS.MYSQL, TECH_TAGS.REDIS, TECH_TAGS.RABBITMQ, TECH_TAGS.ELASTICSEARCH, TECH_TAGS.GITHUB_ACTIONS, TECH_TAGS.NGINX],
+    image: buzzBookImage,
+    link: "https://github.com/nhnacademy-be6-AA"
+  },
+  {
+    title: "JipPickT",
+    category: ProjectCategory.FULLSTACK,
+    description: "An AI-powered real estate platform that recommends properties, summarizes key listing details, and evaluates market value to assist effective decision-making.",
+    tags: [TECH_TAGS.OPENAI, TECH_TAGS.SPRING_BOOT, TECH_TAGS.VUEJS, TECH_TAGS.TAILWIND, TECH_TAGS.MYSQL, TECH_TAGS.REDIS, TECH_TAGS.JENKINS, TECH_TAGS.NGINX],
+    image: jipPickTImage,
+    link: "https://github.com/JipPickT"
+  },
+  {
+    title: "Linky",
+    category: ProjectCategory.INFRASTRUCTURE,
+    description: "Autonomous delivery robot designed for park environments, utilizing SLAM for self-driving navigation and providing AI-enhanced delivery services.",
+    tags: [TECH_TAGS.KUBERNETES, TECH_TAGS.JENKINS, TECH_TAGS.ARGOCD, TECH_TAGS.SLAM, TECH_TAGS.OPENAI, TECH_TAGS.OCR, TECH_TAGS.FACENET,TECH_TAGS.WEBRTC, TECH_TAGS.REDIS, TECH_TAGS.VUEJS, TECH_TAGS.TAILWIND],
+    image: linkyImage,
     link: "https://github.com/heejunp"
   },
   {
-    title: "AI Chat Interface",
-    category: "AI Application",
-    description: "Designed and developed a chat interface for LLMs using Vercel AI SDK. Focus on smooth typography and streaming response UX.",
-    tags: ["Next.js", "OpenAI", "Tailwind"],
-    image: "bg-gradient-to-br from-emerald-900 to-teal-900", // Placeholder
-    link: "https://github.com/heejunp"
-  },
-  {
-    title: "3D Portfolio Website",
-    category: "Creative Dev",
-    description: "Interactive portfolio featuring WebGL experiments and physics-based interactions using React Three Fiber.",
-    tags: ["Three.js", "R3F", "WebGL"],
-    image: "bg-gradient-to-br from-orange-900 to-red-900", // Placeholder
-    link: "https://github.com/heejunp"
-  },
-  {
-    title: "Task Management App",
-    category: "Productivity Tool",
-    description: "A collaborative task manager with real-time updates via WebSockets and offline support using PWA technologies.",
-    tags: ["Vue.js", "Firebase", "PWA"],
-    image: "bg-gradient-to-br from-blue-900 to-cyan-900", // Placeholder
-    link: "https://github.com/heejunp"
+    title: "JangsaManLab",
+    category: ProjectCategory.FULLSTACK,
+    description: "A comprehensive business management platform enabling owners to focus on operations by automating attendance tracking, payroll calculations, team communication, and insurance management.",
+    tags: [TECH_TAGS.SVELTEKIT, TECH_TAGS.FIREBASE, TECH_TAGS.PWA, TECH_TAGS.TAILWIND, TECH_TAGS.MYSQL, TECH_TAGS.DOCKER, TECH_TAGS.NGINX],
+    image: jangsaManLabImage,
+    link: "https://xn--yj2bn4b37j8vh.com/employer/"
   }
 ];
 
-const skills = ["React", "TypeScript", "Next.js", "Tailwind CSS", "Three.js", "Node.js", "GraphQL", "PostgreSQL"];
+const skills = [
+  TECH_TAGS.REACT, 
+  TECH_TAGS.TYPESCRIPT, 
+  TECH_TAGS.NEXTJS, 
+  TECH_TAGS.TAILWIND_CSS, 
+  TECH_TAGS.THREEJS, 
+  TECH_TAGS.NODEJS, 
+  TECH_TAGS.GRAPHQL, 
+  TECH_TAGS.POSTGRESQL
+];
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
