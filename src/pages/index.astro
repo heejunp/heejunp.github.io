@@ -5,6 +5,8 @@ import Hero from '../components/sections/Hero.astro';
 import About from '../components/sections/About.astro';
 import Projects from '../components/sections/Projects.astro';
 import Experience from '../components/sections/Experience.astro';
+import Skills from '../components/sections/Skills.astro';
+import Certificates from '../components/sections/Certificates.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import profileImage from '../assets/profile.png';
 import buzzBookImage from '../assets/buzzbook.png';
@@ -80,17 +82,6 @@ const projects = [
     link: "https://xn--yj2bn4b37j8vh.com/employer/"
   }
 ];
-
-const skills = [
-  TECH_TAGS.REACT, 
-  TECH_TAGS.TYPESCRIPT, 
-  TECH_TAGS.NEXTJS, 
-  TECH_TAGS.TAILWIND_CSS, 
-  TECH_TAGS.THREEJS, 
-  TECH_TAGS.NODEJS, 
-  TECH_TAGS.GRAPHQL, 
-  TECH_TAGS.POSTGRESQL
-];
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
@@ -115,32 +106,29 @@ const skills = [
       <div class="snap-start">
         <About 
           name="Park Hee Jun"
-          role="Frontend Engineer"
-          description={`Building digital products, brands, and experiences. 
-          Specialized in React, TypeScript, and Creative Development.
+          role="Full Stack & Infrastructure Engineer"
+          description={`Expanding engineering horizons from Backend fundamentals to Cloud Infrastructure.
           
-          I love creating beautiful and interactive interfaces that solve real-world problems.`}
+          Experienced in building scalable Microservices Architectures (MSA), developing AI-powered platforms, and orchestrating infrastructure for autonomous robots.
+          I specialize in integrating complex systems using Spring Boot, Kubernetes, and Modern Web Technologies to solve real-world problems.`}
           email="heejun.park@proton.me"
           profileImage={profileImage}
         />
       </div>
       
-      <section id="skills" class="snap-start min-h-screen flex flex-col items-center justify-center px-4 py-20 bg-white">
-        <div class="max-w-3xl w-full">
-          <h2 class="text-2xl font-bold text-gray-900 mb-8 border-b border-gray-200 pb-2">Skills</h2>
-          <div class="flex flex-wrap gap-2">
-            {skills.map((skill) => (
-              <span class="px-4 py-2 bg-white text-gray-800 rounded-lg text-sm font-medium border border-gray-200 hover:border-red-500 hover:text-red-600 transition-colors cursor-default shadow-sm">
-                {skill}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
+      <div class="snap-start">
+        <Skills />
+      </div>
 
       <div id="experience" class="snap-start min-h-screen flex items-center justify-center bg-gray-50">
-        <div class="w-full">
+        <div class="w-full max-w-4xl mx-auto py-20">
           <Experience title="Experience" items={experiences} />
+        </div>
+      </div>
+
+      <div class="snap-start min-h-screen flex items-center justify-center bg-white">
+        <div class="w-full">
+           <Certificates />
         </div>
       </div>
 

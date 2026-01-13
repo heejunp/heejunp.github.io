@@ -1,0 +1,43 @@
+---
+interface CertificateItem {
+  title: string;
+  date: string;
+}
+
+const certificates: CertificateItem[] = [
+  {
+    title: "Engineer Information Processing",
+    date: "2024.12"
+  },
+  {
+    title: "AWS Certified Developer – Associate",
+    date: "2024.12"
+  },
+  {
+    title: "AWS Certified Solutions Architect – Associate",
+    date: "2024.11"
+  },
+  {
+    title: "SQL Developer",
+    date: "2024.09"
+  }
+];
+---
+
+<section id="certificates" class="max-w-3xl mx-auto px-4 py-8">
+  <h2 class="text-2xl font-mono font-bold text-gray-900 mb-0 tracking-tight flex items-center gap-2">
+    Certificates<span class="text-red-600 mr-1">:</span>
+  </h2>
+  <div class="h-16 w-full"></div>
+  
+  <div class="space-y-4 pl-6">
+    {certificates.map((cert) => (
+      <div class="flex items-center gap-3 font-mono text-gray-800 hover:text-black transition-colors">
+        <span class="text-red-600">-</span>
+        <span class="font-bold">{cert.title}</span>
+        <span class="text-red-600 mx-1">:</span>
+        <span class="text-gray-500">{cert.date}</span>
+      </div>
+    ))}
+  </div>
+</section>
