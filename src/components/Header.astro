@@ -23,7 +23,8 @@ const navItems = [
       </h1>
     </a>
 
-    <nav class="flex items-center gap-8">
+    {/* Desktop Navigation */}
+    <nav class="hidden md:flex items-center gap-8">
       <ul class="flex gap-6 items-center">
         {navItems.map((item) => (
           <li>
@@ -63,8 +64,87 @@ const navItems = [
         )}
       </div>
     </nav>
+
+    {/* Mobile Menu Button */}
+    <button id="mobile-menu-btn" class="md:hidden text-black p-2 z-50 relative" aria-label="Toggle Menu">
+      <div class="w-6 h-5 flex flex-col justify-between">
+        <span class="w-full h-0.5 bg-black transition-all duration-300 origin-left"></span>
+        <span class="w-full h-0.5 bg-black transition-all duration-300"></span>
+        <span class="w-full h-0.5 bg-black transition-all duration-300 origin-left"></span>
+      </div>
+    </button>
+  </div>
+
+  {/* Mobile Menu Overlay */}
+  <div id="mobile-menu" class="fixed inset-0 bg-white z-40 flex flex-col items-center justify-center translate-x-full transition-transform duration-300 md:hidden">
+    <nav class="flex flex-col items-center gap-8">
+      {navItems.map((item) => (
+        <a 
+          href={item.href} 
+          class="text-2xl font-bold text-black hover:text-red-600 transition-colors mobile-nav-link"
+        >
+          {item.name}
+        </a>
+      ))}
+      <div class="w-12 h-0.5 bg-gray-200 my-4"></div>
+      <div class="flex gap-8">
+        {blogUrl && (
+          <a href={blogUrl} target="_blank" class="text-black hover:text-red-600 transition-colors">
+            Blog
+          </a>
+        )}
+        {githubUrl && (
+          <a href={githubUrl} target="_blank" class="text-black hover:text-red-600 transition-colors">
+            GitHub
+          </a>
+        )}
+      </div>
+    </nav>
   </div>
 </header>
+
+<script>
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuLines = menuBtn?.querySelectorAll('span');
+  const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+  let isMenuOpen = false;
+
+  const toggleMenu = () => {
+    isMenuOpen = !isMenuOpen;
+    
+    // Toggle Menu Visibility
+    if (isMenuOpen) {
+      mobileMenu?.classList.remove('translate-x-full');
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    } else {
+      mobileMenu?.classList.add('translate-x-full');
+      document.body.style.overflow = '';
+    }
+
+    // Animate Hamburger
+    if (menuLines && menuLines.length === 3) {
+      if (isMenuOpen) {
+        menuLines[0].classList.add('rotate-45');
+        menuLines[1].classList.add('opacity-0');
+        menuLines[2].classList.add('-rotate-45');
+      } else {
+        menuLines[0].classList.remove('rotate-45');
+        menuLines[1].classList.remove('opacity-0');
+        menuLines[2].classList.remove('-rotate-45');
+      }
+    }
+  };
+
+  menuBtn?.addEventListener('click', toggleMenu);
+
+  // Close menu when a link is clicked
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (isMenuOpen) toggleMenu();
+    });
+  });
+</script>
 
 <style>
   header {

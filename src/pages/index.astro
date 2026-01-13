@@ -105,21 +105,21 @@ const projects = [
     
     <Header githubUrl="https://github.com/heejunp" blogUrl="https://blog.heejunp.com" />
     
-    <main class="snap-y snap-mandatory h-screen overflow-y-scroll scroll-smooth">
-      <div class="snap-start">
+    <main class="h-auto overflow-auto md:h-screen md:overflow-y-scroll md:snap-y md:snap-mandatory scroll-smooth">
+      <div class="md:snap-start">
         <Hero 
           name="Heejun Park" 
           tagline="Designing robust infrastructure that satisfies both developers and users, built on a foundation of web development experience." 
         />
       </div>
 
-      <div class="snap-start min-h-screen flex items-center justify-center bg-gray-50">
+      <div class="md:snap-start min-h-screen flex items-center justify-center bg-gray-50">
         <div class="w-full h-full flex flex-col justify-center">
           <Projects projects={projects} />
         </div>
       </div>
 
-      <div class="snap-start">
+      <div class="md:snap-start">
         <About 
           name="Park Hee Jun"
           role="Full Stack & Infrastructure Engineer"
@@ -132,17 +132,17 @@ const projects = [
         />
       </div>
       
-      <div class="snap-start">
+      <div class="md:snap-start">
         <Skills />
       </div>
 
-      <div id="experience" class="snap-start min-h-screen flex items-center justify-center bg-gray-50">
+      <div id="experience" class="md:snap-start min-h-screen flex items-center justify-center bg-gray-50">
         <div class="w-full max-w-4xl mx-auto py-20">
           <Experience title="Experience" items={experiences} />
         </div>
       </div>
 
-      <div class="snap-start min-h-screen flex items-center justify-center bg-white">
+      <div class="md:snap-start min-h-screen flex items-center justify-center bg-white">
         <div class="w-full">
            <Certificates />
         </div>
