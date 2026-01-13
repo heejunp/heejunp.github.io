@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ResumeHeader from '../components/resume/ResumeHeader.astro';
-import HeroSection from '../components/resume/HeroSection.astro';
-import AboutSection from '../components/resume/AboutSection.astro';
-import ResumeSection from '../components/resume/ResumeSection.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/sections/Hero.astro';
+import About from '../components/sections/About.astro';
+import Projects from '../components/sections/Projects.astro';
+import Experience from '../components/sections/Experience.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import profileImage from '../assets/profile.png';
 
@@ -33,21 +34,35 @@ const experiences = [
 const projects = [
   {
     title: "E-commerce Dashboard",
-    company: "Personal Project",
-    period: "2023",
-    description: [
-      "Built a comprehensive analytics dashboard using React, D3.js, and TypeScript.",
-      "implemented real-time data visualization and complex filtering systems."
-    ]
+    category: "Full Stack Development",
+    description: "Built a comprehensive analytics dashboard using React, D3.js, and TypeScript. Implemented real-time data visualization and complex filtering systems for large-scale logistics data.",
+    tags: ["React", "D3.js", "TypeScript", "Next.js"],
+    image: "bg-gradient-to-br from-purple-900 to-indigo-900", // Placeholder
+    link: "https://github.com/heejunp"
   },
   {
     title: "AI Chat Interface",
-    company: "Personal Project",
-    period: "2024",
-    description: [
-      "Designed and developed a chat interface for LLMs using Vercel AI SDK.",
-      "Focus on smooth typography and streaming response UX."
-    ]
+    category: "AI Application",
+    description: "Designed and developed a chat interface for LLMs using Vercel AI SDK. Focus on smooth typography and streaming response UX.",
+    tags: ["Next.js", "OpenAI", "Tailwind"],
+    image: "bg-gradient-to-br from-emerald-900 to-teal-900", // Placeholder
+    link: "https://github.com/heejunp"
+  },
+  {
+    title: "3D Portfolio Website",
+    category: "Creative Dev",
+    description: "Interactive portfolio featuring WebGL experiments and physics-based interactions using React Three Fiber.",
+    tags: ["Three.js", "R3F", "WebGL"],
+    image: "bg-gradient-to-br from-orange-900 to-red-900", // Placeholder
+    link: "https://github.com/heejunp"
+  },
+  {
+    title: "Task Management App",
+    category: "Productivity Tool",
+    description: "A collaborative task manager with real-time updates via WebSockets and offline support using PWA technologies.",
+    tags: ["Vue.js", "Firebase", "PWA"],
+    image: "bg-gradient-to-br from-blue-900 to-cyan-900", // Placeholder
+    link: "https://github.com/heejunp"
   }
 ];
 
@@ -57,24 +72,24 @@ const skills = ["React", "TypeScript", "Next.js", "Tailwind CSS", "Three.js", "N
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <div class="min-h-screen bg-white font-sans text-gray-900">
     
-    <ResumeHeader githubUrl="https://github.com/heejunp" blogUrl="https://blog.heejunp.com" />
+    <Header githubUrl="https://github.com/heejunp" blogUrl="https://blog.heejunp.com" />
     
     <main class="snap-y snap-mandatory h-screen overflow-y-scroll scroll-smooth">
       <div class="snap-start">
-        <HeroSection 
+        <Hero 
           name="Heejun Park" 
           tagline="Designing robust infrastructure that satisfies both developers and users, built on a foundation of web development experience." 
         />
       </div>
 
-      <div id="projects" class="snap-start min-h-screen flex items-center justify-center pt-20 bg-gray-50">
-        <div class="w-full">
-          <ResumeSection title="Projects" items={projects} />
+      <div class="snap-start min-h-screen flex items-center justify-center bg-gray-50">
+        <div class="w-full h-full flex flex-col justify-center">
+          <Projects projects={projects} />
         </div>
       </div>
 
       <div class="snap-start">
-        <AboutSection 
+        <About 
           name="Park Hee Jun"
           role="Frontend Engineer"
           description={`Building digital products, brands, and experiences. 
@@ -101,7 +116,7 @@ const skills = ["React", "TypeScript", "Next.js", "Tailwind CSS", "Three.js", "N
 
       <div id="experience" class="snap-start min-h-screen flex items-center justify-center bg-gray-50">
         <div class="w-full">
-          <ResumeSection title="Experience" items={experiences} />
+          <Experience title="Experience" items={experiences} />
         </div>
       </div>
 

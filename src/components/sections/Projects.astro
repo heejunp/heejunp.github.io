@@ -1,0 +1,106 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Project {
+  title: string;
+  category: string;
+  description: string;
+  tags: string[];
+  link?: string;
+  image?: ImageMetadata | string; // Support both imports and URL strings/placeholders
+}
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<section id="projects" class="py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl font-bold text-gray-900 mb-12 flex items-center gap-4">
+      Selected Projects
+      <span class="h-px flex-1 bg-gray-200"></span>
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[400px]">
+      
+      {/* Featured Project (First Item) - Spans full width on mobile, 2 cols on desktop, or specific layout */}
+      {/* User asked for 1 big image. I'll make the first one span 2 columns and 2 rows or full width depending on the count. 
+          With 4 projects, a 2x2 grid where the first one is 2x2 doesn't work well with 3 others.
+          Layout Idea:
+          [ Big Project ] (md:col-span-3)
+          [ P2 ] [ P3 ] [ P4 ] (md:col-span-1 each)
+      */}
+
+      {projects.map((project, index) => (
+        <article 
+          class:list={[
+            "group relative rounded-3xl overflow-hidden bg-gray-100 border border-gray-100",
+            index === 0 ? "md:col-span-3 md:row-span-2" : "md:col-span-1"
+          ]}
+        >
+          {/* Image Background */}
+          <div class="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
+            {typeof project.image === 'string' ? (
+              <div class={`w-full h-full bg-cover bg-center ${project.image}`} />
+            ) : project.image ? (
+               <Image 
+                src={project.image} 
+                alt={project.title}
+                class="w-full h-full object-cover"
+                width={index === 0 ? 1280 : 640}
+                height={index === 0 ? 720 : 640}
+              />
+            ) : (
+              <div class="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200"></div>
+            )}
+            
+            {/* Overlay Gradient */}
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+          </div>
+
+          {/* Content */}
+          <div class="absolute inset-0 p-6 md:p-10 flex flex-col justify-end text-white">
+            <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+              <span class="text-sm font-medium text-red-400 mb-2 block tracking-wider uppercase">
+                {project.category}
+              </span>
+              <h3 class:list={[
+                "font-bold mb-3 leading-tight",
+                index === 0 ? "text-3xl md:text-5xl" : "text-xl md:text-2xl"
+              ]}>
+                {project.title}
+              </h3>
+              <p class:list={[
+                "text-gray-300 mb-6 line-clamp-2 mix-blend-plus-lighter",
+                 index === 0 ? "text-lg md:text-xl max-w-2xl" : "text-sm"
+              ]}>
+                {project.description}
+              </p>
+              
+              <div class="flex flex-wrap gap-2">
+                {project.tags.map(tag => (
+                   <span class="px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-xs md:text-sm border border-white/10 text-white/90">
+                     {tag}
+                   </span>
+                ))}
+              </div>
+            </div>
+            
+            {/* Link Icon */}
+            {project.link && (
+               <a href={project.link} target="_blank" class="absolute top-6 right-6 w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0">
+                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                   <path d="M7 17l9.2-9.2M17 8v9"></path>
+                 </svg>
+               </a>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
