@@ -26,9 +26,9 @@ const { title, items } = Astro.props;
           {item.period}
         </div>
         <div>
-          <h3 class="text-xl font-bold font-mono text-gray-900 mb-1 flex items-center gap-2">
+          <span class="text-2xl font-bold font-mono text-gray-900 mb-1 flex items-center gap-2">
             <span class="text-red-600">-</span>{item.title}<span class="text-red-600">:</span>
-          </h3>
+          </span>
           <p class="text-gray-700 font-medium mb-3">{item.company}</p>
           <ul class="list-disc list-outside ml-4 space-y-1 text-gray-600 leading-relaxed">
             {item.description.map((desc) => (
