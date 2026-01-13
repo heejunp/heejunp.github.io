@@ -32,7 +32,7 @@ const { title, items } = Astro.props;
           <p class="text-gray-700 font-medium mb-3">{item.company}</p>
           <ul class="list-disc list-outside ml-4 space-y-1 text-gray-600 leading-relaxed">
             {item.description.map((desc) => (
-              <li>{desc}</li>
+              <span>{desc}</span>
             ))}
           </ul>
         </div>

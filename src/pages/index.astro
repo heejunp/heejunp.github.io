@@ -68,34 +68,63 @@ const projects = [
   {
     title: "Buzz Book",
     category: ProjectCategory.BACKEND,
+    period: "2024.05 - 2024.08",
     description: "Microservices Architecture (MSA) project functions as a scalable bookstore platform. Orchestrated distributed services using Spring Boot and RabbitMQ, integrating Elasticsearch for search and Redis for caching.",
     tags: [TECH_TAGS.MSA, TECH_TAGS.SPRING_BOOT, TECH_TAGS.MYSQL, TECH_TAGS.REDIS, TECH_TAGS.RABBITMQ, TECH_TAGS.ELASTICSEARCH, TECH_TAGS.GITHUB_ACTIONS, TECH_TAGS.NGINX],
     image: buzzBookImage,
-    link: "https://github.com/nhnacademy-be6-AA"
+    link: "https://github.com/nhnacademy-be6-AA",
+    work: [
+      "Designed & Implemented MSA Infrastructure: Configured Spring Cloud Eureka, Gateway, and Auth Service for service discovery and centralized authentication.",
+      "Reliability & Monitoring: Integrated ELK Stack (Elasticsearch, Logstash, Kibana) for centralized logging and Zipkin for distributed tracing.",
+      "CI/CD Pipeline: Built automated deployment workflows using GitHub Actions and SonarQube for code quality assurance.",
+      "Event-Driven Architecture: Decoupled order and point systems using RabbitMQ to ensure transactional consistency and system resilience."
+    ]
   },
   {
     title: "JipPickT",
     category: ProjectCategory.FULLSTACK,
+    period: "2025.04 ~ 2025.06",
     description: "An AI-powered real estate platform that recommends properties, summarizes key listing details, and evaluates market value to assist effective decision-making.",
     tags: [TECH_TAGS.OPENAI, TECH_TAGS.SPRING_BOOT, TECH_TAGS.VUEJS, TECH_TAGS.TAILWIND, TECH_TAGS.MYSQL, TECH_TAGS.REDIS, TECH_TAGS.JENKINS, TECH_TAGS.NGINX],
     image: jipPickTImage,
-    link: "https://github.com/JipPickT"
+    link: "https://github.com/JipPickT",
+    work: [
+      "Backend API Development: Designed RESTful APIs for property data management and user interactions using Spring Boot.",
+      "Infrastructure & DevOps: Configured Jenkins for automated CI/CD and deployed services on Naver Cloud Platform.",
+      "Performance Optimization: Implemented Nginx as a reverse proxy and load balancer; used Redis for session management and caching frequently accessed property data.",
+      "AI Integration: Integrated OpenAI API for property description summarization and recommendation logic."
+    ]
   },
   {
     title: "Linky",
     category: ProjectCategory.INFRASTRUCTURE,
+    period: "2025.07 - 2025.08",
     description: "Autonomous delivery robot designed for park environments, utilizing SLAM for self-driving navigation and providing AI-enhanced delivery services.",
     tags: [TECH_TAGS.KUBERNETES, TECH_TAGS.JENKINS, TECH_TAGS.ARGOCD, TECH_TAGS.SLAM, TECH_TAGS.OPENAI, TECH_TAGS.OCR, TECH_TAGS.FACENET,TECH_TAGS.WEBRTC, TECH_TAGS.REDIS, TECH_TAGS.VUEJS, TECH_TAGS.TAILWIND],
     image: linkyImage,
-    link: "https://github.com/heejunp"
+    link: "https://github.com/heejunp",
+    work: [
+      "Robot Control System: Developed the main control server using Python/FastAPI to orchestrate SLAM navigation and sensor data processing.",
+      "IoT Communication: Implemented MQTT for real-time, low-latency communication between the robot, server, and user client.",
+      "Real-time Streaming: Integrated WebRTC for low-latency video streaming from the robot's camera to the admin dashboard.",
+      "AI Features: Implemented OCR for receipt verification and Facenet for user authentication during delivery handover.",
+      "Cloud Native Deployment: Managed containerized application lifecycle using Kubernetes and ArgoCD (GitOps)."
+    ]
   },
   {
     title: "JangsaManLab",
     category: ProjectCategory.FULLSTACK,
+    period: "2025.08 - 2025.12",
     description: "A comprehensive business management platform enabling owners to focus on operations by automating attendance tracking, payroll calculations, team communication, and insurance management.",
     tags: [TECH_TAGS.SVELTEKIT, TECH_TAGS.FIREBASE, TECH_TAGS.PWA, TECH_TAGS.TAILWIND, TECH_TAGS.MYSQL, TECH_TAGS.DOCKER, TECH_TAGS.NGINX],
     image: jangsaManLabImage,
-    link: "https://xn--yj2bn4b37j8vh.com/employer/"
+    link: "https://xn--yj2bn4b37j8vh.com/employer/",
+    work: [
+      "Full-Stack Lead: Led development using SvelteKit for SSR/SEO benefits and serverless backend logic.",
+      "Serverless Architecture: Deployed on Google Cloud Run for auto-scaling and cost-efficiency.",
+      "Real-time & Auth: Utilized Firebase Authentication for secure login and Cloud Firestore/FCM for real-time notifications.",
+      "PWA Implementation: Configured Progressive Web App features for installability and offline capabilities on mobile devices."
+    ]
   }
 ];
 ---
@@ -109,7 +138,7 @@ const projects = [
       <div class="md:snap-start">
         <Hero 
           name="Heejun Park" 
-          tagline="Designing robust infrastructure that satisfies both developers and users, built on a foundation of web development experience." 
+          tagline="Bridging Web and Infra: Engineering reliable systems from a full-stack perspective." 
         />
       </div>
 
@@ -128,7 +157,8 @@ const projects = [
           Experienced in building scalable Microservices Architectures (MSA), developing AI-powered platforms, and orchestrating infrastructure for autonomous robots.
           I specialize in integrating complex systems using Spring Boot, Kubernetes, and Modern Web Technologies to solve real-world problems.`}
           email="heejun.park@proton.me"
-          profileImage={profileImage}
+          githubUrl="https://github.com/heejunp"
+          blogUrl="https://blog.heejunp.com"
         />
       </div>
       
