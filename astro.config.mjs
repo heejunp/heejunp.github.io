@@ -12,6 +12,11 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      minify: 'esbuild',
+      cssMinify: true,
+      sourcemap: false,
+    },
   },
   build: {
     inlineStylesheets: 'always',
