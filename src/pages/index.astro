@@ -7,8 +7,10 @@ import Projects from '../components/sections/Projects.astro';
 import Experience from '../components/sections/Experience.astro';
 import Skills from '../components/sections/Skills.astro';
 import Certificates from '../components/sections/Certificates.astro';
+import { Image } from 'astro:assets';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { experiences, experiencesKo, projects, projectsKo, aboutMe } from '../consts/data';
+import twinNodeCrewImg from '../assets/twin_node_crew.png';
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
@@ -38,10 +40,18 @@ import { experiences, experiencesKo, projects, projectsKo, aboutMe } from '../co
       </div>
 
       <div class="md:snap-start">
-        <Hero 
-          name="Heejun Park" 
-          tagline="Bridging Web and Infra: Engineering reliable systems from a full-stack perspective." 
-        />
+        <Hero name="Heejun Park">
+          <span slot="tagline">
+            Sailing the Container Sea with my 
+            <span class="relative group inline-block cursor-pointer">
+              <a href="#" class="text-red-600 font-bold underline decoration-wavy transition-colors">Twin-Node Crew</a>
+              {/* Hover Image */}
+              <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-40 h-40 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-50 translate-y-2 group-hover:translate-y-0">
+                <Image src={twinNodeCrewImg} alt="Twin-Node Crew" class="w-full h-full object-contain drop-shadow-xl" />
+              </div>
+            </span>.
+          </span>
+        </Hero>
       </div>
 
       <div class="md:snap-start min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 transition-colors duration-300">

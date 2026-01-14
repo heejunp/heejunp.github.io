@@ -7,7 +7,7 @@ interface Props {
 const { name, tagline } = Astro.props;
 ---
 
-<section class="min-h-screen flex flex-col items-center justify-center bg-white dark:bg-gray-900 px-4 relative overflow-hidden transition-colors duration-300">
+<section id="hero" class="min-h-screen flex flex-col items-center justify-center bg-white dark:bg-gray-900 px-4 relative overflow-hidden transition-colors duration-300">
   
   <div class="absolute top-32 left-8 md:left-20 text-gray-100 dark:text-gray-800 text-9xl font-mono font-bold select-none pointer-events-none -z-0 transition-colors duration-300">
     #
@@ -29,10 +29,14 @@ const { name, tagline } = Astro.props;
       </span>
     </p>
 
-    {tagline && (
+    {tagline ? (
       <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 font-medium pt-8 animate-fade-in delay-300">
         {tagline}
       </p>
+    ) : (
+      <div class="text-sm md:text-base text-gray-600 dark:text-gray-300 font-medium pt-8 animate-fade-in delay-300">
+        <slot name="tagline" />
+      </div>
     )}
   </div>
 
