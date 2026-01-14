@@ -24,6 +24,17 @@ const isPortfolioPage = Astro.url.pathname === '/about';
 <html lang="ko">
 	<head>
 		<BaseHead title={title} description={description} />
+		<script is:inline>
+			if (
+				localStorage.getItem('color-theme') === 'dark' ||
+				(!('color-theme' in localStorage) &&
+					window.matchMedia('(prefers-color-scheme: dark)').matches)
+			) {
+				document.documentElement.classList.add('dark');
+			} else {
+				document.documentElement.classList.remove('dark');
+			}
+		</script>
 	</head>
 	<body class={isHomePage || isPortfolioPage ? 'portfolio-page' : ''}>
 

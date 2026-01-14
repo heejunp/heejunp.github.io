@@ -12,13 +12,22 @@ import { experiences, experiencesKo, projects, projectsKo, aboutMe } from '../co
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <div class="min-h-screen bg-white font-sans text-gray-900">
+  <div class="min-h-screen bg-white dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-100 transition-colors duration-300">
     
     <Header githubUrl="https://github.com/heejunp" blogUrl="https://blog.heejunp.com" />
     
     <main class="h-auto overflow-auto md:h-screen md:overflow-y-scroll md:snap-y md:snap-mandatory scroll-smooth relative">
-      {/* Floating Language Switcher */}
+      {/* Floating Buttons */}
       <div class="fixed top-24 right-6 z-50 flex flex-col gap-2 group">
+        <button 
+          id="theme-toggle"
+          class="bg-black/80 hover:bg-black text-white p-3 rounded-full shadow-xl transition-all hover:scale-110 active:scale-95 border border-white/20 backdrop-blur-md"
+          aria-label="Toggle Dark Mode"
+        >
+          <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+          <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+        </button>
+
         <button 
           id="lang-toggle"
           class="bg-black/80 hover:bg-black text-white p-3 rounded-full shadow-xl transition-all hover:scale-110 active:scale-95 border border-white/20 backdrop-blur-md"
@@ -35,7 +44,7 @@ import { experiences, experiencesKo, projects, projectsKo, aboutMe } from '../co
         />
       </div>
 
-      <div class="md:snap-start min-h-screen flex items-center justify-center bg-gray-50">
+      <div class="md:snap-start min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
         <div class="w-full h-full flex flex-col justify-center">
           <Projects projects={projects} projectsKo={projectsKo} />
         </div>
@@ -49,13 +58,13 @@ import { experiences, experiencesKo, projects, projectsKo, aboutMe } from '../co
         <Skills />
       </div>
 
-      <div id="experience" class="md:snap-start min-h-screen flex items-center justify-center bg-gray-50">
+      <div id="experience" class="md:snap-start min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
         <div class="w-full max-w-4xl mx-auto py-20">
           <Experience title="Experience" items={experiences} itemsKo={experiencesKo} />
         </div>
       </div>
 
-      <div class="md:snap-start min-h-screen flex items-center justify-center bg-white">
+      <div class="md:snap-start min-h-screen flex items-center justify-center bg-white dark:bg-gray-900 transition-colors duration-300">
         <div class="w-full">
            <Certificates />
         </div>
@@ -87,9 +96,11 @@ import { experiences, experiencesKo, projects, projectsKo, aboutMe } from '../co
     const label = document.getElementById('lang-label');
     const body = document.body;
 
-    // Check saved preference
+    // Check saved preference - Default to 'ko' if null
     const savedLang = localStorage.getItem('language');
-    if (savedLang === 'ko') {
+    const isKoreanOrDefault = savedLang === 'ko' || !savedLang;
+
+    if (isKoreanOrDefault) {
       body.classList.add('lang-ko');
       if (label) label.textContent = 'EN';
     } else {
@@ -98,12 +109,18 @@ import { experiences, experiencesKo, projects, projectsKo, aboutMe } from '../co
     }
 
     if (btn) {
-      btn.addEventListener('click', () => {
+      // Remove old listeners to prevent duplicates if View Transitions don't swap body
+      const newBtn = btn.cloneNode(true);
+      if (btn.parentNode) btn.parentNode.replaceChild(newBtn, btn);
+      
+      newBtn.addEventListener('click', () => {
         body.classList.toggle('lang-ko');
         const isKo = body.classList.contains('lang-ko');
         
-        // Update Label
-        if (label) label.textContent = isKo ? 'EN' : 'KR';
+        // Update Label - Must re-select because cloneNode created a new button, 
+        // but id is unique so we can just select by id again or select from newBtn
+        const newLabel = newBtn.querySelector('#lang-label');
+        if (newLabel) newLabel.textContent = isKo ? 'EN' : 'KR';
         
         // Save preference
         localStorage.setItem('language', isKo ? 'ko' : 'en');
@@ -111,7 +128,59 @@ import { experiences, experiencesKo, projects, projectsKo, aboutMe } from '../co
     }
   };
 
-  document.addEventListener('astro:page-load', initLang);
-  initLang();
+  // Theme Toggle Script
+  const initTheme = () => {
+    const btn = document.getElementById('theme-toggle');
+    const darkIcon = document.getElementById('theme-toggle-dark-icon');
+    const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+    if (!btn || !darkIcon || !lightIcon) return;
+
+    // Sync UI with current document state (set by BaseLayout)
+    const isDark = document.documentElement.classList.contains('dark');
+    
+    // Set initial icon state based on current theme
+    if (isDark) {
+      lightIcon.classList.remove('hidden');
+      darkIcon.classList.add('hidden');
+    } else {
+      lightIcon.classList.add('hidden');
+      darkIcon.classList.remove('hidden');
+    }
+
+    // Toggle Handler - Use onclick to prevent duplicate listeners
+    btn.onclick = () => {
+      // Toggle Icons
+      darkIcon.classList.toggle('hidden');
+      lightIcon.classList.toggle('hidden');
+
+      // Toggle Theme
+      // If dark mode is active
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+      }
+    };
+  };
+
+  // Run on initial load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      initLang();
+      initTheme();
+    });
+  } else {
+    initLang();
+    initTheme();
+  }
+
+  // Run on view transitions
+  document.addEventListener('astro:page-load', () => {
+    initLang();
+    initTheme();
+  });
 </script>
 

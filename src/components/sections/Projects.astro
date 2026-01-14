@@ -25,15 +25,15 @@ interface Props {
 const { projects, projectsKo } = Astro.props;
 ---
 
-<section id="projects" class="min-h-screen flex items-center bg-white py-20 relative overflow-hidden">
+<section id="projects" class="min-h-screen flex items-center bg-white dark:bg-gray-900 py-20 relative overflow-hidden transition-colors duration-300">
   {/* Background Decoration */}
-  <div class="absolute -top-10 -left-6 md:top-10 md:left-10 text-[8rem] md:text-[10rem] font-black text-gray-100 select-none pointer-events-none z-0">
+  <div class="absolute -top-10 -left-6 md:top-10 md:left-10 text-[8rem] md:text-[10rem] font-black text-gray-100 dark:text-gray-800 select-none pointer-events-none z-0 transition-colors duration-300">
     #
   </div>
 
   <div class="max-w-7xl w-full mx-auto px-4 md:px-8 h-[700px] relative z-10"> 
     {/* Main Container - Rounded & Overflow Hidden */}
-    <div class="flex flex-col md:flex-row w-full h-full rounded-3xl overflow-hidden shadow-2xl border border-gray-100 bg-gray-900">
+    <div class="flex flex-col md:flex-row w-full h-full rounded-3xl overflow-hidden shadow-2xl border border-gray-100 dark:border-white/10 bg-gray-900">
       
       {/* LEFT: Featured Project Display */}
       <div class="flex-[2.5] relative h-full bg-gray-800 flex flex-col min-w-0">
@@ -397,23 +397,23 @@ const { projects, projectsKo } = Astro.props;
       // Populate Content
       modalContent.innerHTML = `
         <div class="p-8 md:p-12 space-y-8">
-           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-200 pb-6">
+           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-200 dark:border-white/10 pb-6">
               <div>
                 <span class="px-3 py-1 bg-red-600 text-white text-xs font-bold uppercase tracking-wider rounded-full mb-3 inline-block">
                   ${p.category}
                 </span>
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-2 leading-tight">${p.title}</h2>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-2 leading-tight">${p.title}</h2>
               </div>
               
               ${p.link ? `
-                <a href="${p.link}" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors font-bold text-sm shrink-0 self-start md:self-center">
+                <a href="${p.link}" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-900 dark:bg-gray-700 text-white rounded-lg hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors font-bold text-sm shrink-0 self-start md:self-center">
                   ${isKo ? '프로젝트 이동' : 'Visit Project'}
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                 </a>
               ` : ''}
            </div>
 
-           <div class="flex flex-wrap gap-6 text-gray-600 text-sm font-mono">
+           <div class="flex flex-wrap gap-6 text-gray-600 dark:text-gray-400 text-sm font-mono">
               ${p.period ? `
                 <div class="flex items-center gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-600"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
@@ -429,25 +429,25 @@ const { projects, projectsKo } = Astro.props;
               ` : ''}
 
               <div class="flex flex-wrap gap-2 items-center">
-                 ${p.tags.map(tag => `<span class="text-xs text-gray-600 border border-gray-300 bg-gray-100 px-2 py-0.5 rounded-full">${tag}</span>`).join('')}
+                 ${p.tags.map(tag => `<span class="text-xs text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full">${tag}</span>`).join('')}
               </div>
            </div>
 
            <div class="p-6">
-              <h3 class="text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
                 ${isKo ? '프로젝트 설명' : 'Project Description'}<span class="text-red-600">:</span>
               </h3>
-              <p class="text-gray-700 leading-relaxed text-lg">${p.description}</p>
+              <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">${p.description}</p>
            </div>
 
            ${p.work ? `
              <div class="p-6">
-                <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                   ${isKo ? '주요 기여' : 'My Contributions'}<span class="text-red-600">:</span>
                 </h3>
                 <ul class="space-y-3">
                   ${p.work.map(item => `
-                    <li class="flex items-start text-gray-700 bg-white p-2">
+                    <li class="flex items-start text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 p-2">
                       <span class="text-red-600 text-2xl font-bold mr-2 leading-none">-</span>
                       <span class="leading-relaxed">${item}</span>
                     </li>
@@ -458,10 +458,10 @@ const { projects, projectsKo } = Astro.props;
 
            ${p.review ? `
              <div class="p-6">
-                <h3 class="text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
                   ${isKo ? '회고' : 'Retrospective'}<span class="text-red-600">:</span>
                 </h3>
-                <p class="text-gray-700 leading-relaxed italic text-base whitespace-pre-line">"${p.review}"</p>
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed italic text-base whitespace-pre-line">"${p.review}"</p>
              </div>
            ` : ''}
 

@@ -132,7 +132,6 @@ export const projects = [
     description: "Autonomous delivery robot designed for park environments, utilizing SLAM for self-driving navigation and providing AI-enhanced delivery services.",
     tags: [TECH_TAGS.KUBERNETES, TECH_TAGS.JENKINS, TECH_TAGS.ARGOCD, TECH_TAGS.SLAM, TECH_TAGS.OPENAI, TECH_TAGS.OCR, TECH_TAGS.FACENET,TECH_TAGS.WEBRTC, TECH_TAGS.REDIS, TECH_TAGS.VUEJS, TECH_TAGS.TAILWIND],
     image: linkyImage,
-    link: "https://github.com/heejunp",
     work: [
       "User Authentication: Developed secure Member API and implemented OAuth 2.0 social login functionality.",
       "Real-time Communication: Built a real-time chat service for user-admin interaction using STOMP protocol.",

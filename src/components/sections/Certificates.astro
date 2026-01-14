@@ -26,7 +26,7 @@ const certificates = [
 ---
 
 <section id="certificates" class="max-w-4xl mx-auto px-6 py-8">
-  <h2 class="text-2xl font-mono font-bold text-gray-900 mb-0 tracking-tight flex items-center gap-2">
+  <h2 class="text-2xl font-mono font-bold text-gray-900 dark:text-white mb-0 tracking-tight flex items-center gap-2">
     <span class="lang-en">Certificates</span>
     <span class="lang-ko">자격증</span>
     <span class="text-red-600 mr-1">:</span>
@@ -35,7 +35,7 @@ const certificates = [
   
   <div class="space-y-4 pl-6">
     {certificates.map((cert) => (
-      <div class="flex items-center gap-3 font-mono text-xl text-gray-800 hover:text-black transition-colors">
+      <div class="flex items-center gap-3 font-mono text-xl text-gray-800 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">
         <span class="text-red-600">-</span>
         <span class="font-bold">{cert.title}</span>
         <span class="text-red-600 mx-1">:</span>
