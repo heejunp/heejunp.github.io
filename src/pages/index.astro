@@ -8,126 +8,7 @@ import Experience from '../components/sections/Experience.astro';
 import Skills from '../components/sections/Skills.astro';
 import Certificates from '../components/sections/Certificates.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import profileImage from '../assets/profile.png';
-import buzzBookImage from '../assets/buzzbook.png';
-import jipPickTImage from '../assets/jippickt.png';
-import linkyImage from '../assets/linky.jpg';
-import jangsaManLabImage from '../assets/jangsamanlab.png';
-
-const experiences = [
-  {
-    title: "FullStack Engineer",
-    company: "(주)비즈웍스",
-    period: "2025.08 - 2025.12",
-    description: [
-      "Developed 'JangsaManLab', a comprehensive business management platform including attendance, payroll, and insurance systems.",
-      "Collaborated with cross-functional teams to deliver scalable full-stack solutions."
-    ]
-  },
-  {
-    title: "Software & AI Track Trainee",
-    company: "Samsung SW AI Academy",
-    period: "2025.01 - 2025.08",
-    description: [
-      "Developed 'Linky', an autonomous delivery robot using SLAM and AI for park environments.",
-      "Developed 'JipPickT', an AI-powered real estate recommendation platform.",
-      "Intensive training in AI, Data Analysis, and Software Engineering."
-    ]
-  },
-  {
-    title: "Backend Engineering Trainee",
-    company: "NHN Academy",
-    period: "2024.02 - 2024.08",
-    description: [
-      "Specialized in Java Backend, Microservices Architecture (MSA), and Cloud Infrastructure.",
-      "Led the 'Buzz Book' project, orchestrating distributed services with Spring Boot and Kubernetes."
-    ]
-  },
-  {
-    title: "Graduation",
-    company: "Chosun University",
-    period: "2024.02",
-    description: [
-      "Bachelor's Degree in Electronic Engineering."
-    ]
-  }
-];
-
-import { TECH_TAGS } from '../consts/tags';
-
-const ProjectCategory = {
-  BACKEND: "BackEnd Development",
-  FULLSTACK: "Full Stack Development",
-  INFRASTRUCTURE: "Infrastucture Development",
-  AI: "AI Application",
-  PRODUCTIVITY: "Productivity Tool",
-  CREATIVE: "Creative Dev"
-} as const;
-
-const projects = [
-  {
-    title: "Buzz Book",
-    category: ProjectCategory.BACKEND,
-    period: "2024.05 - 2024.08",
-    teamSize: "6 Members (Team Lead)",
-    description: "Microservices Architecture (MSA) project functions as a scalable bookstore platform. Orchestrated distributed services using Spring Boot and RabbitMQ, integrating Elasticsearch for search and Redis for caching.",
-    tags: [TECH_TAGS.MSA, TECH_TAGS.SPRING_BOOT, TECH_TAGS.MYSQL, TECH_TAGS.REDIS, TECH_TAGS.RABBITMQ, TECH_TAGS.ELASTICSEARCH, TECH_TAGS.GITHUB_ACTIONS, TECH_TAGS.NGINX],
-    image: buzzBookImage,
-    top: true,
-    link: "https://github.com/nhnacademy-be6-AA",
-    work: [
-      "Coupon & Point System: Developed RESTful APIs for coupon and point management, utilizing RabbitMQ to ensure reliable coupon issuance under high traffic.",
-      "MSA Infrastructure: Architected the microservices environment using Spring Cloud Eureka for service discovery and Spring Cloud Gateway for centralized routing.",
-      "DevOps & Deployment: Deployed services on NHN Cloud infrastructure and established an automated CI/CD pipeline using GitHub Actions."
-    ]
-  },
-  {
-    title: "JipPickT",
-    category: ProjectCategory.FULLSTACK,
-    period: "2025.04 ~ 2025.06",
-    teamSize: "2 Members (Team Lead)",
-    description: "An AI-powered real estate platform that recommends properties, summarizes key listing details, and evaluates market value to assist effective decision-making.",
-    tags: [TECH_TAGS.OPENAI, TECH_TAGS.SPRING_BOOT, TECH_TAGS.VUEJS, TECH_TAGS.TAILWIND, TECH_TAGS.MYSQL, TECH_TAGS.REDIS, TECH_TAGS.JENKINS, TECH_TAGS.NGINX],
-    image: jipPickTImage,
-    link: "https://github.com/JipPickT",
-    work: [
-      "Full Stack Development: Developed the entire application using Vue.js 3 for the frontend and Spring Boot for the backend, ensuring seamless integration.",
-      "Infrastructure & CI/CD: Configured a self-hosted deployment environment using a Mini PC and automated the build/deployment pipeline with Jenkins."
-    ]
-  },
-  {
-    title: "Linky",
-    category: ProjectCategory.INFRASTRUCTURE,
-    period: "2025.07 - 2025.08",
-    teamSize: "6 Members (Team Member)",
-    description: "Autonomous delivery robot designed for park environments, utilizing SLAM for self-driving navigation and providing AI-enhanced delivery services.",
-    tags: [TECH_TAGS.KUBERNETES, TECH_TAGS.JENKINS, TECH_TAGS.ARGOCD, TECH_TAGS.SLAM, TECH_TAGS.OPENAI, TECH_TAGS.OCR, TECH_TAGS.FACENET,TECH_TAGS.WEBRTC, TECH_TAGS.REDIS, TECH_TAGS.VUEJS, TECH_TAGS.TAILWIND],
-    image: linkyImage,
-    link: "https://github.com/heejunp",
-    work: [
-      "User Authentication: Developed secure Member API and implemented OAuth 2.0 social login functionality.",
-      "Real-time Communication: Built a real-time chat service for user-admin interaction using STOMP protocol.",
-      "AI Chatbot: Integrated Large Language Models (LLM) to provide an intelligent interactive chatbot service.",
-      "GitOps Infrastructure: Established a robust GitOps workflow for continuous deployment using Kubernetes, ArgoCD, and Jenkins."
-    ]
-  },
-  {
-    title: "JangsaManLab",
-    category: ProjectCategory.FULLSTACK,
-    period: "2025.08 - 2025.12",
-    teamSize: "1 Member (Full Stack)",
-    description: "A comprehensive business management platform enabling owners to focus on operations by automating attendance tracking, payroll calculations, team communication, and insurance management.",
-    tags: [TECH_TAGS.SVELTEKIT, TECH_TAGS.FIREBASE, TECH_TAGS.PWA, TECH_TAGS.TAILWIND, TECH_TAGS.MYSQL, TECH_TAGS.DOCKER, TECH_TAGS.NGINX],
-    image: jangsaManLabImage,
-    link: "https://xn--yj2bn4b37j8vh.com/employer/",
-    work: [
-      "Full Stack Development: Leveraged SvelteKit for both SSR/SEO optimized frontend and serverless backend functionality.",
-      "AI-Assisted Design Workflow: Established a rapid Web Design-to-Code workflow using Figma and Cursor AI tools.",
-      "PWA Implementation: Configured Progressive Web App features to provide a native app-like experience on mobile devices.",
-      "Component Refactoring: Refactored initial monolithic code into reusable components to improve maintainability and scalability."
-    ]
-  }
-];
+import { experiences, experiencesKo, projects, projectsKo, aboutMe } from '../consts/data';
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
@@ -135,7 +16,18 @@ const projects = [
     
     <Header githubUrl="https://github.com/heejunp" blogUrl="https://blog.heejunp.com" />
     
-    <main class="h-auto overflow-auto md:h-screen md:overflow-y-scroll md:snap-y md:snap-mandatory scroll-smooth">
+    <main class="h-auto overflow-auto md:h-screen md:overflow-y-scroll md:snap-y md:snap-mandatory scroll-smooth relative">
+      {/* Floating Language Switcher */}
+      <div class="fixed top-24 right-6 z-50 flex flex-col gap-2 group">
+        <button 
+          id="lang-toggle"
+          class="bg-black/80 hover:bg-black text-white p-3 rounded-full shadow-xl transition-all hover:scale-110 active:scale-95 border border-white/20 backdrop-blur-md"
+          aria-label="Switch Language"
+        >
+          <span class="font-bold text-xs tracking-wider" id="lang-label">KR</span>
+        </button>
+      </div>
+
       <div class="md:snap-start">
         <Hero 
           name="Heejun Park" 
@@ -145,22 +37,12 @@ const projects = [
 
       <div class="md:snap-start min-h-screen flex items-center justify-center bg-gray-50">
         <div class="w-full h-full flex flex-col justify-center">
-          <Projects projects={projects} />
+          <Projects projects={projects} projectsKo={projectsKo} />
         </div>
       </div>
 
       <div class="md:snap-start">
-        <About 
-          name="Park Hee Jun"
-          role="Full Stack & Infrastructure Engineer"
-          description={`Expanding engineering horizons from Backend fundamentals to Cloud Infrastructure.
-          
-          Experienced in building scalable Microservices Architectures (MSA), developing AI-powered platforms, and orchestrating infrastructure for autonomous robots.
-          I specialize in integrating complex systems using Spring Boot, Kubernetes, and Modern Web Technologies to solve real-world problems.`}
-          email="heejun.park@proton.me"
-          githubUrl="https://github.com/heejunp"
-          blogUrl="https://blog.heejunp.com"
-        />
+        <About {...aboutMe} />
       </div>
       
       <div class="md:snap-start">
@@ -169,7 +51,7 @@ const projects = [
 
       <div id="experience" class="md:snap-start min-h-screen flex items-center justify-center bg-gray-50">
         <div class="w-full max-w-4xl mx-auto py-20">
-          <Experience title="Experience" items={experiences} />
+          <Experience title="Experience" items={experiences} itemsKo={experiencesKo} />
         </div>
       </div>
 
@@ -188,5 +70,48 @@ const projects = [
   html {
     scroll-behavior: smooth;
   }
+  
+  /* Language Toggle Logic */
+  :global(body.lang-ko) :global(.lang-en) {
+    display: none !important;
+  }
+  :global(body:not(.lang-ko)) :global(.lang-ko) {
+    display: none !important;
+  }
 </style>
+
+<script>
+  // Language Toggle Script
+  const initLang = () => {
+    const btn = document.getElementById('lang-toggle');
+    const label = document.getElementById('lang-label');
+    const body = document.body;
+
+    // Check saved preference
+    const savedLang = localStorage.getItem('language');
+    if (savedLang === 'ko') {
+      body.classList.add('lang-ko');
+      if (label) label.textContent = 'EN';
+    } else {
+      body.classList.remove('lang-ko');
+      if (label) label.textContent = 'KR';
+    }
+
+    if (btn) {
+      btn.addEventListener('click', () => {
+        body.classList.toggle('lang-ko');
+        const isKo = body.classList.contains('lang-ko');
+        
+        // Update Label
+        if (label) label.textContent = isKo ? 'EN' : 'KR';
+        
+        // Save preference
+        localStorage.setItem('language', isKo ? 'ko' : 'en');
+      });
+    }
+  };
+
+  document.addEventListener('astro:page-load', initLang);
+  initLang();
+</script>
 

@@ -1,61 +1,64 @@
 ---
-import type { ImageMetadata } from 'astro';
- 
 interface Props {
   name: string;
   role: string;
   description: string;
-  email?: string;
-  githubUrl?: string;
-  blogUrl?: string;
+  descriptionKo: string;
+  email: string;
+  githubUrl: string;
+  blogUrl: string;
 }
 
-const { name, role, description, email, githubUrl, blogUrl } = Astro.props;
+const { name, role, description, descriptionKo, email, githubUrl, blogUrl } = Astro.props;
 ---
 
-<section id="about" class="min-h-screen flex items-center justify-center py-20 bg-gray-50">
-  <div class="max-w-4xl mx-auto px-6">
+<section id="about" class="min-h-screen flex items-center justify-center bg-white">
+  <div class="w-full max-w-4xl mx-auto px-6 flex flex-col items-start text-left">
+    {/* Section Title */}
     <h2 class="text-2xl font-mono font-bold text-gray-900 mb-0 tracking-tight flex items-center gap-2">
-      AboutMe<span class="text-red-600 mr-1">:</span>
+      About<span class="text-red-600 mr-1">:</span>
     </h2>
-    <div class="h-16 w-full"></div>
+    <div class="h-12 w-full"></div>
 
-    <div class="flex flex-col md:flex-row gap-12 items-center md:items-start">
-      
+    {/* Main Headline */}
+    <span class="text-2xl md:text-4xl font-bold text-gray-900 mb-8 tracking-tight">
+      {role}
+    </span>
 
+    {/* Description - English */}
+    <div class="lang-en w-full space-y-6 text-xl text-gray-500 leading-relaxed mb-12">
+      <p class="whitespace-pre-line ">{description}</p>
+    </div>
 
-      <div class="flex-1 text-center md:text-left">
-        <h3 class="text-3xl font-bold text-gray-900 mb-6">{role}</h3>
-        <p class="text-lg text-gray-600 leading-relaxed mb-8 whitespace-pre-line">
-          {description}
-        </p>
+    {/* Description - Korean */}
+    <div class="lang-ko w-full space-y-6 text-xl text-gray-500 leading-relaxed mb-12">
+      <p class="whitespace-pre-line">{descriptionKo}</p>
+    </div>
 
-        <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-          {email && (
-             <div class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-200 shadow-sm hover:border-red-200 hover:shadow-md transition-all">
-               <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-               <a href={`mailto:${email}`} class="text-sm font-medium text-gray-600 hover:text-red-600 transition-colors">
-                 Contact: {email}
-               </a>
-             </div>
-          )}
-
-          {githubUrl && (
-            <a href={githubUrl} target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-200 shadow-sm hover:border-red-200 hover:shadow-md transition-all group">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 group-hover:text-black transition-colors"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-              <span class="text-sm font-medium text-gray-600 group-hover:text-black transition-colors">GitHub</span>
+    {/* Contact Buttons */} 
+    <div class="flex flex-wrap gap-4 justify-start">
+      {email && (
+          <div class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-200 shadow-sm hover:border-red-200 hover:shadow-md transition-all">
+            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            <a href={`mailto:${email}`} class="text-sm font-medium text-gray-600 hover:text-red-600 transition-colors">
+              Contact: {email}
             </a>
-          )}
+          </div>
+      )}
 
-          {blogUrl && (
-            <a href={blogUrl} target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-200 shadow-sm hover:border-red-200 hover:shadow-md transition-all group">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 group-hover:text-black transition-colors"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-              <span class="text-sm font-medium text-gray-600 group-hover:text-black transition-colors">Blog</span>
-            </a>
-          )}
-        </div>
-      </div>
+      {githubUrl && (
+        <a href={githubUrl} target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-200 shadow-sm hover:border-red-200 hover:shadow-md transition-all group">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 group-hover:text-black transition-colors"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          <span class="text-sm font-medium text-gray-600 group-hover:text-black transition-colors">GitHub</span>
+        </a>
+      )}
 
+      {blogUrl && (
+        <a href={blogUrl} target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-200 shadow-sm hover:border-red-200 hover:shadow-md transition-all group">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 group-hover:text-black transition-colors"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          <span class="text-sm font-medium text-gray-600 group-hover:text-black transition-colors">Blog</span>
+        </a>
+      )}
     </div>
   </div>
 </section>

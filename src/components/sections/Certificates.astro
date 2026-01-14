@@ -4,9 +4,9 @@ interface CertificateItem {
   date: string;
 }
 
-const certificates: CertificateItem[] = [
+const certificates = [
   {
-    title: "Engineer Information Processing",
+    title: "정보처리기사",
     date: "2024.12"
   },
   {
@@ -18,15 +18,18 @@ const certificates: CertificateItem[] = [
     date: "2024.11"
   },
   {
-    title: "SQL Developer",
+    title: "SQL 개발자 (SQLD)",
     date: "2024.09"
   }
 ];
+
 ---
 
 <section id="certificates" class="max-w-4xl mx-auto px-6 py-8">
   <h2 class="text-2xl font-mono font-bold text-gray-900 mb-0 tracking-tight flex items-center gap-2">
-    Certificates<span class="text-red-600 mr-1">:</span>
+    <span class="lang-en">Certificates</span>
+    <span class="lang-ko">자격증</span>
+    <span class="text-red-600 mr-1">:</span>
   </h2>
   <div class="h-16 w-full"></div>
   
