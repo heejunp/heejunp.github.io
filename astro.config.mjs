@@ -16,4 +16,5 @@ export default defineConfig({
   build: {
     inlineStylesheets: 'always',
   },
+  compressHTML: true,
 });
