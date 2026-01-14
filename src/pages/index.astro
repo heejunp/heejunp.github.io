@@ -109,22 +109,17 @@ import { experiences, experiencesKo, projects, projectsKo, aboutMe } from '../co
     }
 
     if (btn) {
-      // Remove old listeners to prevent duplicates if View Transitions don't swap body
-      const newBtn = btn.cloneNode(true);
-      if (btn.parentNode) btn.parentNode.replaceChild(newBtn, btn);
-      
-      newBtn.addEventListener('click', () => {
+      // Toggle Handler - Use onclick to prevent duplicate listeners
+      btn.onclick = () => {
         body.classList.toggle('lang-ko');
         const isKo = body.classList.contains('lang-ko');
         
-        // Update Label - Must re-select because cloneNode created a new button, 
-        // but id is unique so we can just select by id again or select from newBtn
-        const newLabel = newBtn.querySelector('#lang-label');
-        if (newLabel) newLabel.textContent = isKo ? 'EN' : 'KR';
+        // Update Label
+        if (label) label.textContent = isKo ? 'EN' : 'KR';
         
         // Save preference
         localStorage.setItem('language', isKo ? 'ko' : 'en');
-      });
+      };
     }
   };
 
