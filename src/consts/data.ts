@@ -107,7 +107,7 @@ export const projects = [
       "MSA Infrastructure: Architected the microservices environment using Spring Cloud Eureka for service discovery and Spring Cloud Gateway for centralized routing.",
       "DevOps & Deployment: Deployed services on NHN Cloud infrastructure and established an automated CI/CD pipeline using GitHub Actions."
     ],
-    review: "This project provided deep insights into the complexities of distributed systems. Handling transactional consistency across microservices using event-driven patterns (RabbitMQ) was a key challenge that improved my understanding of system resilience and loose coupling."
+    review: "While the tech stack was suggested by the bootcamp, my team and I engaged in in-depth studies to rigorously debate 'why these technologies?' We independently verified that adopting RabbitMQ was the key to decoupling services and ensuring transactional consistency. This process went beyond mere implementation; it was a defining moment in developing my engineering capability to validate and justify architectural decisions."
   },
   {
     title: "JipPickT",
@@ -156,7 +156,7 @@ export const projects = [
       "PWA Implementation: Configured Progressive Web App features to provide a native app-like experience on mobile devices.",
       "Component Refactoring: Refactored initial monolithic code into reusable components to improve maintainability and scalability."
     ],
-    review: "As a solo developer, I learned to leverage AI tools and serverless technologies to maximize productivity. Refactoring the code into modular components not only improved the code quality but also accelerated future feature additions."
+    review: "As a solo developer, I maximized productivity by adopting 'Vibe Coding' with AI tools. However, I learned that over-reliance and accepting AI suggestions without critical review could lead to unexpected bugs. This experience taught me that while AI is a powerful accelerator, the final verification of logic remains the engineer's responsibility. I also reaffirmed the importance of systematic component design and refactoring for long-term maintenance."
   }
 ];
 
@@ -175,7 +175,7 @@ export const projectsKo = [
       "MSA 인프라 구축: Spring Cloud Eureka(서비스 디스커버리)와 Gateway(라우팅)를 활용하여 마이크로서비스 환경 설계 및 구축",
       "DevOps: NHN Cloud 인프라에 서비스 배포 및 GitHub Actions를 이용한 CI/CD 파이프라인 구축"
     ],
-    review: "분산 시스템의 복잡성을 이해하고 해결하는 과정에서 큰 성장을 이뤘습니다. 특히 RabbitMQ를 활용한 이벤트 기반 아키텍처로 트랜잭션 일관성을 유지하고 결합도를 낮추는 경험이 매우 유익했습니다."
+    review: "부트캠프에서 제안된 기술 스택이었지만, 팀원들과 스터디를 통해 '왜 이 기술이어야 하는가?'를 치열하게 고민했습니다. 특히 RabbitMQ 도입이 서비스 간 강한 결합을 끊고 트랜잭션 일관성을 보장하는 핵심 열쇠임을 스스로 증명하며 아키텍처에 적용했습니다. 이 과정은 단순히 기술을 사용하는 것을 넘어, 아키텍처 설계의 타당성을 검증하는 엔지니어링 역량을 기르는 계기가 되었습니다."
   },
   {
     title: "JipPickT",
@@ -200,7 +200,6 @@ export const projectsKo = [
     description: "공원 환경을 위한 자율 주행 배달 로봇으로, SLAM 기술을 활용한 자율 주행과 AI 기반 배달 편의 서비스를 제공합니다.",
     tags: [TECH_TAGS.KUBERNETES, TECH_TAGS.JENKINS, TECH_TAGS.ARGOCD, TECH_TAGS.SLAM, TECH_TAGS.OPENAI, TECH_TAGS.OCR, TECH_TAGS.FACENET,TECH_TAGS.WEBRTC, TECH_TAGS.REDIS, TECH_TAGS.VUEJS, TECH_TAGS.TAILWIND],
     image: linkyImage,
-    link: "https://github.com/heejunp",
     work: [
       "사용자 인증: 보안성 높은 회원 API 개발 및 OAuth 2.0 소셜 로그인 기능 구현",
       "실시간 통신: STOMP 프로토콜을 활용하여 관리자와 로봇/사용자 간의 실시간 채팅 서비스 개발",
@@ -213,7 +212,7 @@ export const projectsKo = [
     title: "JangsaManLab",
     category: ProjectCategory.FULLSTACK,
     period: "2025.08 - 2025.12",
-    teamSize: "1명 (풀스택)",
+    teamSize: "1명",
     description: "사장님들의 운영 업무를 돕는 통합 비즈니스 관리 플랫폼입니다. 근태 관리, 급여 정산, 팀 소통, 보험 관리 등을 자동화합니다.",
     tags: [TECH_TAGS.SVELTEKIT, TECH_TAGS.FIREBASE, TECH_TAGS.PWA, TECH_TAGS.TAILWIND, TECH_TAGS.MYSQL, TECH_TAGS.DOCKER, TECH_TAGS.NGINX],
     image: jangsaManLabImage,
@@ -224,7 +223,7 @@ export const projectsKo = [
       "PWA 도입: 모바일 환경에서도 네이티브 앱처럼 사용할 수 있도록 PWA 기능 구현",
       "컴포넌트 리팩토링: 초기 모놀리식 구조를 재사용 가능한 컴포넌트 단위로 리팩토링하여 유지보수성 향상"
     ],
-    review: "1인 개발자로서 AI 도구와 서버리스 기술을 적극 활용하여 생산성을 높이는 법을 터득했습니다. 체계적인 컴포넌트 설계와 리팩토링이 장기적인 프로젝트 관리와 기능 확장에 얼마나 중요한지 깨달았습니다."
+    review: "1인 개발로서 처음으로 '바이브 코딩'을 적용하여 생산성을 극대화했습니다. 하지만 AI 의존도가 높아지며 충분한 고민 없이 코드를 수용(Accept)해 예기치 못한 버그를 마주하기도 했습니다. 이를 통해 AI는 강력한 도구지만, 코드의 논리적 결함을 걸러내는 것은 결국 개발자의 몫임을 뼈저리게 느꼈습니다. 이와 더불어 체계적인 컴포넌트 설계와 리팩토링이 장기적인 유지보수에 얼마나 중요한지도 깊이 깨달았습니다."
   }
 ];
 
