@@ -11,6 +11,8 @@ interface Project {
   image?: ImageMetadata | string; 
   work?: string[];
   period?: string;
+  teamSize?: string;
+  review?: string;
 }
 
 interface Props {
@@ -26,7 +28,7 @@ const { projects } = Astro.props;
     #
   </div>
 
-  <div class="max-w-7xl w-full mx-auto px-4 md:px-8 h-[800px] relative z-10"> 
+  <div class="max-w-7xl w-full mx-auto px-4 md:px-8 h-[700px] relative z-10"> 
     {/* Main Container - Rounded & Overflow Hidden */}
     <div class="flex flex-col md:flex-row w-full h-full rounded-3xl overflow-hidden shadow-2xl border border-gray-100 bg-gray-900">
       
@@ -38,7 +40,7 @@ const { projects } = Astro.props;
             data-index={index}
           >
             {/* Top: Image Area */}
-            <div class="relative h-1/3 md:h-2/5 w-full overflow-hidden shrink-0">
+            <div class="relative h-2/5 md:h-3/5 w-full overflow-hidden shrink-0">
                {typeof project.image === 'string' ? (
                 <div class={`w-full h-full bg-cover bg-center ${project.image}`} />
               ) : project.image ? (
@@ -58,23 +60,25 @@ const { projects } = Astro.props;
 
             {/* Bottom: Content Area */}
             <div class="relative flex-1 bg-gray-900 p-8 md:p-10 overflow-y-auto custom-scrollbar">
+              
+              {/* View Detail Button */}
+              <button 
+                class="view-detail-btn absolute top-6 right-6 p-2 bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white transition-all z-20 group"
+                aria-label="View Details"
+                data-index={index}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                </svg>
+                <span class="absolute right-full mr-2 top-1/2 -translate-y-1/2 text-xs font-medium text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap bg-gray-800 px-2 py-1 rounded">
+                  View Details
+                </span>
+              </button>
+
               <div class="flex flex-wrap items-center gap-3 mb-3">
                 <span class="px-3 py-1 bg-red-600 text-white text-xs font-bold uppercase tracking-wider rounded-full">
                   {project.category}
                 </span>
-                {project.period && (
-                  <span class="text-xs text-gray-400 font-mono">
-                    {project.period}
-                  </span>
-                )}
-              </div>
-
-              <div class="flex flex-wrap items-center gap-2 mb-6">
-                {project.tags.slice(0, 10).map(tag => (
-                    <span class="text-xs text-gray-400 font-medium border border-gray-700 bg-gray-800 px-2 py-0.5 rounded-full">
-                      {tag}
-                    </span>
-                ))}
               </div>
 
               <h3 class="text-3xl md:text-4xl font-bold mb-4 leading-tight text-white">
@@ -93,20 +97,6 @@ const { projects } = Astro.props;
               <p class="text-lg text-gray-300 mb-8 leading-relaxed">
                 {project.description}
               </p>
-
-              {project.work && (
-                <div class="mb-4">
-                  <h4 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 border-b border-gray-800 pb-2">Key Contributions</h4>
-                  <ul class="space-y-3">
-                    {project.work.map(item => (
-                      <li class="flex items-start gap-3 text-gray-300 text-base leading-snug">
-                        <span class="text-red-500 mt-1.5 text-xs">●</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
             </div>
           </article>
         ))}
@@ -160,6 +150,18 @@ const { projects } = Astro.props;
 
               {/* Content */}
               <div class="absolute inset-0 p-6 flex flex-col justify-end text-left pointer-events-none">
+                {/* View Detail Button (List Item) */}
+                <button 
+                  class="view-detail-btn absolute top-3 right-3 p-1.5 bg-black/50 hover:bg-black/80 text-gray-300 hover:text-white rounded-lg transition-all z-30 pointer-events-auto opacity-0 group-hover:opacity-100"
+                  aria-label="View Details"
+                  data-index={index}
+                  onclick="event.stopPropagation()"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                  </svg>
+                </button>
+
                 <div class="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 pointer-events-auto">
                   <span class="text-xs font-bold text-white/80 uppercase tracking-wider block mb-2">
                     {project.category}
@@ -194,6 +196,31 @@ const { projects } = Astro.props;
 
     </div>
   </div>
+
+  {/* Detail Modal */}
+  <div id="project-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+    {/* Backdrop */}
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300" id="modal-backdrop"></div>
+    
+    {/* Modal Container */}
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+      <div 
+        class="bg-white w-full max-w-4xl h-[85vh] rounded-2xl overflow-hidden relative shadow-2xl scale-95 opacity-0 transition-all duration-300 flex flex-col"
+        id="modal-panel"
+      >
+        {/* Close Button */}
+        <button id="modal-close" class="absolute top-4 right-4 z-20 p-2 text-gray-500 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+
+        {/* Modal Content - Populated by JS */}
+        <div id="modal-content" class="overflow-y-auto custom-scrollbar h-full">
+           {/* JS will inject content here */}
+        </div>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <style>
@@ -207,7 +234,7 @@ const { projects } = Astro.props;
   }
 </style>
 
-<script>
+<script define:vars={{ projects }}>
   const setupProjects = () => {
     const listItems = document.querySelectorAll('.project-list-item');
     const cards = document.querySelectorAll('.featured-card');
@@ -219,6 +246,135 @@ const { projects } = Astro.props;
 
     const btnTop = document.getElementById('btn-scroll-top');
     const btnBot = document.getElementById('btn-scroll-bottom');
+
+    // Modal Logic
+    const modal = document.getElementById('project-modal');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const modalPanel = document.getElementById('modal-panel');
+    const modalContent = document.getElementById('modal-content');
+    const modalCloseBtn = document.getElementById('modal-close');
+    const viewDetailBtns = document.querySelectorAll('.view-detail-btn');
+
+    const openModal = (index) => {
+      if (!modal || !modalContent || !projects[index]) return;
+      const p = projects[index];
+
+      // Populate Content
+      modalContent.innerHTML = `
+        <div class="p-8 md:p-12 space-y-8">
+           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-200 pb-6">
+              <div>
+                <span class="px-3 py-1 bg-red-600 text-white text-xs font-bold uppercase tracking-wider rounded-full mb-3 inline-block">
+                  ${p.category}
+                </span>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-2 leading-tight">${p.title}</h2>
+              </div>
+              
+              ${p.link ? `
+                <a href="${p.link}" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors font-bold text-sm shrink-0 self-start md:self-center">
+                  Visit Project
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </a>
+              ` : ''}
+           </div>
+
+           <div class="flex flex-wrap gap-6 text-gray-600 text-sm font-mono">
+              ${p.period ? `
+                <div class="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-600"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  <span>${p.period}</span>
+                </div>
+              ` : ''}
+              
+              ${p.teamSize ? `
+                <div class="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-600"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  <span>${p.teamSize}</span>
+                </div>
+              ` : ''}
+
+              <div class="flex flex-wrap gap-2 items-center">
+                 ${p.tags.map(tag => `<span class="text-xs text-gray-600 border border-gray-300 bg-gray-100 px-2 py-0.5 rounded-full">${tag}</span>`).join('')}
+              </div>
+           </div>
+
+           <div>
+              <h3 class="text-xl font-bold text-gray-900 mb-3">
+                Project Description<span class="text-red-600"> :</span>
+              </h3>
+              <p class="text-gray-700 leading-relaxed text-lg">${p.description}</p>
+           </div>
+
+           ${p.work ? `
+             <div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">
+                  My Contributions<span class="text-red-600"> :</span>
+                </h3>
+                <ul class="space-y-3">
+                  ${p.work.map(item => `
+                    <li class="flex items-start gap-3 text-gray-700 bg-gray-50 p-4 rounded-lg border border-gray-200">
+                      <span class="text-red-600 mt-1 font-bold">-</span>
+                      <span>${item}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+             </div>
+           ` : ''}
+
+           ${p.review ? `
+             <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                <h3 class="text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-600"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                  Retrospective
+                </h3>
+                <p class="text-gray-700 leading-relaxed italic text-base whitespace-pre-line">"${p.review}"</p>
+             </div>
+           ` : ''}
+
+        </div>
+      `;
+
+      // Show Modal
+      modal.classList.remove('hidden');
+      // Trigger reflow
+      void modal.offsetWidth;
+      
+      modalBackdrop.classList.remove('opacity-0');
+      modalPanel.classList.remove('opacity-0', 'scale-95');
+      modalPanel.classList.add('opacity-100', 'scale-100');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+      if (!modal) return;
+      modalBackdrop.classList.add('opacity-0');
+      modalPanel.classList.remove('opacity-100', 'scale-100');
+      modalPanel.classList.add('opacity-0', 'scale-95');
+      
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }, 300);
+    };
+
+    // Event Listeners for Modal
+    viewDetailBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent card click
+        const index = btn.getAttribute('data-index');
+        openModal(index);
+      });
+    });
+
+    modalCloseBtn?.addEventListener('click', closeModal);
+    modalBackdrop?.addEventListener('click', closeModal);
+    
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
 
     // Click Handlers for Smooth Scroll
     if (btnTop && listContainer) {
