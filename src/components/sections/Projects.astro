@@ -489,8 +489,17 @@ const { projects, projectsKo } = Astro.props;
        }, 300);
     };
 
+    const modalWrapper = document.getElementById('modal-wrapper');
+
     modalCloseBtn?.addEventListener('click', closeModal);
     modalBackdrop?.addEventListener('click', closeModal);
+    
+    // Close when clicking outside the panel (on the wrapper)
+    modalWrapper?.addEventListener('click', (e) => {
+      if (e.target === modalWrapper) {
+        closeModal();
+      }
+    });
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
     });
