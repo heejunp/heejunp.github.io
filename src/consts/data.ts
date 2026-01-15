@@ -150,7 +150,7 @@ export const projects = [
     image: jangsaManLabImage,
     link: "https://xn--yj2bn4b37j8vh.com/employer/",
     work: [
-      "Full Stack Development: Leveraged SvelteKit for both SSR/SEO optimized frontend and serverless backend functionality.",
+      "Full Stack Development: Leveraged SvelteKit for full stack development.",
       "AI-Assisted Design Workflow: Established a rapid Web Design-to-Code workflow using Figma and Cursor AI tools.",
       "PWA Implementation: Configured Progressive Web App features to provide a native app-like experience on mobile devices.",
       "Component Refactoring: Refactored initial monolithic code into reusable components to improve maintainability and scalability."
@@ -217,7 +217,7 @@ export const projectsKo = [
     image: jangsaManLabImage,
     link: "https://xn--yj2bn4b37j8vh.com/employer/",
     work: [
-      "풀스택 개발: SvelteKit을 사용하여 SSR/SEO 최적화 및 서버리스 백엔드 로직 구현",
+      "풀스택 개발: SvelteKit을 사용하여 풀스택 개발",
       "AI 활용 워크플로우: Figma와 Cursor AI를 활용하여 디자인부터 코드 구현까지의 생산성을 극대화한 워크플로우 정립",
       "PWA 도입: 모바일 환경에서도 네이티브 앱처럼 사용할 수 있도록 PWA 기능 구현",
       "컴포넌트 리팩토링: 초기 모놀리식 구조를 재사용 가능한 컴포넌트 단위로 리팩토링하여 유지보수성 향상"
