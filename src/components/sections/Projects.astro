@@ -82,10 +82,18 @@ const { projects, projectsKo } = Astro.props;
                   </span>
                 </button>
 
-                <div class="flex flex-wrap items-center gap-3 mb-3">
-                  <span class="px-3 py-1 bg-red-600 text-white text-xs font-bold uppercase tracking-wider rounded-full">
+                <div class="flex flex-wrap items-center gap-2 mb-4">
+                  <span class="px-3 py-1 bg-red-600 text-white text-xs font-bold uppercase tracking-wider rounded-full mr-2">
                     {project.category}
                   </span>
+                  {project.tags && project.tags.slice(0, 5).map((tag) => (
+                    <span class="px-2 py-1 text-xs text-gray-300 border border-gray-700 bg-gray-800/50 rounded-full">
+                      {tag}
+                    </span>
+                  ))}
+                  {project.tags && project.tags.length > 5 && (
+                    <span class="text-xs text-gray-500 ml-1">+{project.tags.length - 5}</span>
+                  )}
                 </div>
 
                 <h3 class="text-3xl md:text-4xl font-bold mb-4 leading-tight text-white">
@@ -152,10 +160,18 @@ const { projects, projectsKo } = Astro.props;
                   </span>
                 </button>
 
-                <div class="flex flex-wrap items-center gap-3 mb-3">
-                  <span class="px-3 py-1 bg-red-600 text-white text-xs font-bold uppercase tracking-wider rounded-full">
+                <div class="flex flex-wrap items-center gap-2 mb-4">
+                  <span class="px-3 py-1 bg-red-600 text-white text-xs font-bold uppercase tracking-wider rounded-full mr-2">
                     {project.category}
                   </span>
+                   {project.tags && project.tags.slice(0, 5).map((tag) => (
+                    <span class="px-2 py-1 text-xs text-gray-300 border border-gray-700 bg-gray-800/50 rounded-full">
+                      {tag}
+                    </span>
+                  ))}
+                  {project.tags && project.tags.length > 5 && (
+                    <span class="text-xs text-gray-500 ml-1">+{project.tags.length - 5}</span>
+                  )}
                 </div>
 
                 <h3 class="text-3xl md:text-4xl font-bold mb-4 leading-tight text-white">

@@ -166,7 +166,7 @@ export const projectsKo = [
     period: "2024.05 - 2024.08",
     teamSize: "6명 (팀장)",
     description: "MSA 아키텍처 기반의 확장 가능한 온라인 서점 플랫폼입니다. Spring Boot와 RabbitMQ를 사용하여 분산 서비스를 조율하고, Elasticsearch와 Redis를 통합하여 검색 및 캐싱 성능을 최적화했습니다.",
-    tags: [TECH_TAGS.MSA, TECH_TAGS.SPRING_BOOT, TECH_TAGS.MYSQL, TECH_TAGS.REDIS, TECH_TAGS.RABBITMQ, TECH_TAGS.ELASTICSEARCH, TECH_TAGS.GITHUB_ACTIONS, TECH_TAGS.NGINX],
+    tags: [TECH_TAGS.MSA, TECH_TAGS.SPRING_BOOT, TECH_TAGS.MYSQL, TECH_TAGS.REDIS, TECH_TAGS.RABBITMQ, TECH_TAGS.ELASTICSEARCH, TECH_TAGS.GITHUB_ACTIONS, TECH_TAGS.NGINX, TECH_TAGS.GITHUB, TECH_TAGS.DOORAY],
     image: buzzBookImage,
     link: "https://github.com/nhnacademy-be6-AA",
     work: [
@@ -182,7 +182,7 @@ export const projectsKo = [
     period: "2025.04 ~ 2025.06",
     teamSize: "2명 (팀장)",
     description: "AI 기반 부동산 추천 플랫폼으로, 매물 정보를 요약하고 적정 시세를 분석하여 사용자의 효율적인 의사결정을 돕습니다.",
-    tags: [TECH_TAGS.OPENAI, TECH_TAGS.SPRING_BOOT, TECH_TAGS.VUEJS, TECH_TAGS.TAILWIND, TECH_TAGS.MYSQL, TECH_TAGS.REDIS, TECH_TAGS.JENKINS, TECH_TAGS.NGINX],
+    tags: [TECH_TAGS.OPENAI, TECH_TAGS.SPRING_BOOT, TECH_TAGS.VUEJS, TECH_TAGS.TAILWIND, TECH_TAGS.MYSQL, TECH_TAGS.REDIS, TECH_TAGS.JENKINS, TECH_TAGS.NGINX, TECH_TAGS.GITHUB, TECH_TAGS.MATTERMOST],
     image: jipPickTImage,
     link: "https://github.com/JipPickT",
     work: [
@@ -197,7 +197,7 @@ export const projectsKo = [
     period: "2025.07 - 2025.08",
     teamSize: "6명 (팀원)",
     description: "공원 환경을 위한 자율 주행 배달 로봇으로, SLAM 기술을 활용한 자율 주행과 AI 기반 배달 편의 서비스를 제공합니다.",
-    tags: [TECH_TAGS.KUBERNETES, TECH_TAGS.JENKINS, TECH_TAGS.ARGOCD, TECH_TAGS.SLAM, TECH_TAGS.OPENAI, TECH_TAGS.OCR, TECH_TAGS.FACENET,TECH_TAGS.WEBRTC, TECH_TAGS.REDIS, TECH_TAGS.VUEJS, TECH_TAGS.TAILWIND],
+    tags: [TECH_TAGS.KUBERNETES, TECH_TAGS.JENKINS, TECH_TAGS.ARGOCD, TECH_TAGS.SLAM, TECH_TAGS.OPENAI, TECH_TAGS.OCR, TECH_TAGS.FACENET,TECH_TAGS.WEBRTC, TECH_TAGS.REDIS, TECH_TAGS.VUEJS, TECH_TAGS.TAILWIND, TECH_TAGS.GITHUB, TECH_TAGS.JIRA, TECH_TAGS.MATTERMOST],
     image: linkyImage,
     work: [
       "사용자 인증: 보안성 높은 회원 API 개발 및 OAuth 2.0 소셜 로그인 기능 구현",
@@ -213,7 +213,7 @@ export const projectsKo = [
     period: "2025.08 - 2025.12",
     teamSize: "1명",
     description: "사장님들의 운영 업무를 돕는 통합 비즈니스 관리 플랫폼입니다. 근태 관리, 급여 정산, 팀 소통, 보험 관리 등을 자동화합니다.",
-    tags: [TECH_TAGS.SVELTEKIT, TECH_TAGS.FIREBASE, TECH_TAGS.PWA, TECH_TAGS.TAILWIND, TECH_TAGS.MYSQL, TECH_TAGS.DOCKER, TECH_TAGS.NGINX],
+    tags: [TECH_TAGS.SVELTEKIT, TECH_TAGS.FIREBASE, TECH_TAGS.PWA, TECH_TAGS.TAILWIND, TECH_TAGS.MYSQL, TECH_TAGS.DOCKER, TECH_TAGS.NGINX, TECH_TAGS.GITHUB],
     image: jangsaManLabImage,
     link: "https://xn--yj2bn4b37j8vh.com/employer/",
     work: [
