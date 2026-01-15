@@ -44,4 +44,9 @@ export const TECH_TAGS = {
   NGINX: "Nginx",
   MSA: "MSA",
   SLAM: "SLAM",
+  GITLAB: "GitLab",
+GITHUB: "GitHub",
+  JIRA: "Jira",
+  MATTERMOST: "Mattermost",
+  DOORAY: "Dooray",
 } as const;
