@@ -45,8 +45,9 @@ export const TECH_TAGS = {
   MSA: "MSA",
   SLAM: "SLAM",
   GITLAB: "GitLab",
-GITHUB: "GitHub",
+  GITHUB: "GitHub",
   JIRA: "Jira",
   MATTERMOST: "Mattermost",
   DOORAY: "Dooray",
+  GIN: "Gin",
 } as const;
