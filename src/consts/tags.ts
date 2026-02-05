@@ -50,4 +50,5 @@ export const TECH_TAGS = {
   MATTERMOST: "Mattermost",
   DOORAY: "Dooray",
   GIN: "Gin",
+  ECHO: "Echo",
 } as const;
